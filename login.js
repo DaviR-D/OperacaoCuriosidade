@@ -1,4 +1,4 @@
-const usuarios = [];
+const usuarios = ["user"];
 
 document.addEventListener("DOMContentLoaded", function(){
     const loginButton = document.getElementById("login");
