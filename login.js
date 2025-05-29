@@ -1,4 +1,4 @@
-const usuarios = ["user"];
+const usuario = {email:"Davi", password: "senha123"};
 
 document.addEventListener("DOMContentLoaded", function(){
     const loginButton = document.getElementById("login");
@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function(){
     const passwordInput = document.getElementById("password");
 
     loginButton.addEventListener("click", function(){
-        console.log(emailInput.value);
-        if(emailInput.value && passwordInput.value)
+        let login = {email:emailInput.value, password:passwordInput.value}
+        if(JSON.stringify(login) == JSON.stringify(usuario))
             alert("Sucesso!");
         else
-            alert("Preencha as credenciais!");
+            alert("Login errado!");
     })
 })
