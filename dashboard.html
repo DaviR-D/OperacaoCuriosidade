@@ -21,23 +21,23 @@
         <p><a href="">Relatórios</a></p>
     </nav>
     <main>
-        <div style="display: flex;">
+        <div class="statsContainersWraper">
             <article class="statsContainer">
-                <p id="total" class="stats"></p>
+                <p id="total" class="stats" style="color: blue;"></p>
                 <span class="statsTitle">Total de cadastros</span>
             </article>
             <article class="statsContainer">
-                <p id="pending" class="stats"></p>
+                <p id="pending" class="stats" style="color: green;"></p>
                 <span class="statsTitle">Cadastros com pendência de revisão</span>
             </article>
             <article class="statsContainer">
-                <p id="lastMonth" class="stats"></p>
+                <p id="lastMonth" class="stats" style="color: red;"></p>
                 <span class="statsTitle">Cadastros no último mês</span>
             </article>
         </div>
-        <article>
-            <p>Últimos cadastros</p>
-            <ul id="latestRegistrations"></ul>
+        <article class="latestRegistrationsWraper">
+            <h1><strong>Últimos cadastros</strong></h1>
+            <table id="latestRegistrations"></table>
         </article>
     </main>
 </body>

@@ -2,11 +2,13 @@ body{
     height: 95vh;
     background-color: rgb(225, 225, 225);
     font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr, 2fr, 2fr;
 }
 
 header{
-    margin: auto;
-    width: 95vw;
+    width: 80vw;
     height: 10vh;
     align-items: center;
     background-color: white;
@@ -14,6 +16,10 @@ header{
     border-color: black;
     border-radius: 10px;
     display: flex;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 .login{
@@ -23,11 +29,22 @@ header{
 }
 
 nav{
-    
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    height: 95vh;
+    width: 15vw;
 }
 
 main{
-    
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 4;
 }
 
 #exit{
@@ -57,18 +74,62 @@ main{
 
 .statsContainer{
     background-color: white;
-    height: 30vh;
-    width: 30vh;
+    height: 40vh;
+    width: 40vh;
     border-style: solid;
     margin: 1vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    justify-content: center;
+    align-items: center;
 }
 
 .stats{
-justify-content: center;
-align-content: center;
-font-size: 5rem;
+    font-size: 6vw;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: center;
 }
 
 .statsTitle{
-text-align: right;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: center;
+}
+
+.statsContainersWraper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.latestRegistrationsWraper{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    height: 40vh;
+}
+
+table {
+  width: 100%;
+  font-size: 1.5vw;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom-style: solid;
 }

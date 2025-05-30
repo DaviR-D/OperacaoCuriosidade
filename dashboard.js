@@ -12,9 +12,15 @@ let pendingRegistrations = 10;
 let lastMonthRegistrations = 10;
 
 function renderLatestRegistrationsHTML(){
-    registrationList = [];
+    registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th></tr>'];
     registrations.slice(-3).forEach(register => {
-        registrationList.push(`<li>${register.name} ${register.email} ${register.status}</li>`)
+        registrationList.push(
+            `<tr>
+            <td>${register.name}</td>
+            <td>${register.email}</td>
+            <td>${register.status}</td>
+            </tr>`
+        )
     });
 
     return registrationList;
