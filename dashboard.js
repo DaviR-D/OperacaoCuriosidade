@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", function(){
     
     userDisplay.innerText = loggedUser.name;
 
-    total.innerHTML = totalRegistrations;
-    pending.innerHTML = pendingRegistrations;
-    lastMonth.innerHTML = lastMonthRegistrations;
+    total.innerText = totalRegistrations;
+    pending.innerText = pendingRegistrations;
+    lastMonth.innerText = lastMonthRegistrations;
 
     latestRegistrations.innerHTML = renderLatestRegistrationsHTML().join('');
 

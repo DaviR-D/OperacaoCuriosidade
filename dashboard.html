@@ -8,9 +8,11 @@
 </head>
 <body>
     <header>
-        <input type="text" placeholder="Pesquisar...">
-        <span id="userDisplay"></span>
-        <a href="login.html">Sair</a>
+        <input type="text" placeholder="Pesquisar..." id="search">
+        <div class="login">
+            <span id="userDisplay"></span>
+            <a href="login.html" id="exit">SAIR</a>
+        </div>
     </header>
     <nav>
         <p>Operação Curiosidade</p>
@@ -19,18 +21,20 @@
         <p><a href="">Relatórios</a></p>
     </nav>
     <main>
-        <article>
-            <p id="total"></p>
-            Total de cadastros
-        </article>
-        <article>
-            <p id="pending"></p>
-            Cadastros com pendência de revisão
-        </article>
-        <article>
-            <p id="lastMonth"></p>
-            Cadastros no último mês
-        </article>
+        <div style="display: flex;">
+            <article class="statsContainer">
+                <p id="total" class="stats"></p>
+                <span class="statsTitle">Total de cadastros</span>
+            </article>
+            <article class="statsContainer">
+                <p id="pending" class="stats"></p>
+                <span class="statsTitle">Cadastros com pendência de revisão</span>
+            </article>
+            <article class="statsContainer">
+                <p id="lastMonth" class="stats"></p>
+                <span class="statsTitle">Cadastros no último mês</span>
+            </article>
+        </div>
         <article>
             <p>Últimos cadastros</p>
             <ul id="latestRegistrations"></ul>
