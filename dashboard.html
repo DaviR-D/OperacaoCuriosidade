@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <input type="text" placeholder="Pesquisar...">
+        <span id="userDisplay"></span>
+        <a href="login.html">Sair</a>
+    </header>
+    <nav>
+        <p>Operação Curiosidade</p>
+        <p><a href="">Home</a></p>
+        <p><a href="">Cadastro</a></p>
+        <p><a href="">Relatórios</a></p>
+    </nav>
+    <main>
+        <article>
+            <p id="total"></p>
+            Total de cadastros
+        </article>
+        <article>
+            <p id="pending"></p>
+            Cadastros com pendência de revisão
+        </article>
+        <article>
+            <p id="lastMonth"></p>
+            Cadastros no último mês
+        </article>
+        <article>
+            <p>Últimos cadastros</p>
+            <ul id="latestRegistrations"></ul>
+        </article>
+    </main>
+</body>
+<script src="dashboard.js"></script>
+</html>
