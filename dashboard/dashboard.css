@@ -5,6 +5,7 @@ body{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr, 2fr, 2fr;
+    color: rgb(74, 74, 74);
 }
 
 header{
@@ -12,14 +13,13 @@ header{
     height: 10vh;
     align-items: center;
     background-color: white;
-    border-style: solid;
-    border-color: black;
     border-radius: 10px;
     display: flex;
     grid-column-start: 2;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
+    box-shadow: 4px 4px 4px gray;
 }
 
 .login{
@@ -33,11 +33,10 @@ nav{
     grid-row-start: 1;
     grid-row-end: 4;
     background-color: white;
-    border-style: solid;
-    border-color: black;
     border-radius: 10px;
     height: 95vh;
     width: 15vw;
+    box-shadow: 4px 4px 4px gray;
 }
 
 main{
@@ -48,7 +47,7 @@ main{
 }
 
 #exit{
-    color: rgb(165, 165, 165);
+    color: rgb(74, 74, 74);
     text-decoration: none;
     font-size: 2rem;
     border-left-style: solid;
@@ -59,6 +58,7 @@ main{
 #exit:hover{
     color: firebrick;
     border-left-color: firebrick;
+    border-bottom-style: none;
 }
 
 #userDisplay{
@@ -76,13 +76,14 @@ main{
     background-color: white;
     height: 40vh;
     width: 40vh;
-    border-style: solid;
     margin: 1vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
+    box-shadow: 4px 4px 4px gray;
+    border-radius: 10px;
 }
 
 .stats{
@@ -117,10 +118,9 @@ main{
     grid-column-start: 2;
     grid-column-end: 5;
     background-color: white;
-    border-style: solid;
-    border-color: black;
     border-radius: 10px;
     height: 40vh;
+    box-shadow: 4px 4px 4px gray;
 }
 
 table {
@@ -132,4 +132,15 @@ th, td {
   padding: 10px;
   text-align: center;
   border-bottom-style: solid;
+  border-bottom-color: rgb(203, 203, 203);
+}
+
+a{
+    text-decoration: none;
+    color: rgb(74, 74, 74);
+
+}
+
+a:hover{
+    border-bottom-style: solid;
 }
