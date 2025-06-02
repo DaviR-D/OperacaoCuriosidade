@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <input type="text" placeholder="Pesquisar..." id="search">
+        <div class="login">
+            <span id="userDisplay"></span>
+            <a href="../login.html" id="exit">SAIR</a>
+        </div>
+    </header>
+    <nav>
+        <p style="text-align: center;">Operação Curiosidade</p>
+        <p><a href="dashboard.html">Home</a></p>
+        <p><a href="">Cadastro</a></p>
+        <p><a href="">Relatórios</a></p>
+    </nav>
+    <main>
+        <div class="statsContainersWraper">
+            <article class="statsContainer">
+                <p id="total" class="stats" style="color: rgb(79, 79, 255);"></p>
+                <span class="statsTitle">Total de cadastros</span>
+            </article>
+            <article class="statsContainer">
+                <p  id="lastMonth"  class="stats" style="color: rgb(52, 255, 52);"></p>
+                <span class="statsTitle">Cadastros no último mês</span>
+            </article>
+            <article class="statsContainer">
+                <p id="pending" class="stats" style="color: rgb(255, 39, 39);"></p>
+                <span class="statsTitle">Cadastros com pendência de revisão</span>
+            </article>
+        </div>
+        <article class="latestRegistrationsWraper">
+            <h1><strong>Últimos cadastros</strong></h1>
+            <table id="latestRegistrations"></table>
+        </article>
+    </main>
+</body>
+<script src="dashboard.js"></script>
+</html>

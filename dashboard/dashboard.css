@@ -1,0 +1,62 @@
+.statsContainer{
+    background-color: white;
+    height: 40vh;
+    width: 40vh;
+    margin: 1vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 4px gray;
+    border-radius: 10px;
+}
+
+.stats{
+    font-size: 6vw;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: center;
+}
+
+.statsTitle{
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: center;
+}
+
+.statsContainersWraper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.latestRegistrationsWraper{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    background-color: white;
+    border-radius: 10px;
+    height: 40vh;
+    box-shadow: 4px 4px 4px gray;
+}
+
+table {
+  width: 100%;
+  font-size: 1.5vw;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(203, 203, 203);
+}
