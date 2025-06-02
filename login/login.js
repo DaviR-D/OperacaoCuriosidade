@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(){
     loginButton.addEventListener("click", function(){
         let login = {email:emailInput.value, password:passwordInput.value}
         if(JSON.stringify(login) == JSON.stringify(users))
-            alert("Sucesso!");
+            window.location = "../dashboard/dashboard.html"
         else
             alert("Login errado!");
     })
