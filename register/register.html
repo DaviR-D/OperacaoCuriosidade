@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+        <header>
+        <input type="text" placeholder="Pesquisar..." id="search">
+        <div class="login">
+            <span id="userDisplay"></span>
+            <a href="../login/login.html" id="exit">SAIR</a>
+        </div>
+    </header>
+    <nav>
+            <p style="text-align: center;">Operação Curiosidade</p>
+        <div class="navLinks">
+            <p><a href="../dashboard/dashboard.html">Home</a></p>
+            <p><a href="register.html">Cadastro</a></p>
+            <p><a href="../report/report.html">Relatórios</a></p>
+        </div>
+    </nav>
+    <main>
+        <div id="registerModal" style="display: none;">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+        </div>
+        <article class="latestRegistrationsWraper" style="height: 95%; margin-top: 15px;">
+            <div style="display: flex; padding: 15px;">
+                <h1 style="padding-left: 30px;"><strong>Cadastros</strong></h1>
+                <button id="register">NOVO CADASTRO</button>
+            </div>
+            <div class="tableWraper">
+                <table id="allRegistrations"></table>
+            </div>
+        </article>
+    </main>
+</body>
+<script src="register.js"></script>
+</html>

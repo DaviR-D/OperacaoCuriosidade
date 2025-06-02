@@ -109,3 +109,13 @@ th, td {
     overflow-inline: scroll;
     height: 85%;
 }
+
+button{
+    color: white;
+    font-weight: bolder;
+    font-size: 1.5vw;
+    border-radius: 10px;
+    width: 15vw;
+    margin: 10px;
+    margin-left: auto;
+}
