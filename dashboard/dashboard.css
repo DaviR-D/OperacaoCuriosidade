@@ -38,25 +38,3 @@
     grid-row-end: 3;
 }
 
-.latestRegistrationsWraper{
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column-start: 2;
-    grid-column-end: 5;
-    background-color: white;
-    border-radius: 10px;
-    height: 40vh;
-    box-shadow: 4px 4px 4px gray;
-}
-
-table {
-  width: 100%;
-  font-size: 1.5vw;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(203, 203, 203);
-}
