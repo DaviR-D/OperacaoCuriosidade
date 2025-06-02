@@ -1,10 +1,10 @@
 body{
-    height: 95vh;
+    max-height: 95vh;
     background-color: rgb(225, 225, 225);
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr, 2fr, 2fr;
+    grid-template-rows: 0.5fr 2fr 2fr;
     color: rgb(74, 74, 74);
 }
 
@@ -37,6 +37,10 @@ nav{
     height: 95vh;
     width: 15vw;
     box-shadow: 4px 4px 4px gray;
+}
+
+.navLinks{
+    margin-left: 15px;
 }
 
 main{
@@ -80,4 +84,28 @@ a{
 
 a:hover{
     border-bottom-style: solid;
+}
+
+.latestRegistrationsWraper{
+    background-color: white;
+    border-radius: 10px;
+    height: 39vh;
+    box-shadow: 4px 4px 4px gray;
+}
+
+table {
+  width: 100%;
+  font-size: 1.5vw;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(203, 203, 203);
+}
+
+.tableWraper{
+    overflow-inline: scroll;
+    height: 85%;
 }
