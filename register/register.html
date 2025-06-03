@@ -24,17 +24,43 @@
         </div>
     </nav>
     <main>
-        <div id="registerModal" style="display: none;">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-        </div>
+        <dialog id="registerWindow">
+            <div class="firstSection">
+                <div style="margin-left: 90%; margin-top: 5vh;">Ativo <input type="checkbox"></div>
+                <h1><strong>1° Fatos e dados</strong></h1>
+                <p>Nome</p>
+                <input type="text">
+                <p>Idade</p>
+                <input type="text">
+                <p>Email</p>
+                <input type="text">
+                <p>Endereço</p>
+                <input type="text">
+                <p>Outras informações</p>
+                <input type="text">
+            </div>
+
+            <div class="formSection">
+                <h1><strong>2° Interesses</strong></h1>
+                <input type="text">
+            </div>
+
+            <div class="formSection">
+                <h1><strong>3° Sentimentos</strong></h1>
+                <input type="text">
+            </div>
+
+            <div class="formSection">
+                <h1><strong>4° Valores</strong></h1>
+                <input type="text">
+            </div>
+
+            <button style="margin-top: 40px; padding: 10px;">GRAVAR</button>
+        </dialog>
         <article class="latestRegistrationsWraper" style="height: 95%; margin-top: 15px;">
             <div style="display: flex; padding: 15px;">
                 <h1 style="padding-left: 30px;"><strong>Cadastros</strong></h1>
-                <button id="register">NOVO CADASTRO</button>
+                <button id="registerButton" onclick="showRegisterWindow()">NOVO CADASTRO</button>
             </div>
             <div class="tableWraper">
                 <table id="allRegistrations"></table>

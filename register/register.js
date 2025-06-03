@@ -36,9 +36,10 @@ function renderAllRegistrationsHTML(){
     return registrationList;
 }
 
-register.addEventListener("click", function(){
-    registerModal.style.display = "flex"
-});
+function showRegisterWindow(){
+    registerWindow.showModal();
+}
+
 
 let loggedUser = {name: "Davi Rodrigues"};
 
