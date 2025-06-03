@@ -18,5 +18,3 @@ function showRegisterWindow(){
 function hideRegisterWindow(){
     registerWindow.close();
 }
-
-console.log(JSON.parse(localStorage.getItem("1")));

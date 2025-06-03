@@ -14,6 +14,20 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 })
 
+localStorage.setItem("0", JSON.stringify({
+  name: "Mario",
+  email: "mario@gmail.com",
+  status: "Ativo",
+  pending: true,
+  date: "2025-05-04T09:27:58",
+  age: 29,
+  adress: "Rua ABC, 123",
+  other: "Gosta de livros",
+  interests: "Tecnologia",
+  feelings: "Motivado",
+  values: "Honestidade"
+}));
+
 localStorage.setItem("1", JSON.stringify({
   name: "João",
   email: "joao@gmail.com",
