@@ -86,7 +86,7 @@ a:hover{
     border-bottom-style: solid;
 }
 
-.latestRegistrationsWraper{
+.registrationsWraper{
     background-color: white;
     border-radius: 10px;
     height: 39vh;
@@ -96,6 +96,7 @@ a:hover{
 table {
   width: 100%;
   font-size: 1.5vw;
+  overflow: hidden;
 }
 
 th, td {
