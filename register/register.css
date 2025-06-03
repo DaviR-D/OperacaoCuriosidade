@@ -1,0 +1,25 @@
+button{
+    background-color: rgb(0, 181, 0);
+}
+
+#registerWindow{
+    width: 40vw;
+    height: 30vw;
+    border-style: none;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px gray;
+    justify-content: center;
+    text-align: center;
+}
+
+.formSection > input{
+    border-radius: 10px;
+    width: 30vw;
+    height: 15vh;
+}
+
+.firstSection > input{
+    border-radius: 10px;
+    width: 20vw;
+    height: 5vh;
+}
