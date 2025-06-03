@@ -40,8 +40,9 @@ function showRegisterWindow(){
     registerWindow.showModal();
 }
 
-
-let loggedUser = {name: "Davi Rodrigues"};
+function hideRegisterWindow(){
+    registerWindow.close();
+}
 
 let registrations = [
     {name: "João", email: "joao@gmail.com", status: "Ativo", pending:true, date:"2025-05-04T09:27:53"},
@@ -64,3 +65,8 @@ let registrations = [
     {name: "Igor", email: "igor@gmail.com", status: "Inativo", pending: false, date: "2025-01-30T03:51:02"},
     {name: "Renata", email: "renata@gmail.com", status: "Ativo", pending: false, date: "2025-05-17T14:39:00"}
 ];
+
+
+let loggedUser = {name: "Davi Rodrigues"};
+
+console.log(JSON.parse(localStorage.getItem("1")));
