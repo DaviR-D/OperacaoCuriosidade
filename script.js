@@ -31,23 +31,24 @@ function insertData(html) {
 function renderRegistrationsHTML(amount = 0) {
     registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th></tr>'];
     registrations.slice(amount).forEach(register => {
-        let rowContent =
-            `<tr>
-                <td>${register.name}</td>
-                <td>${register.email}</td>
-                <td>${register.status}</td>
-            </tr>`
+        let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
-        if(rowContent.includes(search.value)){
-            registrationList.push(rowContent);
+        if (rowContent.includes(search.value)) {
+            registrationList.push(
+                `<tr>
+                    <td>${register.name}</td>
+                    <td>${register.email}</td>
+                    <td>${register.status}</td>
+                </tr>`
+            );
         }
-            
+
     });
 
     return registrationList;
 }
 
-search.addEventListener("input", function (){
+search.addEventListener("input", function () {
     let table = document.getElementById("registrations");
     table.innerHTML = renderRegistrationsHTML().join('');
 });
