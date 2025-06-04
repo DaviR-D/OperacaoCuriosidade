@@ -29,7 +29,7 @@ function insertData(html) {
 }
 
 function renderRegistrationsHTML(amount = 0) {
-    registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th></tr>'];
+    registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th><th>Ações</th></tr>'];
     registrations.slice(amount).forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
@@ -39,6 +39,10 @@ function renderRegistrationsHTML(amount = 0) {
                     <td>${register.name}</td>
                     <td>${register.email}</td>
                     <td>${register.status}</td>
+                    <td>
+                    
+                    <button class="deleteButton" onclick="deleteRegistration(${register.key})">X</button>
+                    </td>
                 </tr>`
             );
         }
@@ -48,10 +52,6 @@ function renderRegistrationsHTML(amount = 0) {
     return registrationList;
 }
 
-search.addEventListener("input", function () {
-    let table = document.getElementById("registrations");
-    table.innerHTML = renderRegistrationsHTML().join('');
-});
 
 function getStorageRegistrations() {
     for (let index = 0; index < localStorage.length; index++) {
@@ -62,5 +62,19 @@ function getStorageRegistrations() {
     }
 }
 
+function deleteRegistration(key) {
+    localStorage.removeItem(key);
+    registrations = [];
+    getStorageRegistrations();
+    updateTable();
+}
 
+function updateTable() {
+    let table = document.getElementById("registrations");
+    table.innerHTML = renderRegistrationsHTML().join('');
+}
+
+search.addEventListener("input", function () {
+    updateTable();
+});
 
