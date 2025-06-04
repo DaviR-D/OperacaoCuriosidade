@@ -1,11 +1,11 @@
 let html = {};
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     getRegisterElements();
     //insertRegisterData(html);
 })
 
-function getRegisterElements(){
+function getRegisterElements() {
 
     html.statusCheck = document.getElementById("status");
     html.nameInput = document.getElementById("name");
@@ -23,27 +23,39 @@ function getRegisterElements(){
 //function insertRegisterData(html){}
 
 
-function saveRegistration(){
-    localStorage.setItem(String(localStorage.length), JSON.stringify({
-    name:  html.nameInput.value,
-    email:  html.emailInput.value,
-    status:  html.statusCheck.checked ? "Ativo" : "Inativo",
-    pending: true,
-    date: new Date(),
-    age:  html.ageInput.value,
-    adress:  html.adressInput.value,
-    other:  html.otherInput.value,
-    interests:  html.interestsInput.value,
-    feelings:  html.feelingsInput.value,
-    values:  html.valuesInput.value
-}));
+function saveRegistration() {
+    [...registerForm.elements].forEach(field => {
+        field.style.borderColor = "black";
+    });
+    if (registerForm.checkValidity()) {
+        localStorage.setItem(String(localStorage.length), JSON.stringify({
+            name: html.nameInput.value,
+            email: html.emailInput.value,
+            status: html.statusCheck.checked ? "Ativo" : "Inativo",
+            pending: true,
+            date: new Date(),
+            age: html.ageInput.value,
+            adress: html.adressInput.value,
+            other: html.otherInput.value,
+            interests: html.interestsInput.value,
+            feelings: html.feelingsInput.value,
+            values: html.valuesInput.value
+        }));
+    }
+    else {
+        alert("Preencha todos os campos obrigatórios!");
+        let emptyFields = [...registerForm.elements].filter(field => !field.checkValidity());
+        emptyFields.forEach(field => {
+            field.style.borderColor = "red";
+        });
+    }
 }
 
 
-function showRegisterWindow(){
+function showRegisterWindow() {
     registerWindow.showModal();
 }
 
-function hideRegisterWindow(){
+function hideRegisterWindow() {
     registerWindow.close();
 }
