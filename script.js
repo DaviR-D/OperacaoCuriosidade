@@ -31,17 +31,26 @@ function insertData(html) {
 function renderRegistrationsHTML(amount = 0) {
     registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th></tr>'];
     registrations.slice(amount).forEach(register => {
-        registrationList.push(
+        let rowContent =
             `<tr>
-            <td>${register.name}</td>
-            <td>${register.email}</td>
-            <td>${register.status}</td>
+                <td>${register.name}</td>
+                <td>${register.email}</td>
+                <td>${register.status}</td>
             </tr>`
-        )
+
+        if(rowContent.includes(search.value)){
+            registrationList.push(rowContent);
+        }
+            
     });
 
     return registrationList;
 }
+
+search.addEventListener("input", function (){
+    let table = document.getElementById("registrations");
+    table.innerHTML = renderRegistrationsHTML().join('');
+});
 
 function getStorageRegistrations() {
     for (let index = 0; index < localStorage.length; index++) {
