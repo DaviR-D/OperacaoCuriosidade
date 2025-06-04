@@ -23,7 +23,7 @@ function getRegisterElements() {
 //function insertRegisterData(html){}
 
 
-function saveRegistration() {
+function saveRegistration(key = String(localStorage.length)) {
     [...registerForm.elements].forEach(field => {
         field.style.borderColor = "black";
     });
@@ -51,6 +51,19 @@ function saveRegistration() {
     }
 }
 
+function editRegistration(key){
+    registerWindow.showModal();
+    let editItem = JSON.parse(localStorage.getItem(key));
+
+    html.nameInput.value = editItem.name;
+    html.emailInput.value = editItem.email;
+    html.ageInput.value = editItem.age;
+    html.adressInput.value = editItem.adress;
+    html.otherInput.value = editItem.other;
+    html.interestsInput.value = editItem.interests;
+    html.feelingsInput.value = editItem.feelings;
+    html.valuesInput.value = editItem.values;
+}
 
 function showRegisterWindow() {
     registerWindow.showModal();
