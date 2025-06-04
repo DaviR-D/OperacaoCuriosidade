@@ -1,4 +1,4 @@
-body{
+body {
     max-height: 95vh;
     background-color: rgb(225, 225, 225);
     font-family: Arial, Helvetica, sans-serif;
@@ -8,7 +8,7 @@ body{
     color: rgb(74, 74, 74);
 }
 
-header{
+header {
     width: 80vw;
     height: 10vh;
     align-items: center;
@@ -22,13 +22,13 @@ header{
     box-shadow: 4px 4px 4px gray;
 }
 
-.login{
+.login {
     margin-left: auto;
     display: flex;
     align-items: center;
 }
 
-nav{
+nav {
     grid-column-start: 1;
     grid-row-start: 1;
     grid-row-end: 4;
@@ -39,18 +39,18 @@ nav{
     box-shadow: 4px 4px 4px gray;
 }
 
-.navLinks{
+.navLinks {
     margin-left: 15px;
 }
 
-main{
+main {
     grid-column-start: 2;
     grid-column-end: 5;
     grid-row-start: 2;
     grid-row-end: 4;
 }
 
-#exit{
+#exit {
     color: rgb(74, 74, 74);
     text-decoration: none;
     font-size: 2rem;
@@ -59,34 +59,34 @@ main{
     padding: 1vw;
 }
 
-#exit:hover{
+#exit:hover {
     color: firebrick;
     border-left-color: firebrick;
     border-bottom-style: none;
 }
 
-#userDisplay{
+#userDisplay {
     font-size: 1.5rem;
     padding-right: 1vw;
 }
 
-#search{
+#search {
     padding: 1vw;
     margin-left: 1vw;
     border-radius: 10px;
 }
 
-a{
+a {
     text-decoration: none;
     color: rgb(74, 74, 74);
 
 }
 
-a:hover{
+a:hover {
     border-bottom-style: solid;
 }
 
-.registrationsWraper{
+.registrationsWraper {
     background-color: white;
     border-radius: 10px;
     height: 39vh;
@@ -94,30 +94,32 @@ a:hover{
 }
 
 table {
-  width: 100%;
-  font-size: 1.5vw;
-  overflow: hidden;
+    width: 100%;
+    font-size: 1.5vw;
+    overflow: hidden;
+    border-collapse: collapse;
 }
 
-th, td {
-  padding: 10px;
-  text-align: center;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(203, 203, 203);
+th,
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(203, 203, 203);
 }
 
 tr:hover {
     background-color: rgb(195, 195, 195);
     scale: 1.1;
-    transition-duration: 200ms;
+    transition-duration: 400ms;
 }
 
-.tableWraper{
+.tableWraper {
     overflow-inline: scroll;
     height: 85%;
 }
 
-button{
+button {
     color: white;
     font-weight: bolder;
     font-size: 1.5vw;
