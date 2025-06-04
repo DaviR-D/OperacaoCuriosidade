@@ -116,7 +116,8 @@ tr:hover {
 
 .tableWraper {
     overflow-inline: scroll;
-    height: 85%;
+    overflow-x: hidden;
+    height: 80%;
 }
 
 button {
