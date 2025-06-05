@@ -2,11 +2,6 @@ button {
     background-color: rgb(59, 59, 129);
 }
 
-#tableStart {
-    display: flex;
-    padding: 15px;
-}
-
 @media print {
     nav {
         display: none;
@@ -16,7 +11,7 @@ button {
         display: none;
     }
 
-    #tableStart {
+    .tableStart {
         display: none;
     }
 

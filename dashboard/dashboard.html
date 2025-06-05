@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
     <main>
         <div class="statsContainersWraper">
@@ -15,7 +17,7 @@
                 <span class="statsTitle">Total de cadastros</span>
             </article>
             <article class="statsContainer">
-                <p  id="lastMonth"  class="stats" style="color: rgb(52, 255, 52);"></p>
+                <p id="lastMonth" class="stats" style="color: rgb(52, 255, 52);"></p>
                 <span class="statsTitle">Cadastros no último mês</span>
             </article>
             <article class="statsContainer">
@@ -23,8 +25,10 @@
                 <span class="statsTitle">Cadastros com pendência de revisão</span>
             </article>
         </div>
-        <article class="registrationsWraper"  style="max-height: 37vh">
-            <h1><strong>Últimos cadastros</strong></h1>
+        <article class="registrationsWraper" style="max-height: 37vh">
+            <div class="tableStart">
+                <h1><strong>Últimos cadastros</strong></h1>
+            </div>
             <div class="tableWraper">
                 <table id="registrations"></table>
             </div>
@@ -33,4 +37,5 @@
 </body>
 <script src="../script.js"></script>
 <script src="dashboard.js"></script>
+
 </html>

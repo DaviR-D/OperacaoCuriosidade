@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function getRegisterElements() {
+    html.registerWindow = document.getElementById("registerWindow")
 
     html.statusCheck = document.getElementById("status");
     html.nameInput = document.getElementById("name");
@@ -15,10 +16,14 @@ function getRegisterElements() {
     html.feelingsInput = document.getElementById("feelings");
     html.valuesInput = document.getElementById("values");
 
+    html.registerWindow.addEventListener("close", function () {
+        clearFields();
+    });
+
 }
 
 
-function addActions(){
+function addActions() {
     tableHeader.innerHTML += "<th>Ações</th>";
     document.querySelectorAll(".actions").forEach(row => {
         row.style.display = "table-cell";
@@ -61,7 +66,7 @@ function deleteRegistration(key) {
     addActions();
 }
 
-function editRegistration(key){
+function editRegistration(key) {
     registerWindow.dataset.userKey = key;
     registerWindow.showModal();
     let editItem = JSON.parse(localStorage.getItem(key));
@@ -74,6 +79,7 @@ function editRegistration(key){
     html.interestsInput.value = editItem.interests;
     html.feelingsInput.value = editItem.feelings;
     html.valuesInput.value = editItem.values;
+    html.statusCheck.checked = editItem.status == "Ativo" ? true : false;
 }
 
 function showRegisterWindow() {
@@ -84,7 +90,7 @@ function hideRegisterWindow() {
     registerWindow.close();
 }
 
-function clearFields(){
+function clearFields() {
     html.nameInput.value = "";
     html.emailInput.value = "";
     html.ageInput.value = "";
@@ -94,7 +100,3 @@ function clearFields(){
     html.feelingsInput.value = "";
     html.valuesInput.value = "";
 }
-
-registerWindow.addEventListener("close", function(){
-    clearFields();
-});

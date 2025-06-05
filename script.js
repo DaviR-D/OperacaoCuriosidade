@@ -4,8 +4,6 @@ let html = {};
 
 let registrations = [];
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     loadLayout();
 
@@ -26,13 +24,6 @@ function getPageElements() {
 
 }
 
-function loadLayout() {
-    loadHeader();
-    loadNav();
-    loadTable();
-}
-
-
 function insertData() {
 
     html.search?.addEventListener("input", function () {
@@ -43,6 +34,30 @@ function insertData() {
     html.userDisplay.innerText = loggedUser.name;
 
     html.registrations.innerHTML = renderRegistrationsHTML().join('');
+}
+
+function renderRegistrationsHTML(amount = 0) {
+    registrationList = ['<tr id="tableHeader"><th>Nome</th><th>Email</th><th>Status</th></tr>'];
+    registrations.slice(amount).forEach(register => {
+        let rowContent = `${register.name} ${register.email.split("@")[0]}`;
+
+        if (rowContent.includes(html.search.value)) {
+            registrationList.push(
+                `<tr>
+                    <td>${register.name}</td>
+                    <td>${register.email}</td>
+                    <td>${register.status}</td>
+                    <td class="actions" style="display: none;">
+                        <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
+                        <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
+                    </td>
+                </tr>`
+            );
+        }
+
+    });
+
+    return registrationList;
 }
 
 function loadHeader() {
@@ -72,32 +87,9 @@ function loadNav() {
     `
 }
 
-function loadTable() {
-
-}
-
-function renderRegistrationsHTML(amount = 0) {
-    registrationList = ['<tr id="tableHeader"><th>Nome</th><th>Email</th><th>Status</th></tr>'];
-    registrations.slice(amount).forEach(register => {
-        let rowContent = `${register.name} ${register.email.split("@")[0]}`;
-
-        if (rowContent.includes(html.search.value)) {
-            registrationList.push(
-                `<tr>
-                    <td>${register.name}</td>
-                    <td>${register.email}</td>
-                    <td>${register.status}</td>
-                    <td class="actions" style="display: none;">
-                        <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
-                        <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
-                    </td>
-                </tr>`
-            );
-        }
-
-    });
-
-    return registrationList;
+function loadLayout() {
+    loadHeader();
+    loadNav();
 }
 
 

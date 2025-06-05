@@ -2,6 +2,22 @@ button{
     background-color: rgb(0, 181, 0);
 }
 
+.deleteButton {
+    color: red;
+    background-color: transparent;
+    border-style: none;
+    width: 3vw;
+    height: 4vh;
+}
+
+.editButton {
+    color: gray;
+    background-color: transparent;
+    border-style: none;
+    width: 3vw;
+    height: 4vh;
+}
+
 #registerWindow{
     width: 40vw;
     height: 30vw;
@@ -12,13 +28,13 @@ button{
     text-align: center;
 }
 
-.formSection > input{
+.aboutUser > input{
     border-radius: 10px;
     width: 30vw;
     height: 15vh;
 }
 
-.firstSection > input{
+.userData > input{
     border-radius: 10px;
     width: 20vw;
     height: 5vh;

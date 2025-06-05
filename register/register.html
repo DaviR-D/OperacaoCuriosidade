@@ -13,7 +13,7 @@
     <main>
         <dialog id="registerWindow">
             <form id="registerForm">
-                <div class="firstSection">
+                <div class="userData">
                     <div style="margin-left: 90%; margin-top: 5vh;">Ativo <input type="checkbox" id="status"></div>
                     <h1><strong>1° Fatos e dados</strong></h1>
                     <p>Nome</p>
@@ -27,15 +27,15 @@
                     <p>Outras informações</p>
                     <input type="text" id="other" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>2° Interesses</strong></h1>
                     <input type="" id="interests" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>3° Sentimentos</strong></h1>
                     <input type="text" id="feelings" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>4° Valores</strong></h1>
                     <input type="text" id="values" required>
                 </div>
@@ -43,8 +43,8 @@
             </form>
         </dialog>
         <article class="registrationsWraper">
-            <div style="display: flex; padding: 15px;">
-                <h1 style="padding-left: 30px;"><strong>Cadastros</strong></h1>
+            <div class="tableStart">
+                <h1><strong>Cadastros</strong></h1>
                 <button id="registerButton" onclick="showRegisterWindow()">NOVO CADASTRO</button>
             </div>
             <div class="tableWraper">
