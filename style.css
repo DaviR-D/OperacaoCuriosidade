@@ -87,9 +87,9 @@ a:hover {
 }
 
 .registrationsWraper {
+    height: 100%;
     background-color: white;
     border-radius: 10px;
-    height: 39vh;
     box-shadow: 4px 4px 4px gray;
 }
 

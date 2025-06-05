@@ -7,6 +7,8 @@ let registrations = [];
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    loadLayout();
+
     getStorageRegistrations();
 
     getPageElements();
@@ -16,18 +18,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function getPageElements() {
 
+    html.search = document.getElementById("search");
+
     html.userDisplay = document.getElementById("userDisplay");
 
     html.registrations = document.getElementById("registrations");
 
 }
 
+function loadLayout() {
+    loadHeader();
+    loadNav();
+    loadTable();
+}
+
 
 function insertData() {
+
+    html.search?.addEventListener("input", function () {
+        updateTable();
+        addActions?.();
+    });
 
     html.userDisplay.innerText = loggedUser.name;
 
     html.registrations.innerHTML = renderRegistrationsHTML().join('');
+}
+
+function loadHeader() {
+    document.body.innerHTML +=
+        `
+    <header>
+        <input type="text" placeholder="Pesquisar..." id="search">
+        <div class="login">
+            <span id="userDisplay"></span>
+            <a href="../login/login.html" id="exit">SAIR</a>
+        </div>
+    </header>
+    `;
+}
+
+function loadNav() {
+    document.body.innerHTML +=
+        `
+    <nav>
+        <p style="text-align: center;">Operação Curiosidade</p>
+        <div class="navLinks">
+            <p><a href="../dashboard/dashboard.html">Home</a></p>
+            <p><a href="../register/register.html">Cadastro</a></p>
+            <p><a href="../report/report.html">Relatórios</a></p>
+        </div>
+    </nav>
+    `
+}
+
+function loadTable() {
+
 }
 
 function renderRegistrationsHTML(amount = 0) {
@@ -35,7 +81,7 @@ function renderRegistrationsHTML(amount = 0) {
     registrations.slice(amount).forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
-        if (rowContent.includes(search.value)) {
+        if (rowContent.includes(html.search.value)) {
             registrationList.push(
                 `<tr>
                     <td>${register.name}</td>
@@ -70,8 +116,5 @@ function updateTable() {
     table.innerHTML = renderRegistrationsHTML().join('');
 }
 
-search.addEventListener("input", function () {
-    updateTable();
-    addActions?.();
-});
+
 

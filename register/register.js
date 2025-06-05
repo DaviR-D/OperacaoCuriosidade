@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     addActions();
     getRegisterElements();
-    //insertRegisterData(html);
 })
 
 function getRegisterElements() {
@@ -19,8 +18,6 @@ function getRegisterElements() {
 }
 
 
-//function insertRegisterData(html){}
-
 function addActions(){
     tableHeader.innerHTML += "<th>Ações</th>";
     document.querySelectorAll(".actions").forEach(row => {
@@ -33,8 +30,6 @@ function saveRegistration(key = crypto.randomUUID()) {
         field.style.borderColor = "black";
     });
     if (registerForm.checkValidity()) {
-        console.log(key);
-        console.log(registerWindow.dataset.userKey);
         localStorage.setItem(key, JSON.stringify({
             name: html.nameInput.value,
             email: html.emailInput.value,
