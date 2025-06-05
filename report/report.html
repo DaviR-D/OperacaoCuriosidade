@@ -25,11 +25,11 @@
     </nav>
     <main>
         <article class="registrationsWraper" style="height: 95%; margin-top: 15px;">
-            <div style="display: flex; padding: 15px;">
+            <div id="tableStart">
                 <h1 style="padding-left: 30px;"><strong>Lista de usuários</strong></h1>
-                <button>IMPRIMIR</button>
+                <button onclick="printTable()">IMPRIMIR</button>
             </div>
-            <div class="tableWraper">
+            <div id="printArea" class="tableWraper">
                 <table id="registrations"></table>
             </div>
         </article>

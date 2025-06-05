@@ -1,3 +1,35 @@
-button{
+button {
     background-color: rgb(59, 59, 129);
+}
+
+#tableStart{
+    display: flex;
+    padding: 15px;
+}
+
+@media print {
+    nav {
+        display: none;
+    }
+
+    header {
+        display: none;
+    }
+
+    #tableStart {
+        display: none;
+    }
+
+    .tableWraper {
+        display: flex;
+        overflow-inline: visible;
+    }
+
+    #registrations{
+        display: flex;
+    }
+
+    .registrationsWraper{
+        box-shadow: none;
+    }
 }
