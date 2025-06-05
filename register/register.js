@@ -33,7 +33,8 @@ function saveRegistration(key = crypto.randomUUID()) {
         field.style.borderColor = "black";
     });
     if (registerForm.checkValidity()) {
-
+        console.log(key);
+        console.log(registerWindow.dataset.userKey);
         localStorage.setItem(key, JSON.stringify({
             name: html.nameInput.value,
             email: html.emailInput.value,
@@ -66,6 +67,7 @@ function deleteRegistration(key) {
 }
 
 function editRegistration(key){
+    registerWindow.dataset.userKey = key;
     registerWindow.showModal();
     let editItem = JSON.parse(localStorage.getItem(key));
 
