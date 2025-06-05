@@ -2,7 +2,7 @@ button {
     background-color: rgb(59, 59, 129);
 }
 
-#tableStart{
+#tableStart {
     display: flex;
     padding: 15px;
 }
@@ -20,16 +20,19 @@ button {
         display: none;
     }
 
-    .tableWraper {
-        display: flex;
+    .registrationsWraper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
         overflow-inline: visible;
-    }
-
-    #registrations{
-        display: flex;
-    }
-
-    .registrationsWraper{
         box-shadow: none;
+    }
+
+    .registrationsWraper > *{
+        height: 100%;
+        width: 100%;
+        overflow-inline: visible;
     }
 }
