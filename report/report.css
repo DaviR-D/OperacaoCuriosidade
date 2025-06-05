@@ -1,3 +1,38 @@
-button{
+button {
     background-color: rgb(59, 59, 129);
+}
+
+#tableStart {
+    display: flex;
+    padding: 15px;
+}
+
+@media print {
+    nav {
+        display: none;
+    }
+
+    header {
+        display: none;
+    }
+
+    #tableStart {
+        display: none;
+    }
+
+    .registrationsWraper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        overflow-inline: visible;
+        box-shadow: none;
+    }
+
+    .registrationsWraper > *{
+        height: 100%;
+        width: 100%;
+        overflow-inline: visible;
+    }
 }

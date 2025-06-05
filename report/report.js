@@ -8,3 +8,7 @@
 
 
 // function insertReportData(){}
+
+function printTable(){
+    window.print()
+}
