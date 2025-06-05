@@ -85,3 +85,18 @@ function showRegisterWindow() {
 function hideRegisterWindow() {
     registerWindow.close();
 }
+
+function clearFields(){
+    html.nameInput.value = "";
+    html.emailInput.value = "";
+    html.ageInput.value = "";
+    html.adressInput.value = "";
+    html.otherInput.value = "";
+    html.interestsInput.value = "";
+    html.feelingsInput.value = "";
+    html.valuesInput.value = "";
+}
+
+registerWindow.addEventListener("close", function(){
+    clearFields();
+});
