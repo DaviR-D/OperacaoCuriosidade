@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function(){
-    let html = getDashboardElements();
-    insertDashboardData(html);
+    getDashboardElements();
+    insertDashboardData();
 
 })
 
 function getDashboardElements(){
-    let html = {};
 
     html.total = document.getElementById("total");
     html.pending = document.getElementById("pending");
@@ -13,11 +12,10 @@ function getDashboardElements(){
 
     html.latestRegistrations = document.getElementById("registrations");
 
-    return html;
 }
 
 
-function insertDashboardData(html){
+function insertDashboardData(){
     const [totalRegistrations, pendingRegistrations, lastMonthRegistrations] = calculateStats();
 
     html.total.innerText = totalRegistrations;

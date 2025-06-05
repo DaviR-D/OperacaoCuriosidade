@@ -1,6 +1,5 @@
-let html = {};
-
 document.addEventListener("DOMContentLoaded", function () {
+    addActions();
     getRegisterElements();
     //insertRegisterData(html);
 })
@@ -22,6 +21,12 @@ function getRegisterElements() {
 
 //function insertRegisterData(html){}
 
+function addActions(){
+    tableHeader.innerHTML += "<th>Ações</th>";
+    document.querySelectorAll(".actions").forEach(row => {
+        row.style.display = "table-cell";
+    })
+}
 
 function saveRegistration(key = String(localStorage.length)) {
     [...registerForm.elements].forEach(field => {
@@ -49,6 +54,14 @@ function saveRegistration(key = String(localStorage.length)) {
             field.style.borderColor = "red";
         });
     }
+}
+
+function deleteRegistration(key) {
+    localStorage.removeItem(key);
+    registrations = [];
+    getStorageRegistrations();
+    updateTable();
+    addActions();
 }
 
 function editRegistration(key){

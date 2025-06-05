@@ -1,27 +1,29 @@
 let loggedUser = { name: "Davi Rodrigues" };
 
+let html = {};
+
 let registrations = [];
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     getStorageRegistrations();
 
-    let html = getPageElements();
+    getPageElements();
 
-    insertData(html);
+    insertData();
 })
 
 function getPageElements() {
-    let html = {};
 
     html.userDisplay = document.getElementById("userDisplay");
 
     html.registrations = document.getElementById("registrations");
 
-    return html;
 }
 
 
-function insertData(html) {
+function insertData() {
 
     html.userDisplay.innerText = loggedUser.name;
 
@@ -29,7 +31,7 @@ function insertData(html) {
 }
 
 function renderRegistrationsHTML(amount = 0) {
-    registrationList = ['<tr><th>Nome</th><th>Email</th><th>Status</th><th>Ações</th></tr>'];
+    registrationList = ['<tr id="tableHeader"><th>Nome</th><th>Email</th><th>Status</th></tr>'];
     registrations.slice(amount).forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
@@ -39,9 +41,9 @@ function renderRegistrationsHTML(amount = 0) {
                     <td>${register.name}</td>
                     <td>${register.email}</td>
                     <td>${register.status}</td>
-                    <td>
-                    <button class="editButton" onclick="editRegistration(${register.key})">&#9998</button>
-                    <button class="deleteButton" onclick="deleteRegistration(${register.key})">X</button>
+                    <td class="actions" style="display: none;">
+                        <button class="editButton" onclick="editRegistration(${register.key})">&#9998</button>
+                        <button class="deleteButton" onclick="deleteRegistration(${register.key})">X</button>
                     </td>
                 </tr>`
             );
@@ -60,13 +62,6 @@ function getStorageRegistrations() {
         item.key = key;
         registrations.push(item);
     }
-}
-
-function deleteRegistration(key) {
-    localStorage.removeItem(key);
-    registrations = [];
-    getStorageRegistrations();
-    updateTable();
 }
 
 
