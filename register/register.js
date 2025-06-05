@@ -28,12 +28,13 @@ function addActions(){
     })
 }
 
-function saveRegistration(key = String(localStorage.length)) {
+function saveRegistration(key = crypto.randomUUID()) {
     [...registerForm.elements].forEach(field => {
         field.style.borderColor = "black";
     });
     if (registerForm.checkValidity()) {
-        localStorage.setItem(String(localStorage.length), JSON.stringify({
+
+        localStorage.setItem(key, JSON.stringify({
             name: html.nameInput.value,
             email: html.emailInput.value,
             status: html.statusCheck.checked ? "Ativo" : "Inativo",
@@ -44,7 +45,7 @@ function saveRegistration(key = String(localStorage.length)) {
             other: html.otherInput.value,
             interests: html.interestsInput.value,
             feelings: html.feelingsInput.value,
-            values: html.valuesInput.value
+            values: html.valuesInput.value,
         }));
     }
     else {

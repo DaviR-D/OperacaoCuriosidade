@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 })
 
-localStorage.setItem("0", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Mario",
   email: "mario@gmail.com",
   status: "Ativo",
@@ -28,7 +28,7 @@ localStorage.setItem("0", JSON.stringify({
   values: "Honestidade"
 }));
 
-localStorage.setItem("1", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "João",
   email: "joao@gmail.com",
   status: "Ativo",
@@ -42,7 +42,7 @@ localStorage.setItem("1", JSON.stringify({
   values: "Honestidade"
 }));
 
-localStorage.setItem("2", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Maria",
   email: "maria@gmail.com",
   status: "Inativo",
@@ -56,7 +56,7 @@ localStorage.setItem("2", JSON.stringify({
   values: "Respeito"
 }));
 
-localStorage.setItem("3", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Carlos",
   email: "carlos@gmail.com",
   status: "Ativo",
@@ -70,7 +70,7 @@ localStorage.setItem("3", JSON.stringify({
   values: "Determinação"
 }));
 
-localStorage.setItem("4", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Rafael",
   email: "rafael@gmail.com",
   status: "Inativo",
@@ -84,7 +84,7 @@ localStorage.setItem("4", JSON.stringify({
   values: "Liberdade"
 }));
 
-localStorage.setItem("5", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Fernanda",
   email: "fernanda@gmail.com",
   status: "Ativo",
@@ -98,7 +98,7 @@ localStorage.setItem("5", JSON.stringify({
   values: "Saúde"
 }));
 
-localStorage.setItem("6", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Bruno",
   email: "bruno@gmail.com",
   status: "Inativo",
@@ -112,7 +112,7 @@ localStorage.setItem("6", JSON.stringify({
   values: "Criatividade"
 }));
 
-localStorage.setItem("7", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Luciana",
   email: "luciana@gmail.com",
   status: "Ativo",
@@ -126,7 +126,7 @@ localStorage.setItem("7", JSON.stringify({
   values: "Conhecimento"
 }));
 
-localStorage.setItem("8", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Eduardo",
   email: "eduardo@gmail.com",
   status: "Ativo",
@@ -140,7 +140,7 @@ localStorage.setItem("8", JSON.stringify({
   values: "Tradição"
 }));
 
-localStorage.setItem("9", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Paula",
   email: "paula@gmail.com",
   status: "Inativo",
@@ -154,7 +154,7 @@ localStorage.setItem("9", JSON.stringify({
   values: "Expressão"
 }));
 
-localStorage.setItem("10", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "André",
   email: "andre@gmail.com",
   status: "Ativo",
@@ -168,7 +168,7 @@ localStorage.setItem("10", JSON.stringify({
   values: "Aventura"
 }));
 
-localStorage.setItem("11", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Camila",
   email: "camila@gmail.com",
   status: "Inativo",
@@ -182,7 +182,7 @@ localStorage.setItem("11", JSON.stringify({
   values: "Estilo"
 }));
 
-localStorage.setItem("12", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Thiago",
   email: "thiago@gmail.com",
   status: "Ativo",
@@ -196,7 +196,7 @@ localStorage.setItem("12", JSON.stringify({
   values: "Compromisso"
 }));
 
-localStorage.setItem("13", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Juliana",
   email: "juliana@gmail.com",
   status: "Ativo",
@@ -210,7 +210,7 @@ localStorage.setItem("13", JSON.stringify({
   values: "Empatia"
 }));
 
-localStorage.setItem("14", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Fábio",
   email: "fabio@gmail.com",
   status: "Inativo",
@@ -224,7 +224,7 @@ localStorage.setItem("14", JSON.stringify({
   values: "Simplicidade"
 }));
 
-localStorage.setItem("15", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Tatiane",
   email: "tatiane@gmail.com",
   status: "Ativo",
@@ -238,7 +238,7 @@ localStorage.setItem("15", JSON.stringify({
   values: "Progresso"
 }));
 
-localStorage.setItem("16", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Marcelo",
   email: "marcelo@gmail.com",
   status: "Inativo",
@@ -252,7 +252,7 @@ localStorage.setItem("16", JSON.stringify({
   values: "Transparência"
 }));
 
-localStorage.setItem("17", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Vanessa",
   email: "vanessa@gmail.com",
   status: "Ativo",
@@ -266,7 +266,7 @@ localStorage.setItem("17", JSON.stringify({
   values: "Harmonia"
 }));
 
-localStorage.setItem("18", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Igor",
   email: "igor@gmail.com",
   status: "Inativo",
@@ -280,7 +280,7 @@ localStorage.setItem("18", JSON.stringify({
   values: "Autenticidade"
 }));
 
-localStorage.setItem("19", JSON.stringify({
+localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Renata",
   email: "renata@gmail.com",
   status: "Ativo",

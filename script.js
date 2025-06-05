@@ -42,8 +42,8 @@ function renderRegistrationsHTML(amount = 0) {
                     <td>${register.email}</td>
                     <td>${register.status}</td>
                     <td class="actions" style="display: none;">
-                        <button class="editButton" onclick="editRegistration(${register.key})">&#9998</button>
-                        <button class="deleteButton" onclick="deleteRegistration(${register.key})">X</button>
+                        <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
+                        <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
                     </td>
                 </tr>`
             );
