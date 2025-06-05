@@ -138,3 +138,10 @@ button {
     height: 4vh;
 }
 
+.editButton {
+    color: gray;
+    background-color: transparent;
+    border-style: none;
+    width: 3vw;
+    height: 4vh;
+}

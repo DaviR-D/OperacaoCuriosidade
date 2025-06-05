@@ -1,12 +1,10 @@
 // document.addEventListener("DOMContentLoaded", function(){
-//     let html = getReportElements();
-//     insertReportData(html);
+//     getReportElements();
+//     insertReportData();
 // })
 
 // function getReportElements(){
-//     let html = {};
-//     return html;
 // }
 
 
-// function insertReportData(html){}
+// function insertReportData(){}

@@ -1,6 +1,5 @@
-let html = {};
-
 document.addEventListener("DOMContentLoaded", function () {
+    addActions();
     getRegisterElements();
     //insertRegisterData(html);
 })
@@ -22,13 +21,21 @@ function getRegisterElements() {
 
 //function insertRegisterData(html){}
 
+function addActions(){
+    tableHeader.innerHTML += "<th>Ações</th>";
+    document.querySelectorAll(".actions").forEach(row => {
+        row.style.display = "table-cell";
+    })
+}
 
-function saveRegistration() {
+function saveRegistration(key = crypto.randomUUID()) {
     [...registerForm.elements].forEach(field => {
         field.style.borderColor = "black";
     });
     if (registerForm.checkValidity()) {
-        localStorage.setItem(String(localStorage.length), JSON.stringify({
+        console.log(key);
+        console.log(registerWindow.dataset.userKey);
+        localStorage.setItem(key, JSON.stringify({
             name: html.nameInput.value,
             email: html.emailInput.value,
             status: html.statusCheck.checked ? "Ativo" : "Inativo",
@@ -39,7 +46,7 @@ function saveRegistration() {
             other: html.otherInput.value,
             interests: html.interestsInput.value,
             feelings: html.feelingsInput.value,
-            values: html.valuesInput.value
+            values: html.valuesInput.value,
         }));
     }
     else {
@@ -51,6 +58,28 @@ function saveRegistration() {
     }
 }
 
+function deleteRegistration(key) {
+    localStorage.removeItem(key);
+    registrations = [];
+    getStorageRegistrations();
+    updateTable();
+    addActions();
+}
+
+function editRegistration(key){
+    registerWindow.dataset.userKey = key;
+    registerWindow.showModal();
+    let editItem = JSON.parse(localStorage.getItem(key));
+
+    html.nameInput.value = editItem.name;
+    html.emailInput.value = editItem.email;
+    html.ageInput.value = editItem.age;
+    html.adressInput.value = editItem.adress;
+    html.otherInput.value = editItem.other;
+    html.interestsInput.value = editItem.interests;
+    html.feelingsInput.value = editItem.feelings;
+    html.valuesInput.value = editItem.values;
+}
 
 function showRegisterWindow() {
     registerWindow.showModal();
@@ -59,3 +88,18 @@ function showRegisterWindow() {
 function hideRegisterWindow() {
     registerWindow.close();
 }
+
+function clearFields(){
+    html.nameInput.value = "";
+    html.emailInput.value = "";
+    html.ageInput.value = "";
+    html.adressInput.value = "";
+    html.otherInput.value = "";
+    html.interestsInput.value = "";
+    html.feelingsInput.value = "";
+    html.valuesInput.value = "";
+}
+
+registerWindow.addEventListener("close", function(){
+    clearFields();
+});
