@@ -72,5 +72,6 @@ function updateTable() {
 
 search.addEventListener("input", function () {
     updateTable();
+    addActions?.();
 });
 
