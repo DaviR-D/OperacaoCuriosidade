@@ -6,16 +6,18 @@ button{
     color: red;
     background-color: transparent;
     border-style: none;
-    width: 3vw;
-    height: 4vh;
+    width: 1vw;
+    height: 1vh;
+    font-size: 1vw;
 }
 
 .editButton {
     color: gray;
     background-color: transparent;
     border-style: none;
-    width: 3vw;
-    height: 4vh;
+    width: 1vw;
+    height: 1vh;
+    font-size: 1vw;
 }
 
 #registerModal{

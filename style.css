@@ -19,7 +19,6 @@ header {
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-    box-shadow: 4px 4px 4px gray;
 }
 
 nav {
@@ -30,7 +29,7 @@ nav {
     border-radius: 10px;
     height: 95vh;
     width: 15vw;
-    box-shadow: 4px 4px 4px gray;
+    font-size: 1.5vw;
 }
 
 main {
@@ -84,7 +83,8 @@ a {
 }
 
 a:hover {
-    border-bottom-style: solid;
+    background-color: rgb(195, 195, 195);
+    transition-duration: 100ms;
 }
 
 #registrationsWraper {
@@ -92,7 +92,6 @@ a:hover {
     margin-top: 15px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 4px 4px 4px gray;
 }
 
 #tableStart{
@@ -111,7 +110,7 @@ a:hover {
 
 table {
     width: 100%;
-    font-size: 1.5vw;
+    font-size: 1vw;
     overflow: hidden;
     border-collapse: collapse;
 }
@@ -126,8 +125,7 @@ td {
 
 tr:hover {
     background-color: rgb(195, 195, 195);
-    scale: 1.1;
-    transition-duration: 400ms;
+    transition-duration: 100ms;
 }
 
 
