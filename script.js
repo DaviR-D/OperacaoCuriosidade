@@ -7,38 +7,74 @@ let registrations = [];
 document.addEventListener("DOMContentLoaded", function () {
     loadLayout();
 
-    getStorageRegistrations();
-
-    getPageElements();
-
-    insertData();
 })
 
-function getPageElements() {
+function loadLayout() {
+    loadHeader();
+    loadNav();
+    loadTable();
+    loadTableContent();
+}
+
+function loadHeader() {
+    document.body.insertAdjacentHTML('beforeend',
+        `
+    <header>
+        <input type="text" placeholder="Pesquisar..." id="search">
+        <div class="login">
+            <span id="userDisplay"></span>
+            <a href="../login/login.html" id="exit">SAIR</a>
+        </div>
+    </header>
+    `);
 
     html.search = document.getElementById("search");
 
     html.userDisplay = document.getElementById("userDisplay");
+    html.userDisplay.innerText = loggedUser.name;
+
+    html.search.addEventListener("input", function () {
+        loadTableContent();
+        addActions?.();
+    });
+}
+
+function loadNav() {
+    document.body.insertAdjacentHTML('beforeend',
+        `
+    <nav>
+        <p style="text-align: center;">Operação Curiosidade</p>
+        <div class="navLinks">
+            <p><a href="../dashboard/dashboard.html">Home</a></p>
+            <p><a href="../register/register.html">Cadastro</a></p>
+            <p><a href="../report/report.html">Relatórios</a></p>
+        </div>
+    </nav>
+    `);
+}
+
+function loadTable() {
+    let content = document.getElementById("mainContent")
+    content.insertAdjacentHTML('beforeend',
+        `
+        <article id="registrationsWraper">
+            <div id="tableStart"></div>
+            <div id="tableWraper">
+                <table id="registrations"></table>
+            </div>
+        </article>
+        `
+    )
+}
+
+function loadTableContent() {
+    registrations = [];
+    getStorageRegistrations();
 
     html.registrations = document.getElementById("registrations");
 
-}
-
-function insertData() {
-
-    html.search?.addEventListener("input", function () {
-        updateTable();
-        addActions?.();
-    });
-
-    html.userDisplay.innerText = loggedUser.name;
-
-    html.registrations.innerHTML = renderRegistrationsHTML().join('');
-}
-
-function renderRegistrationsHTML(amount = 0) {
     registrationList = ['<tr id="tableHeader"><th>Nome</th><th>Email</th><th>Status</th></tr>'];
-    registrations.slice(amount).forEach(register => {
+    registrations.forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
         if (rowContent.includes(html.search.value)) {
@@ -57,39 +93,7 @@ function renderRegistrationsHTML(amount = 0) {
 
     });
 
-    return registrationList;
-}
-
-function loadHeader() {
-    document.body.innerHTML +=
-        `
-    <header>
-        <input type="text" placeholder="Pesquisar..." id="search">
-        <div class="login">
-            <span id="userDisplay"></span>
-            <a href="../login/login.html" id="exit">SAIR</a>
-        </div>
-    </header>
-    `;
-}
-
-function loadNav() {
-    document.body.innerHTML +=
-        `
-    <nav>
-        <p style="text-align: center;">Operação Curiosidade</p>
-        <div class="navLinks">
-            <p><a href="../dashboard/dashboard.html">Home</a></p>
-            <p><a href="../register/register.html">Cadastro</a></p>
-            <p><a href="../report/report.html">Relatórios</a></p>
-        </div>
-    </nav>
-    `
-}
-
-function loadLayout() {
-    loadHeader();
-    loadNav();
+    html.registrations.innerHTML = registrationList.join('');
 }
 
 
@@ -102,11 +106,6 @@ function getStorageRegistrations() {
     }
 }
 
-
-function updateTable() {
-    let table = document.getElementById("registrations");
-    table.innerHTML = renderRegistrationsHTML().join('');
-}
 
 
 

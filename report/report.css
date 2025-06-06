@@ -11,11 +11,11 @@ button {
         display: none;
     }
 
-    .tableStart {
+    #tableStart {
         display: none;
     }
 
-    .registrationsWraper {
+    #registrationsWraper {
         position: absolute;
         top: 0;
         left: 0;
@@ -25,7 +25,7 @@ button {
         box-shadow: none;
     }
 
-    .registrationsWraper > *{
+    #registrationsWraper > *{
         height: 100%;
         width: 100%;
         overflow-inline: visible;

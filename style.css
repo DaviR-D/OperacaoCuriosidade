@@ -87,14 +87,7 @@ a:hover {
     border-bottom-style: solid;
 }
 
-.tableStart{
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    display: flex;
-}
-
-.registrationsWraper {
+#registrationsWraper {
     height: 95%;
     margin-top: 15px;
     background-color: white;
@@ -102,7 +95,15 @@ a:hover {
     box-shadow: 4px 4px 4px gray;
 }
 
-.tableWraper {
+#tableStart{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    display: flex;
+}
+
+
+#tableWraper {
     overflow-inline: scroll;
     overflow-x: hidden;
     height: 80%;
@@ -135,6 +136,7 @@ button {
     font-weight: bolder;
     font-size: 1.5vw;
     border-radius: 10px;
+    border-style: none;
     width: 15vw;
     margin: 10px;
     margin-left: auto;
