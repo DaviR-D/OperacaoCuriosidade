@@ -1,12 +1,15 @@
-let loggedUser = { name: "Davi Rodrigues" };
+let loggedUser = JSON.parse(localStorage.getItem("login"));
 
 let html = {};
 
 let registrations = [];
 
 document.addEventListener("DOMContentLoaded", function () {
+    if (!loggedUser) {
+        alert("Faça login para continuar!")
+        window.location = "../login/login.html"
+    }
     loadLayout();
-
 })
 
 function loadLayout() {
@@ -28,6 +31,8 @@ function loadHeader() {
     </header>
     `);
 
+    html.exit = document.getElementById("exit");
+
     html.search = document.getElementById("search");
 
     html.userDisplay = document.getElementById("userDisplay");
@@ -37,6 +42,11 @@ function loadHeader() {
         loadTableContent();
         addActions?.();
     });
+
+    html.exit.addEventListener("click", function () {
+        localStorage.removeItem("login")
+    })
+
 }
 
 function loadNav() {
@@ -100,6 +110,7 @@ function loadTableContent() {
 function getStorageRegistrations() {
     for (let index = 0; index < localStorage.length; index++) {
         let key = localStorage.key(index);
+        if(key=="login") continue;
         let item = JSON.parse(localStorage.getItem(key));
         item.key = key;
         registrations.push(item);
