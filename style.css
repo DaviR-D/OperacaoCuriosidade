@@ -19,13 +19,6 @@ header {
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-    box-shadow: 4px 4px 4px gray;
-}
-
-.login {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
 }
 
 nav {
@@ -36,11 +29,7 @@ nav {
     border-radius: 10px;
     height: 95vh;
     width: 15vw;
-    box-shadow: 4px 4px 4px gray;
-}
-
-.navLinks {
-    margin-left: 15px;
+    font-size: 1.5vw;
 }
 
 main {
@@ -50,9 +39,14 @@ main {
     grid-row-end: 4;
 }
 
+.login {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
 #exit {
     color: rgb(74, 74, 74);
-    text-decoration: none;
     font-size: 2rem;
     border-left-style: solid;
     border-left-color: rgb(165, 165, 165);
@@ -76,26 +70,46 @@ main {
     border-radius: 10px;
 }
 
+.navLinks {
+    margin-left: 1.5vw;
+}
+
+
 a {
     text-decoration: none;
     color: rgb(74, 74, 74);
 
 }
 
-a:hover {
-    border-bottom-style: solid;
+p>a:hover {
+    background-color: rgb(195, 195, 195);
+    transition-duration: 100ms;
 }
 
-.registrationsWraper {
+#tableContainer {
+    height: 95%;
+    margin-top: 15px;
     background-color: white;
     border-radius: 10px;
-    height: 39vh;
-    box-shadow: 4px 4px 4px gray;
+}
+
+#tableTop {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    display: flex;
+}
+
+
+#tableWraper {
+    overflow-inline: scroll;
+    overflow-x: hidden;
+    height: 80%;
 }
 
 table {
     width: 100%;
-    font-size: 1.5vw;
+    font-size: 1vw;
     overflow: hidden;
     border-collapse: collapse;
 }
@@ -110,38 +124,17 @@ td {
 
 tr:hover {
     background-color: rgb(195, 195, 195);
-    scale: 1.1;
-    transition-duration: 400ms;
+    transition-duration: 100ms;
 }
 
-.tableWraper {
-    overflow-inline: scroll;
-    overflow-x: hidden;
-    height: 80%;
-}
 
 button {
     color: white;
     font-weight: bolder;
     font-size: 1.5vw;
     border-radius: 10px;
+    border-style: none;
     width: 15vw;
     margin: 10px;
     margin-left: auto;
-}
-
-.deleteButton {
-    color: red;
-    background-color: transparent;
-    border-style: none;
-    width: 3vw;
-    height: 4vh;
-}
-
-.editButton {
-    color: gray;
-    background-color: transparent;
-    border-style: none;
-    width: 3vw;
-    height: 4vh;
 }

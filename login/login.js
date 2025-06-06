@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function(){
     })
 })
 
+if(localStorage.length == 0){
+
 localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   name: "Mario",
   email: "mario@gmail.com",
@@ -293,3 +295,5 @@ localStorage.setItem(crypto.randomUUID(), JSON.stringify({
   feelings: "Animada",
   values: "Disciplina"
 }));
+
+}

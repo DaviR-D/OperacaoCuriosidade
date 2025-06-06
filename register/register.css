@@ -1,8 +1,25 @@
-button{
+button {
     background-color: rgb(0, 181, 0);
 }
 
-#registerWindow{
+.deleteButton {
+    color: red;
+}
+
+.editButton {
+    color: gray;
+}
+
+.deleteButton,
+.editButton {
+    background-color: transparent;
+    border-style: none;
+    width: 1vw;
+    height: 1vh;
+    font-size: 1vw;
+}
+
+#registerModal {
     width: 40vw;
     height: 30vw;
     border-style: none;
@@ -12,13 +29,13 @@ button{
     text-align: center;
 }
 
-.formSection > input{
+.aboutUser>input {
     border-radius: 10px;
     width: 30vw;
     height: 15vh;
 }
 
-.firstSection > input{
+.userData>input {
     border-radius: 10px;
     width: 20vw;
     height: 5vh;

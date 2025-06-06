@@ -2,11 +2,6 @@ button {
     background-color: rgb(59, 59, 129);
 }
 
-#tableStart {
-    display: flex;
-    padding: 15px;
-}
-
 @media print {
     nav {
         display: none;
@@ -16,11 +11,11 @@ button {
         display: none;
     }
 
-    #tableStart {
+    #tableTop {
         display: none;
     }
 
-    .registrationsWraper {
+    #tableContainer {
         position: absolute;
         top: 0;
         left: 0;
@@ -30,7 +25,7 @@ button {
         box-shadow: none;
     }
 
-    .registrationsWraper > *{
+    #tableContainer > *{
         height: 100%;
         width: 100%;
         overflow-inline: visible;

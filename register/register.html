@@ -10,25 +10,10 @@
 </head>
 
 <body>
-    <header>
-        <input type="text" placeholder="Pesquisar..." id="search">
-        <div class="login">
-            <span id="userDisplay"></span>
-            <a href="../login/login.html" id="exit">SAIR</a>
-        </div>
-    </header>
-    <nav>
-        <p style="text-align: center;">Operação Curiosidade</p>
-        <div class="navLinks">
-            <p><a href="../dashboard/dashboard.html">Home</a></p>
-            <p><a href="register.html">Cadastro</a></p>
-            <p><a href="../report/report.html">Relatórios</a></p>
-        </div>
-    </nav>
-    <main>
-        <dialog id="registerWindow">
+    <main id="mainContent">
+        <dialog id="registerModal">
             <form id="registerForm">
-                <div class="firstSection">
+                <div class="userData">
                     <div style="margin-left: 90%; margin-top: 5vh;">Ativo <input type="checkbox" id="status"></div>
                     <h1><strong>1° Fatos e dados</strong></h1>
                     <p>Nome</p>
@@ -42,33 +27,24 @@
                     <p>Outras informações</p>
                     <input type="text" id="other" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>2° Interesses</strong></h1>
                     <input type="" id="interests" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>3° Sentimentos</strong></h1>
                     <input type="text" id="feelings" required>
                 </div>
-                <div class="formSection">
+                <div class="aboutUser">
                     <h1><strong>4° Valores</strong></h1>
                     <input type="text" id="values" required>
                 </div>
-                <button type="submit" style="margin-top: 40px; padding: 10px;" onclick="saveRegistration(registerWindow.dataset.userKey)">GRAVAR</button>
+                <button type="submit" style="margin-top: 40px; padding: 10px;" onclick="saveRegistration(registerModal.dataset.userKey)">GRAVAR</button>
             </form>
         </dialog>
-        <article class="registrationsWraper" style="height: 95%; margin-top: 15px;">
-            <div style="display: flex; padding: 15px;">
-                <h1 style="padding-left: 30px;"><strong>Cadastros</strong></h1>
-                <button id="registerButton" onclick="showRegisterWindow()">NOVO CADASTRO</button>
-            </div>
-            <div class="tableWraper">
-                <table id="registrations"></table>
-            </div>
-        </article>
     </main>
 </body>
-<script src="../script.js"></script>
-<script src="register.js"></script>
+<script src="../script.js" defer></script>
+<script src="register.js" defer></script>
 
 </html>

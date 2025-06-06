@@ -1,13 +1,21 @@
-// document.addEventListener("DOMContentLoaded", function(){
-//     getReportElements();
-//     insertReportData();
-// })
+document.addEventListener("DOMContentLoaded", function(){
+    html.report = {};
+    getReportElements();
+    insertReportData();
+});
 
-// function getReportElements(){
-// }
+function getReportElements(){
+    html.report.tableTop = document.getElementById("tableTop");
+}
 
-
-// function insertReportData(){}
+function insertReportData(){
+    html.report.tableTop.insertAdjacentHTML('beforeend', 
+        `
+        <h1><strong>Lista de usuários</strong></h1>
+        <button onclick="printTable()">IMPRIMIR</button>
+        `
+    )
+}
 
 function printTable(){
     window.print()

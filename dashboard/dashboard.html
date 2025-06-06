@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,30 +8,16 @@
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-    <header>
-        <input type="text" placeholder="Pesquisar..." id="search">
-        <div class="login">
-            <span id="userDisplay"></span>
-            <a href="../login/login.html" id="exit">SAIR</a>
-        </div>
-    </header>
-    <nav>
-        <p style="text-align: center;">Operação Curiosidade</p>
-        <div class="navLinks">
-            <p><a href="dashboard.html">Home</a></p>
-            <p><a href="../register/register.html">Cadastro</a></p>
-            <p><a href="../report/report.html">Relatórios</a></p>
-        </div>
-    </nav>
-    <main>
+    <main id="mainContent">
         <div class="statsContainersWraper">
             <article class="statsContainer">
                 <p id="total" class="stats" style="color: rgb(79, 79, 255);"></p>
                 <span class="statsTitle">Total de cadastros</span>
             </article>
             <article class="statsContainer">
-                <p  id="lastMonth"  class="stats" style="color: rgb(52, 255, 52);"></p>
+                <p id="lastMonth" class="stats" style="color: rgb(52, 255, 52);"></p>
                 <span class="statsTitle">Cadastros no último mês</span>
             </article>
             <article class="statsContainer">
@@ -38,14 +25,9 @@
                 <span class="statsTitle">Cadastros com pendência de revisão</span>
             </article>
         </div>
-        <article class="registrationsWraper">
-            <h1><strong>Últimos cadastros</strong></h1>
-            <div class="tableWraper">
-                <table id="registrations"></table>
-            </div>
-        </article>
     </main>
 </body>
-<script src="../script.js"></script>
-<script src="dashboard.js"></script>
+<script src="../script.js" defer></script>
+<script src="dashboard.js" defer></script>
+
 </html>

@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", function(){
+    html.dashboard = {};
     getDashboardElements();
     insertDashboardData();
 
 })
 
 function getDashboardElements(){
+    html.dashboard.tableTop = document.getElementById("tableTop");
 
-    html.total = document.getElementById("total");
-    html.pending = document.getElementById("pending");
-    html.lastMonth = document.getElementById("lastMonth");
-
-    html.latestRegistrations = document.getElementById("registrations");
+    html.dashboard.total = document.getElementById("total");
+    html.dashboard.pending = document.getElementById("pending");
+    html.dashboard.lastMonth = document.getElementById("lastMonth");
 
 }
 
@@ -18,11 +18,16 @@ function getDashboardElements(){
 function insertDashboardData(){
     const [totalRegistrations, pendingRegistrations, lastMonthRegistrations] = calculateStats();
 
-    html.total.innerText = totalRegistrations;
-    html.pending.innerText = pendingRegistrations;
-    html.lastMonth.innerText = lastMonthRegistrations;
+    html.dashboard.tableTop.insertAdjacentHTML('beforeend', 
+        `
+        <h1><strong>Últimos cadastros</strong></h1>
+        `
+    )
 
-    html.latestRegistrations.innerHTML = renderRegistrationsHTML(-3).join('');
+    html.dashboard.total.innerText = totalRegistrations;
+    html.dashboard.pending.innerText = pendingRegistrations;
+    html.dashboard.lastMonth.innerText = lastMonthRegistrations;
+
 }
 
 function calculateStats(){
