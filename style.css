@@ -47,7 +47,6 @@ main {
 
 #exit {
     color: rgb(74, 74, 74);
-    text-decoration: none;
     font-size: 2rem;
     border-left-style: solid;
     border-left-color: rgb(165, 165, 165);
@@ -72,7 +71,7 @@ main {
 }
 
 .navLinks {
-    margin-left: 15px;
+    margin-left: 1.5vw;
 }
 
 
@@ -82,19 +81,19 @@ a {
 
 }
 
-a:hover {
+p>a:hover {
     background-color: rgb(195, 195, 195);
     transition-duration: 100ms;
 }
 
-#registrationsWraper {
+#tableContainer {
     height: 95%;
     margin-top: 15px;
     background-color: white;
     border-radius: 10px;
 }
 
-#tableStart{
+#tableTop {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
@@ -139,4 +138,3 @@ button {
     margin: 10px;
     margin-left: auto;
 }
-

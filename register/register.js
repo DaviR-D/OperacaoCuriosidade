@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function getRegisterElements() {
-    html.register.tableStart = document.getElementById("tableStart");
+    html.register.tableTop = document.getElementById("tableTop");
 
     html.register.registerModal = document.getElementById("registerModal")
 
@@ -27,7 +27,7 @@ function getRegisterElements() {
 }
 
 function insertRegisterData() {
-    html.register.tableStart.insertAdjacentHTML('beforeend',
+    html.register.tableTop.insertAdjacentHTML('beforeend',
         `
             <h1><strong>Cadastros</strong></h1>
             <button onclick="showRegisterModal()">NOVO CADASTRO</button>

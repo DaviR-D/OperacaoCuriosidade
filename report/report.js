@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function getReportElements(){
-    html.report.tableStart = document.getElementById("tableStart");
+    html.report.tableTop = document.getElementById("tableTop");
 }
 
 function insertReportData(){
-    html.report.tableStart.insertAdjacentHTML('beforeend', 
+    html.report.tableTop.insertAdjacentHTML('beforeend', 
         `
         <h1><strong>Lista de usuários</strong></h1>
         <button onclick="printTable()">IMPRIMIR</button>

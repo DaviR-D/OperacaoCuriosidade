@@ -57,8 +57,8 @@ function loadTable() {
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('beforeend',
         `
-        <article id="registrationsWraper">
-            <div id="tableStart"></div>
+        <article id="tableContainer">
+            <div id="tableTop"></div>
             <div id="tableWraper">
                 <table id="registrations"></table>
             </div>

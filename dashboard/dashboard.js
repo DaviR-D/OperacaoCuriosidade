@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
 })
 
 function getDashboardElements(){
-    html.dashboard.tableStart = document.getElementById("tableStart");
+    html.dashboard.tableTop = document.getElementById("tableTop");
 
     html.dashboard.total = document.getElementById("total");
     html.dashboard.pending = document.getElementById("pending");
@@ -18,7 +18,7 @@ function getDashboardElements(){
 function insertDashboardData(){
     const [totalRegistrations, pendingRegistrations, lastMonthRegistrations] = calculateStats();
 
-    html.dashboard.tableStart.insertAdjacentHTML('beforeend', 
+    html.dashboard.tableTop.insertAdjacentHTML('beforeend', 
         `
         <h1><strong>Últimos cadastros</strong></h1>
         `
