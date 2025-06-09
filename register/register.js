@@ -43,10 +43,17 @@ function addActions() {
     })
 }
 
-function saveRegistration(key = crypto.randomUUID()) {
+function saveRegistration(event, key = crypto.randomUUID()) {
+    event.preventDefault();
     [...registerForm.elements].forEach(field => {
         field.style.borderColor = "black";
     });
+    let emailExists = registrations.map(registration => registration.email).includes(html.register.emailInput.value);
+    let sameKey = JSON.parse(localStorage.getItem(key))?.email == html.register.emailInput.value;
+    if (emailExists && !sameKey) {
+        alert("Email já cadastrado!");
+        return;
+    }
     if (registerForm.checkValidity()) {
         localStorage.setItem(key, JSON.stringify({
             name: html.register.nameInput.value,
@@ -61,6 +68,8 @@ function saveRegistration(key = crypto.randomUUID()) {
             feelings: html.register.feelingsInput.value,
             values: html.register.valuesInput.value,
         }));
+
+        registerForm.submit();
     }
     else {
         alert("Preencha todos os campos obrigatórios!");
@@ -111,4 +120,8 @@ function clearFields() {
     html.register.interestsInput.value = "";
     html.register.feelingsInput.value = "";
     html.register.valuesInput.value = "";
+}
+
+function resetFieldsColor(){
+    
 }
