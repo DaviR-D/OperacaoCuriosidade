@@ -3,9 +3,6 @@ let users = { name: "Davi Rodrigues", email: "davi@gmail.com", password: "senha1
 let pageTheme = localStorage.getItem("theme");
 
 document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("login")) {
-    window.location = "../dashboard/dashboard.html"
-  }
 
   applyTheme(pageTheme ?? "default");
 

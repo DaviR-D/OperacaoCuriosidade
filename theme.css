@@ -36,8 +36,6 @@ nav,
     border-left-color: firebrick;
 }
 
-#userDisplay {}
-
 #search {
     background-color: var(--second-color);
 }
