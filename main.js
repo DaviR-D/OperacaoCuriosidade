@@ -7,10 +7,6 @@ let registrations = [];
 let pageTheme = localStorage.getItem("theme");
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (!loggedUser) {
-        alert("Faça login para continuar!")
-        window.location = "../login/login.html"
-    }
     loadLayout();
     applyTheme(pageTheme ?? "default");
 })
