@@ -33,6 +33,9 @@ function insertRegisterData() {
             <button onclick="showRegisterModal()">NOVO CADASTRO</button>
         `
     )
+
+    navLink = document.getElementById("registerNav")
+    navLink.style.borderBottomStyle = "solid";
 }
 
 

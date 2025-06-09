@@ -54,9 +54,9 @@ function loadNav() {
     <nav>
         <p style="text-align: center;">Operação Curiosidade</p>
         <div class="navLinks">
-            <p><a href="../dashboard/dashboard.html">Home</a></p>
-            <p><a href="../register/register.html">Cadastro</a></p>
-            <p><a href="../report/report.html">Relatórios</a></p>
+            <p><a id="dashboardNav" href="../dashboard/dashboard.html">Home</a></p>
+            <p><a id="registerNav" href="../register/register.html">Cadastro</a></p>
+            <p><a id="reportNav" href="../report/report.html">Relatórios</a></p>
         </div>
         <input type="checkbox" id="themeToggle">Tema Escuro</div>
     </nav>

@@ -1,22 +1,25 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     html.report = {};
     getReportElements();
     insertReportData();
 });
 
-function getReportElements(){
+function getReportElements() {
     html.report.tableTop = document.getElementById("tableTop");
 }
 
-function insertReportData(){
-    html.report.tableTop.insertAdjacentHTML('beforeend', 
+function insertReportData() {
+    html.report.tableTop.insertAdjacentHTML('beforeend',
         `
         <h1><strong>Lista de usuários</strong></h1>
         <button onclick="printTable()">IMPRIMIR</button>
         `
     )
+
+    navLink = document.getElementById("reportNav")
+    navLink.style.borderBottomStyle = "solid";
 }
 
-function printTable(){
+function printTable() {
     window.print()
 }
