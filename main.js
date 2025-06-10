@@ -39,7 +39,6 @@ function loadHeader() {
 
     html.search.addEventListener("input", function () {
         loadTableContent();
-        addActions?.();
     });
 
     html.exit.addEventListener("click", function () {
@@ -88,15 +87,37 @@ function loadTable() {
         </article>
         `
     )
+
+html.tableOrder = "";
 }
 
-function loadTableContent() {
+function loadTableContent(order = "default") {
+    let sortBy = {
+        "name": (registrations) => registrations.sort((a, b) => a.name.localeCompare(b.name)),
+        "email": (registrations) => registrations.sort((a, b) => a.email.localeCompare(b.email)),
+        "status": (registrations) => registrations.sort((a, b) => a.status.localeCompare(b.status)),
+        "date": (registrations) => registrations.sort((a, b) => new Date(b.date) - new Date(a.date)),
+        "default": (registrations) => registrations,
+    }
     registrations = [];
     getStorageRegistrations();
+    sortBy[order](registrations);
+    if(order == html.tableOrder) {
+        registrations.reverse();
+
+    };
+    html.tableOrder = order;
 
     html.registrations = document.getElementById("registrations");
 
-    registrationList = ['<tr id="tableHeader"><th>Nome</th><th>Email</th><th>Status</th></tr>'];
+    registrationList = [`
+        <tr id="tableHeader">
+            <th onclick="loadTableContent('name')">Nome</th>
+            <th onclick="loadTableContent('email')">Email</th>
+            <th onclick="loadTableContent('status')">Status</th>
+            <th onclick="loadTableContent('date')">Data</th>
+        </tr>
+        `];
     registrations.forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
@@ -105,7 +126,8 @@ function loadTableContent() {
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
-                    <td style="color:${register.status== "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
+                    <td style="color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
+                     <td>${register.date}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
                         <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
@@ -117,8 +139,8 @@ function loadTableContent() {
     });
 
     html.registrations.innerHTML = registrationList.join('');
+    html.addActions?.();
 }
-
 
 function getStorageRegistrations() {
     for (let index = 0; index < localStorage.length; index++) {

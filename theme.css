@@ -2,7 +2,7 @@
     --main-color: white;
     --second-color: rgb(225, 225, 225);
     --font-color: rgb(74, 74, 74);
-    --hover-color: rgb(195, 195, 195);
+    --hover-color: lightgray;
     --border-color: rgb(203, 203, 203);
 }
 
@@ -47,6 +47,10 @@ a {
 p>a:hover,
 tr:hover {
     background-color: var(--hover-color);
+}
+
+#tableHeader{
+    background-color: rgb(171, 171, 171);
 }
 
 th,
