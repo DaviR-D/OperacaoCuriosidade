@@ -51,8 +51,6 @@ function saveRegistration(event, key = crypto.randomUUID()) {
 
     resetFieldsColor();
 
-
-
     if (registerForm.checkValidity()) {
         let newRegister = {
             name: html.register.nameInput.value,
@@ -91,6 +89,7 @@ function deleteRegistration(key) {
 
 function editRegistration(key) {
     registerModal.dataset.userKey = key;
+    resetFieldsColor();
     registerModal.showModal();
     let editItem = JSON.parse(localStorage.getItem(key));
 
