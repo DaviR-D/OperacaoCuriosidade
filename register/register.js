@@ -51,9 +51,9 @@ function saveRegistration(event, key = crypto.randomUUID()) {
 
     resetFieldsColor();
 
-    
 
-     if (registerForm.checkValidity()) {
+
+    if (registerForm.checkValidity()) {
         let newRegister = {
             name: html.register.nameInput.value,
             email: html.register.emailInput.value,
@@ -68,15 +68,13 @@ function saveRegistration(event, key = crypto.randomUUID()) {
             values: html.register.valuesInput.value,
         };
 
-        if (checkExistingEmail(key, newRegister.email)) alert("Email já cadastrado!");
-
-        else{
+        if (checkFieldsValidity(key, newRegister)) {
             localStorage.setItem(key, JSON.stringify(newRegister));
             registerForm.submit();
-        }    
+        }
     }
     else {
-        alert("Preencha todos os campos corretamente!");
+        alert("Preencha todos os campos!");
         highlightBlankFields();
     }
 }
@@ -140,9 +138,25 @@ function highlightBlankFields() {
     });
 }
 
+function checkFieldsValidity(key, newRegister) {
+    if (checkExistingEmail(key, newRegister.email)) {
+        alert("Email já cadastrado!");
+        return false;
+    } else if (!checkValidEmail(newRegister)) {
+        alert("Insira um email válido!");
+        return false;
+    }
+    return true;
+}
+
 function checkExistingEmail(key, email) {
     let emailExists = registrations.map(registration => registration.email).includes(email);
     let sameKey = JSON.parse(localStorage.getItem(key))?.email == email;
 
     return (emailExists && !sameKey);
+}
+
+function checkValidEmail(newRegister) {
+    regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regex.test(newRegister.email);
 }

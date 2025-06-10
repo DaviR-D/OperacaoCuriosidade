@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     else if (!localStorage.getItem("login")) {
+        document.body.innerHTML="";
         window.location = "../login/login.html"
         alert("Faça login para continuar!")
     }

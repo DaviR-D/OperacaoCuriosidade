@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loginButton.addEventListener("click", function () {
     let login = {email: emailInput.value, password: passwordInput.value }
+    if(checkValidEmail(login.email)){
     if (JSON.stringify([login.email, login.password]) == JSON.stringify([users.email, users.password])) {
       localStorage.setItem("login", JSON.stringify(users))
       window.location = "../dashboard/dashboard.html";
@@ -21,6 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
     else {
       alert("Login errado!");
     }
+  }
+  else{
+    alert("Insira um email válido!");
+  }
   })
 })
 
@@ -56,6 +61,11 @@ function applyTheme(theme = "default") {
     });
 
     localStorage.setItem("theme", theme)
+}
+
+function checkValidEmail(email) {
+    regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regex.test(email);
 }
 
 
