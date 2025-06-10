@@ -105,7 +105,7 @@ function loadTableContent() {
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
-                    <td>${register.status}</td>
+                    <td style="color:${register.status== "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
                         <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
