@@ -28,6 +28,9 @@ function insertDashboardData(){
     html.dashboard.pending.innerText = pendingRegistrations;
     html.dashboard.lastMonth.innerText = lastMonthRegistrations;
 
+    navLink = document.getElementById("dashboardNav")
+    navLink.style.borderBottomStyle = "solid";
+
 }
 
 function calculateStats(){
