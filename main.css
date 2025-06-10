@@ -25,7 +25,7 @@ nav {
     border-radius: 10px;
     height: 95vh;
     width: 15vw;
-    font-size: 1.5vw;
+    font-size: 1.25vw;
 }
 
 main {
@@ -42,7 +42,7 @@ main {
 }
 
 #exit {
-    font-size: 2rem;
+    font-size: 1.5vw;
     border-left-style: solid;
     padding: 1vw;
 }
@@ -60,6 +60,7 @@ main {
     padding: 1vw;
     margin-left: 1vw;
     border-radius: 10px;
+    width: 50%;
 }
 
 .navLinks {
