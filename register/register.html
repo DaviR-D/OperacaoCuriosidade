@@ -21,9 +21,9 @@
                     <p>Nome</p>
                     <input type="text" id="name" required>
                     <p>Idade</p>
-                    <input type="number" id="age" required>
+                    <input type="number" id="age" min="14" max="120" required>
                     <p>Email</p>
-                    <input type="email" id="email" required>
+                    <input type="email" id="email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" required>
                     <p>Endereço</p>
                     <input type="text" id="adress" required>
                     <p>Outras informações</p>
@@ -41,7 +41,8 @@
                     <h1><strong>4° Valores</strong></h1>
                     <input type="text" id="values" required>
                 </div>
-                <button type="submit" style="margin-top: 40px; padding: 10px;" onclick="saveRegistration(event, registerModal.dataset.userKey)">GRAVAR</button>
+                <button type="submit" style="margin-top: 40px; padding: 10px;"
+                    onclick="saveRegistration(event, registerModal.dataset.userKey)">GRAVAR</button>
             </form>
         </dialog>
     </main>

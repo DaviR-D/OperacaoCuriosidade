@@ -51,10 +51,10 @@ function saveRegistration(event, key = crypto.randomUUID()) {
 
     resetFieldsColor();
 
-    if (checkExistingEmail(key)) alert("Email já cadastrado!");
+    
 
-    else if (registerForm.checkValidity()) {
-        localStorage.setItem(key, JSON.stringify({
+     if (registerForm.checkValidity()) {
+        let newRegister = {
             name: html.register.nameInput.value,
             email: html.register.emailInput.value,
             status: html.register.statusCheck.checked ? "Ativo" : "Inativo",
@@ -66,12 +66,17 @@ function saveRegistration(event, key = crypto.randomUUID()) {
             interests: html.register.interestsInput.value,
             feelings: html.register.feelingsInput.value,
             values: html.register.valuesInput.value,
-        }));
+        };
 
-        registerForm.submit();
+        if (checkExistingEmail(key, newRegister.email)) alert("Email já cadastrado!");
+
+        else{
+            localStorage.setItem(key, JSON.stringify(newRegister));
+            registerForm.submit();
+        }    
     }
     else {
-        alert("Preencha todos os campos obrigatórios!");
+        alert("Preencha todos os campos corretamente!");
         highlightBlankFields();
     }
 }
@@ -135,9 +140,9 @@ function highlightBlankFields() {
     });
 }
 
-function checkExistingEmail(key) {
-    let emailExists = registrations.map(registration => registration.email).includes(html.register.emailInput.value);
-    let sameKey = JSON.parse(localStorage.getItem(key))?.email == html.register.emailInput.value;
+function checkExistingEmail(key, email) {
+    let emailExists = registrations.map(registration => registration.email).includes(email);
+    let sameKey = JSON.parse(localStorage.getItem(key))?.email == email;
 
     return (emailExists && !sameKey);
 }
