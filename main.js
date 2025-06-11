@@ -42,7 +42,7 @@ function loadHeader() {
     });
 
     html.exit.addEventListener("click", function () {
-        localStorage.removeItem("login")
+        localStorage.removeItem("login");
     })
 
 }
@@ -114,7 +114,7 @@ function loadTableContent(order = "default") {
                     <td>${register.name}</td>
                     <td>${register.email}</td>
                     <td style="color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
-                     <td>${register.date}</td>
+                     <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
                         <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
