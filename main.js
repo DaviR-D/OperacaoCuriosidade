@@ -53,9 +53,9 @@ function loadNav() {
     <nav>
         <p style="text-align: center;">Operação Curiosidade</p>
         <div class="navLinks">
-            <p><a id="dashboardNav" href="../dashboard/dashboard.html"> ⌂ Home</a></p>
-            <p><a id="registerNav" href="../register/register.html"> 🗄 Cadastro</a></p>
-            <p><a id="reportNav" href="../report/report.html"> 🗒 Relatórios</a></p>
+            <p><a id="dashboardNav" href="../dashboard/dashboard.html"> <span style="font-size: 1.8vw;">⌂</span> Home</a></p>
+            <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6vw;">🗄 </span>Cadastro </a></p>
+            <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6vw;">🗒 </span>Relatórios </a></p>
         </div>
         <input type="checkbox" id="themeToggle">Tema Escuro</div>
     </nav>
@@ -89,36 +89,20 @@ function loadTable() {
     )
 
     html.tableOrder = "";
+    html.arrow = {};
+    html.orderReverse = false;
 }
 
 function loadTableContent(order = "default") {
-    let sortBy = {
-        "name": (registrations) => registrations.sort((a, b) => a.name.localeCompare(b.name)),
-        "email": (registrations) => registrations.sort((a, b) => a.email.localeCompare(b.email)),
-        "status": (registrations) => registrations.sort((a, b) => a.status.localeCompare(b.status)),
-        "date": (registrations) => registrations.sort((a, b) => new Date(b.date) - new Date(a.date)),
-        "default": (registrations) => registrations,
-    }
-
-    if (order == "default") {
-        registrations = [];
-        getStorageRegistrations();
-    } else if (order == html.tableOrder) {
-        registrations.reverse();
-    } else {
-        sortBy[order](registrations);
-    }
-
-    html.tableOrder = order;
-
+    sortTable(order);
     html.registrations = document.getElementById("registrations");
 
     registrationList = [`
         <tr id="tableHeader">
-            <th class="column" onclick="loadTableContent('name')">Nome</th>
-            <th class="column" onclick="loadTableContent('email')">Email</th>
-            <th class="column" onclick="loadTableContent('status')">Status</th>
-            <th class="column" onclick="loadTableContent('date')">Data</th>
+            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
         </tr>
         `];
     registrations.forEach(register => {
@@ -143,6 +127,47 @@ function loadTableContent(order = "default") {
 
     html.registrations.innerHTML = registrationList.join('');
     html.addActions?.();
+}
+
+function sortTable(order = "default") {
+    let sortBy = {
+        "name": (registrations) => {
+            html.arrow = {};
+            html.arrow.name = "";
+            return registrations.sort((a, b) => a.name.localeCompare(b.name))
+        },
+        "email": (registrations) => {
+            html.arrow = {};
+            html.arrow.email = "";
+            return registrations.sort((a, b) => a.email.localeCompare(b.email))
+        },
+        "status": (registrations) => {
+            html.arrow = {};
+            html.arrow.status = "";
+            return registrations.sort((a, b) => a.status.localeCompare(b.status))
+        },
+        "date": (registrations) => {
+            html.arrow = {};
+            html.arrow.date = "";
+            return registrations.sort((a, b) => new Date(b.date) - new Date(a.date));
+        },
+    }
+
+    if (order == "default") {
+        registrations = [];
+        getStorageRegistrations();
+    } else if (order == html.tableOrder) {
+        html.orderReverse = !html.orderReverse;
+        registrations.reverse();
+    } else {
+        sortBy[order](registrations);
+        html.orderReverse = false;
+    }
+
+    let selectedColumn = Object.keys(html.arrow)[0];
+    html.arrow[selectedColumn] = html.orderReverse ? "↓" : "↑";
+
+    html.tableOrder = order;
 }
 
 function getStorageRegistrations() {
