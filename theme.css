@@ -50,7 +50,12 @@ tr:hover {
 }
 
 #tableHeader{
-    background-color: rgb(171, 171, 171);
+    background-color: var(--second-color);
+    border-color: var(--main-color);
+}
+
+.column:active{
+    background-color: var(--main-color);
 }
 
 th,

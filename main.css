@@ -103,6 +103,10 @@ table {
     border-collapse: collapse;
 }
 
+#tableHeader{
+    border-style: solid;
+}
+
 th,
 td {
     padding: 10px;

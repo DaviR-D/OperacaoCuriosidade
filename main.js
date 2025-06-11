@@ -88,7 +88,7 @@ function loadTable() {
         `
     )
 
-html.tableOrder = "";
+    html.tableOrder = "";
 }
 
 function loadTableContent(order = "default") {
@@ -99,23 +99,26 @@ function loadTableContent(order = "default") {
         "date": (registrations) => registrations.sort((a, b) => new Date(b.date) - new Date(a.date)),
         "default": (registrations) => registrations,
     }
-    registrations = [];
-    getStorageRegistrations();
-    sortBy[order](registrations);
-    if(order == html.tableOrder) {
-        registrations.reverse();
 
-    };
+    if (order == "default") {
+        registrations = [];
+        getStorageRegistrations();
+    } else if (order == html.tableOrder) {
+        registrations.reverse();
+    } else {
+        sortBy[order](registrations);
+    }
+
     html.tableOrder = order;
 
     html.registrations = document.getElementById("registrations");
 
     registrationList = [`
         <tr id="tableHeader">
-            <th onclick="loadTableContent('name')">Nome</th>
-            <th onclick="loadTableContent('email')">Email</th>
-            <th onclick="loadTableContent('status')">Status</th>
-            <th onclick="loadTableContent('date')">Data</th>
+            <th class="column" onclick="loadTableContent('name')">Nome</th>
+            <th class="column" onclick="loadTableContent('email')">Email</th>
+            <th class="column" onclick="loadTableContent('status')">Status</th>
+            <th class="column" onclick="loadTableContent('date')">Data</th>
         </tr>
         `];
     registrations.forEach(register => {
