@@ -84,9 +84,15 @@ function loadTable() {
             <div id="tableWraper">
                 <table id="registrations"></table>
             </div>
+            <div class="tableButtons">
+                <button id="previousButton">←</button>
+                <button id="nextButton">→</button>
+            </div>
         </article>
         `
     )
+
+
 
     html.tableOrder = "";
     html.arrow = {};
@@ -95,16 +101,8 @@ function loadTable() {
 
 function loadTableContent(order = "default") {
     sortTable(order);
-    html.registrations = document.getElementById("registrations");
 
-    registrationList = [`
-        <tr id="tableHeader">
-            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
-        </tr>
-        `];
+    registrationList = [];
     registrations.forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
@@ -125,8 +123,50 @@ function loadTableContent(order = "default") {
 
     });
 
-    html.registrations.innerHTML = registrationList.join('');
+    registrationList.unshift(`
+        <tr id="tableHeader">
+            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+        </tr>
+        `);
+
+    changePage();
+}
+
+function changePage(start = 0, stop = 10, firstLoad = true) {
+    html.registrations = document.getElementById("registrations");
+    html.tableContainer = document.getElementById("tableContainer");
+
+    if (start > (registrations.length - 10)) {
+        start = registrations.length - 10;
+        stop = registrations.length;
+    }
+    if (start < 0) {
+        start = 0;
+        stop = 10;
+    }
+    
+    if(firstLoad) registrationList.shift();
+    let page = registrationList.slice(start, stop);
+    page.unshift(`
+        <tr id="tableHeader">
+            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+        </tr>
+        `);
+
+    html.registrations.innerHTML = page.join('');
     html.addActions?.();
+
+    let nextButton = document.getElementById("nextButton");
+    nextButton.onclick = () => changePage(start + 10, stop + 10, firstLoad = false);
+
+    let previousButton = document.getElementById("previousButton");
+    previousButton.onclick = () => changePage(start - 10, stop - 10, firstLoad = false);
 }
 
 function sortTable(order = "default") {
