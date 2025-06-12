@@ -14,6 +14,13 @@ function getLoginElements() {
   html.loginButton = document.getElementById("login");
   html.emailInput = document.getElementById("email");
   html.passwordInput = document.getElementById("password");
+
+  html.emailInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") html.passwordInput.focus();
+  })
+  html.passwordInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") tryLogin();
+  })
 }
 
 function tryLogin() {
