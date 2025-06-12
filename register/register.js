@@ -38,7 +38,7 @@ function insertRegisterData() {
     navLink.style.borderBottomStyle = "solid";
 
     html.addActions = () => {
-        tableHeader.innerHTML += "<th>Ações</th>";
+        tableHeader.insertAdjacentHTML("beforeend","<th>Ações</th>");
         document.querySelectorAll(".actions").forEach(row => {
             row.style.display = "table-cell";
         })
@@ -51,12 +51,13 @@ function saveRegistration(event, key = crypto.randomUUID()) {
     resetFieldsColor();
 
     if (registerForm.checkValidity()) {
+        let existingRegister = JSON.parse(localStorage.getItem(key));
         let newRegister = {
             name: html.register.nameInput.value,
             email: html.register.emailInput.value,
             status: html.register.statusCheck.checked ? "Ativo" : "Inativo",
             pending: true,
-            date: new Date(),
+            date: existingRegister?.date ? existingRegister?.date : new Date(),
             age: html.register.ageInput.value,
             adress: html.register.adressInput.value,
             other: html.register.otherInput.value,
