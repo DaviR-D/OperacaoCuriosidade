@@ -126,9 +126,8 @@ function loadTableContent(order = "default") {
     loadPaging();
 }
 
-function loadPaging(start = 0) {
+function loadPaging(start = 0, increment = 10) {
     html.registrations = document.getElementById("registrations");
-    let increment = 10;
 
     let nextButton = document.getElementById("nextButton");
     nextButton.onclick = () => loadPaging(start + increment);
