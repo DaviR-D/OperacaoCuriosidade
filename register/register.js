@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     html.register = {};
-    addActions();
     getRegisterElements();
     insertRegisterData();
+    html.addActions();
 })
 
 function getRegisterElements() {
@@ -36,14 +36,13 @@ function insertRegisterData() {
 
     navLink = document.getElementById("registerNav")
     navLink.style.borderBottomStyle = "solid";
-}
 
-
-function addActions() {
-    tableHeader.innerHTML += "<th>Ações</th>";
-    document.querySelectorAll(".actions").forEach(row => {
-        row.style.display = "table-cell";
-    })
+    html.addActions = () => {
+        tableHeader.innerHTML += "<th>Ações</th>";
+        document.querySelectorAll(".actions").forEach(row => {
+            row.style.display = "table-cell";
+        })
+    }
 }
 
 function saveRegistration(event, key = crypto.randomUUID()) {
@@ -83,7 +82,6 @@ function deleteRegistration(key) {
     if (response) {
         localStorage.removeItem(key);
         loadTableContent();
-        addActions();
     }
 }
 

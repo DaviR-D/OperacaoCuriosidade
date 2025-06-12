@@ -21,5 +21,7 @@ function insertReportData() {
 }
 
 function printTable() {
+    loadPaging(0, registrations.length);
     window.print()
+    loadPaging();
 }
