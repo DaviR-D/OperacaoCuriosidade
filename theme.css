@@ -49,12 +49,12 @@ tr:hover {
     background-color: var(--hover-color);
 }
 
-#tableHeader{
+#tableHeader {
     background-color: var(--second-color);
     border-color: var(--main-color);
 }
 
-.column:active{
+.column:active {
     background-color: var(--main-color);
 }
 
@@ -75,6 +75,7 @@ button {
 }
 
 .aboutUser>input,
+textarea,
 .userData>input {
     background-color: var(--second-color);
     color: var(--font-color);

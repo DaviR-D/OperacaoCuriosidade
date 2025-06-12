@@ -28,14 +28,16 @@ button {
     text-align: center;
 }
 
-.aboutUser>input {
+.aboutUser>input, textarea {
     border-radius: 10px;
     width: 30vw;
     height: 15vh;
+    font-size: 1.5vw;
 }
 
 .userData>input {
     border-radius: 10px;
-    width: 20vw;
-    height: 5vh;
+    width: 22vw;
+    height: 8vh;
+    font-size: 1.5vw;
 }
