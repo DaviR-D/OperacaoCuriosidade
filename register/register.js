@@ -142,6 +142,9 @@ function checkFieldsValidity(key, newRegister) {
     } else if (!checkValidEmail(newRegister)) {
         alert("Insira um email válido!");
         return false;
+    } else if (!checkValidName(newRegister)) {
+        alert("Insira um nome válido!");
+        return false;
     }
     return true;
 }
@@ -156,4 +159,9 @@ function checkExistingEmail(key, email) {
 function checkValidEmail(newRegister) {
     regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return regex.test(newRegister.email);
+}
+
+function checkValidName(newRegister) {
+    regex = /^[^0-9]*$/
+    return regex.test(newRegister.name);
 }
