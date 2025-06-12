@@ -123,32 +123,27 @@ function loadTableContent(order = "default") {
 
     });
 
-    registrationList.unshift(`
-        <tr id="tableHeader">
-            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
-        </tr>
-        `);
-
-    changePage();
+    loadPaging();
 }
 
-function changePage(start = 0, stop = 10, firstLoad = true) {
+function loadPaging(start = 0) {
     html.registrations = document.getElementById("registrations");
-    html.tableContainer = document.getElementById("tableContainer");
+    let increment = 10;
 
-    if (start > (registrations.length - 10)) {
-        start = registrations.length - 10;
-        stop = registrations.length;
-    }
-    if (start < 0) {
+    let nextButton = document.getElementById("nextButton");
+    nextButton.onclick = () => loadPaging(start + increment);
+
+    let previousButton = document.getElementById("previousButton");
+    previousButton.onclick = () => loadPaging(start - increment);
+
+    if (start > (registrations.length))
+        start -= increment;
+
+    if (start < 0)
         start = 0;
-        stop = 10;
-    }
-    
-    if(firstLoad) registrationList.shift();
+
+    let stop = start + increment;
+
     let page = registrationList.slice(start, stop);
     page.unshift(`
         <tr id="tableHeader">
@@ -161,12 +156,6 @@ function changePage(start = 0, stop = 10, firstLoad = true) {
 
     html.registrations.innerHTML = page.join('');
     html.addActions?.();
-
-    let nextButton = document.getElementById("nextButton");
-    nextButton.onclick = () => changePage(start + 10, stop + 10, firstLoad = false);
-
-    let previousButton = document.getElementById("previousButton");
-    previousButton.onclick = () => changePage(start - 10, stop - 10, firstLoad = false);
 }
 
 function sortTable(order = "default") {
