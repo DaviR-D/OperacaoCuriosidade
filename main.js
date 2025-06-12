@@ -57,7 +57,7 @@ function loadNav() {
             <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6vw;">🗄 </span>Cadastro </a></p>
             <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6vw;">🗒 </span>Relatórios </a></p>
         </div>
-        <input type="checkbox" id="themeToggle">Tema Escuro</div>
+        <input type="checkbox" id="themeToggle"> <span style="font-size: 1.8vw;">☾</span>
     </nav>
     `);
 
@@ -102,12 +102,12 @@ function loadTable() {
 function loadTableContent(order = "default") {
     sortTable(order);
 
-    registrationList = [];
+    renderedRegistrations = [];
     registrations.forEach(register => {
         let rowContent = `${register.name} ${register.email.split("@")[0]}`;
 
         if (rowContent.includes(html.search.value)) {
-            registrationList.push(
+            renderedRegistrations.push(
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
@@ -143,7 +143,7 @@ function loadPaging(start = 0, increment = 10) {
 
     let stop = start + increment;
 
-    let page = registrationList.slice(start, stop);
+    let page = renderedRegistrations.slice(start, stop);
     page.unshift(`
         <tr id="tableHeader">
             <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
