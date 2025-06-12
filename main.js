@@ -136,7 +136,7 @@ function loadPaging(start = 0) {
     let previousButton = document.getElementById("previousButton");
     previousButton.onclick = () => loadPaging(start - increment);
 
-    if (start > (registrations.length))
+    if (start >= (registrations.length))
         start -= increment;
 
     if (start < 0)
@@ -200,10 +200,18 @@ function sortTable(order = "default") {
 }
 
 function getStorageRegistrations() {
+    let registrationsKeys = [
+        'name','email', 'status',
+        'pending', 'date', 'age',
+        'adress', 'other', 'interests',
+        'feelings', 'values',
+    ]
     for (let index = 0; index < localStorage.length; index++) {
         let key = localStorage.key(index);
-        if (key == "login" || key == "theme") continue;
-        let item = JSON.parse(localStorage.getItem(key));
+        let content = localStorage.getItem(key);
+        let isRegistration = registrationsKeys.every(k => content.includes(k));
+        if (!isRegistration) continue;
+        let item = JSON.parse(content);
         item.key = key;
         registrations.push(item);
     }
