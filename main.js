@@ -53,20 +53,20 @@ function loadNav() {
     <nav>
         <p style="text-align: center;">Operação Curiosidade</p>
         <div class="navLinks">
-            <p><a id="dashboardNav" href="../dashboard/dashboard.html"> <span style="font-size: 1.8vw;">⌂</span> Home</a></p>
-            <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6vw;">🗄 </span>Cadastro </a></p>
-            <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6vw;">🗒 </span>Relatórios </a></p>
+            <p><a id="dashboardNav" href="../dashboard/dashboard.html"> <span style="font-size: 1.8rem;">⌂</span> Home</a></p>
+            <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6rem;">🗄 </span>Cadastro </a></p>
+            <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6rem;">🗒 </span>Relatórios </a></p>
+            <p style="margin-top: 55px;"><span id="themeIcon"></span></p>
         </div>
-        <input type="checkbox" id="themeToggle"> <span style="font-size: 1.8vw;">☾</span>
+        
     </nav>
     `);
 
-    let themeToggle = document.getElementById("themeToggle");
+    html.themeIcon = document.getElementById("themeIcon");
 
-    themeToggle.checked = (pageTheme == "dark" ? true : false);
 
-    themeToggle.addEventListener("change", function () {
-        if (themeToggle.checked) {
+    html.themeIcon.addEventListener("click", function () {
+        if (pageTheme == "default") {
             applyTheme("dark")
         }
         else {
@@ -160,22 +160,18 @@ function loadPaging(start = 0, increment = 10) {
 function sortTable(order = "default") {
     let sortBy = {
         "name": (registrations) => {
-            html.arrow = {};
             html.arrow.name = "";
             return registrations.sort((a, b) => a.name.localeCompare(b.name))
         },
         "email": (registrations) => {
-            html.arrow = {};
             html.arrow.email = "";
             return registrations.sort((a, b) => a.email.localeCompare(b.email))
         },
         "status": (registrations) => {
-            html.arrow = {};
             html.arrow.status = "";
             return registrations.sort((a, b) => a.status.localeCompare(b.status))
         },
         "date": (registrations) => {
-            html.arrow = {};
             html.arrow.date = "";
             return registrations.sort((a, b) => new Date(b.date) - new Date(a.date));
         },
@@ -188,6 +184,7 @@ function sortTable(order = "default") {
         html.orderReverse = !html.orderReverse;
         registrations.reverse();
     } else {
+        html.arrow = {};
         sortBy[order](registrations);
         html.orderReverse = false;
     }
@@ -246,7 +243,10 @@ function applyTheme(theme = "default") {
         document.documentElement.style.setProperty(variable, themeColors[theme][variable])
     });
 
-    localStorage.setItem("theme", theme)
+    localStorage.setItem("theme", theme);
+    pageTheme = theme;
+
+    html.themeIcon.innerHTML = theme == "dark" ? `<span style="font-size: 1.8rem;">☼</span>` : `<span style="font-size: 2rem;">☾</span>`;
 }
 
 
