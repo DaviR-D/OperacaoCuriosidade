@@ -39,6 +39,7 @@ nav,
 
 #search {
     background-color: var(--second-color);
+    color: var(--font-color);
 }
 
 a {
