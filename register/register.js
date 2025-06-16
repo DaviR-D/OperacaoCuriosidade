@@ -30,7 +30,7 @@ function insertRegisterData() {
     html.register.tableTop.insertAdjacentHTML('beforeend',
         `
             <h1><strong>Cadastros</strong></h1>
-            <button onclick="showRegisterModal()">NOVO CADASTRO</button>
+            <button onclick="showRegisterModal()"> + NOVO CADASTRO</button>
         `
     )
 
