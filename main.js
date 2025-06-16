@@ -59,9 +59,8 @@ function loadNav() {
             <p><a id="dashboardNav" href="../dashboard/dashboard.html"> <span style="font-size: 1.8rem;">⌂</span> Home</a></p>
             <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6rem;">🗄 </span>Cadastro </a></p>
             <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6rem;">🗒 </span>Relatórios </a></p>
-            <p style="margin-top: 55px;"><span id="themeIcon"></span></p>
         </div>
-        
+        <div id="themeIconContainer"><p><span id="themeIcon"></span></p></div>
     </nav>
     `);
 
