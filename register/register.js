@@ -163,6 +163,6 @@ function checkValidEmail(newRegister) {
 }
 
 function checkValidName(newRegister) {
-    regex = /^[^0-9]*$/
+    regex = /^[^0-9!@#$%*+={}?<>()]*$/
     return regex.test(newRegister.name);
 }
