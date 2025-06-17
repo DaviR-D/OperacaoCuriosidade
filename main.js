@@ -134,7 +134,7 @@ function loadTableContent(order = "default") {
     loadPaging();
 }
 
-function loadPaging(start = 0, increment = 8) {
+function loadPaging(start = 0, increment = 10) {
     if (start >= (renderedRegistrations.length))
         start -= increment;
 

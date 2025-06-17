@@ -116,10 +116,11 @@ main {
 
 
 #tableContainer {
-    height: fit-content;
+    height: 95%;
     margin-top: 15px;
     border-radius: 10px;
     min-width: 600px;
+    padding: 5px;
 }
 
 #tableTop {
@@ -153,7 +154,7 @@ table {
 
 th,
 td {
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     border-bottom-style: solid;
 }
