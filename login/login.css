@@ -1,3 +1,9 @@
+:root{
+    --normal-font: 1.10rem;
+    --big-font: 1.25rem;
+    --small-font: 1rem;
+}
+
 body{
     align-content: center;
     height: 95vh;
@@ -33,6 +39,10 @@ header{
     border-radius: 10px;
     margin-bottom: 8vh;
     padding: 5px;
+}
+
+.loginBox>input{
+    font-size: var(--big-font);
 }
 
 button{

@@ -35,7 +35,7 @@ function insertRegisterData() {
     )
 
     navLink = document.getElementById("registerNav")
-    navLink.style.borderBottomStyle = "solid";
+    navLink.style.backgroundColor = "var(--hover-color)";
 
     html.addActions = () => {
         tableHeader.insertAdjacentHTML("beforeend","<th>Ações</th>");
@@ -121,6 +121,7 @@ function clearFields() {
     html.register.interestsInput.value = "";
     html.register.feelingsInput.value = "";
     html.register.valuesInput.value = "";
+    html.register.statusCheck.checked = false;
 }
 
 function resetFieldsColor() {

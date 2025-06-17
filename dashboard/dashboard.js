@@ -48,7 +48,7 @@ function insertDashboardData() {
     html.dashboard.lastMonth.innerText = lastMonthRegistrations;
 
     navLink = document.getElementById("dashboardNav")
-    navLink.style.borderBottomStyle = "solid";
+    navLink.style.backgroundColor = "var(--hover-color)";
 
     loadTableContent("date");
 
