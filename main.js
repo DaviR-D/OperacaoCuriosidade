@@ -83,7 +83,7 @@ function loadTable() {
         `
         <article id="tableContainer">
             <div id="tableTop"></div>
-            <div id="tableWraper">
+            <div id="tableWrapper">
                 <table id="registrations"></table>
             </div>
             <div class="tablePaging">
@@ -213,7 +213,7 @@ function getStorageRegistrations() {
     let registrationsKeys = [
         'name', 'email', 'status',
         'pending', 'date', 'age',
-        'adress', 'other', 'interests',
+        'address', 'other', 'interests',
         'feelings', 'values',
     ]
     for (let index = 0; index < localStorage.length; index++) {

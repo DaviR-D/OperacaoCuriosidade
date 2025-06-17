@@ -30,7 +30,7 @@
     font-size: var(--big-font);
 }
 
-.statsContainersWraper{
+.statsContainersWrapper{
     display: flex;
     justify-content: center;
     align-items: center;

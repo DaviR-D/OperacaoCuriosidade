@@ -133,7 +133,7 @@ main {
     width: 12vw;
 }
 
-#tableWraper {
+#tableWrapper {
     overflow-inline: scroll;
     overflow-x: hidden;
     height: 80%;
@@ -170,6 +170,7 @@ tr:hover {
 
 .tablePaging>button {
     background-color: transparent;
+    font-size: var(--big-font);
     max-width: 1px;
 }
 
