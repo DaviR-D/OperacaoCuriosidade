@@ -55,6 +55,7 @@ function loadNav() {
     document.body.insertAdjacentHTML('beforeend',
         `
     <nav>
+        <p id="navIcon">OC</p>
         <p style="text-align: center;">Operação<br>Curiosidade</p>
         <div class="navLinks">
             <a id="dashboardNav" href="../dashboard/dashboard.html">Home</a>

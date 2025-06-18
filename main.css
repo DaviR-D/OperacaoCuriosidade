@@ -87,6 +87,22 @@ nav {
     min-width: 150px;
 }
 
+#navIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    background-color: var(--hover-color);
+    font-size: 3rem;
+    font-weight: bolder;
+    justify-self: center;
+}
+
+
 .navLinks>a {
     display: block;
     margin-top: 1.5vh;
@@ -154,7 +170,7 @@ table {
 
 th,
 td {
-    padding: 8px;
+    padding: 1vh;
     text-align: center;
     border-bottom-style: solid;
 }
@@ -186,4 +202,3 @@ button {
     min-width: 150px;
     cursor: pointer;
 }
-
