@@ -5,7 +5,6 @@
 }
 
 body {
-    max-height: 95vh;
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -81,7 +80,7 @@ nav {
     grid-row-start: 1;
     grid-row-end: 4;
     border-radius: 10px;
-    height: 95vh;
+    height: 100%;
     width: 15vw;
     font-size: var(--big-font);
     min-height: 700px;
@@ -133,7 +132,7 @@ main {
 
 
 #tableContainer {
-    height: 95%;
+    height: fit-content;
     margin-top: 15px;
     border-radius: 10px;
     min-width: 600px;
