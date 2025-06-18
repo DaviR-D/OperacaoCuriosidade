@@ -48,6 +48,7 @@ function insertRegisterData() {
 
 function saveRegistration(event, key = crypto.randomUUID()) {
     event.preventDefault();
+    resetFieldsStyle();
 
     if (registerForm.checkValidity()) {
         let existingRegister = JSON.parse(localStorage.getItem(key));
