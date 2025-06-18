@@ -36,7 +36,7 @@ function insertRegisterData() {
     )
 
     navLink = document.getElementById("registerNav")
-    navLink.style.backgroundColor = "var(--hover-color)";
+    navLink.style.backgroundColor = "var(--highlight-color)";
 
     html.addActions = () => {
         tableHeader.insertAdjacentHTML("beforeend", "<th>Ações</th>");

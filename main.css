@@ -96,7 +96,7 @@ nav {
     border-radius: 100%;
     width: 60px;
     height: 60px;
-    background-color: var(--hover-color);
+    background-color: var(--highlight-color);
     font-size: 3rem;
     font-weight: bolder;
     justify-self: center;
