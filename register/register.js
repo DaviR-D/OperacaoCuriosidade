@@ -136,7 +136,7 @@ function highlightBlankFields() {
     let errorMessage;
     emptyFields.forEach(field => {
         field.style.borderColor = "red";
-        errorMessage = document.getElementById(`${field.id}Error`)
+        errorMessage = document.getElementById(`${field.id}Error`)  ?? {};
         errorMessage.innerText = "Campo obrigatório";
     });
 
