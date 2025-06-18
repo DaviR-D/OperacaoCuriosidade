@@ -23,7 +23,9 @@ function loadHeader() {
         `
     <header>
         <input type="text" placeholder="Pesquisar..." id="search">
+        <span id="searchResults"></span>
         <div class="login">
+            <span id="themeIcon"></span>
             <span id="userDisplay"></span>
             <a href="../login/login.html" id="exit">SAIR</a>
         </div>
@@ -33,6 +35,8 @@ function loadHeader() {
     html.exit = document.getElementById("exit");
 
     html.search = document.getElementById("search");
+
+    html.searchResults = document.getElementById("searchResults");
 
     html.userDisplay = document.getElementById("userDisplay");
     html.userDisplay.innerText = loggedUser.name;
@@ -51,22 +55,21 @@ function loadNav() {
     document.body.insertAdjacentHTML('beforeend',
         `
     <nav>
-        <p style="text-align: center;">Operação Curiosidade</p>
+        <p id="navIcon">OC</p>
+        <p style="text-align: center;">Operação<br>Curiosidade</p>
         <div class="navLinks">
-            <p><a id="dashboardNav" href="../dashboard/dashboard.html"> <span style="font-size: 1.8vw;">⌂</span> Home</a></p>
-            <p><a id="registerNav" href="../register/register.html"> <span style="font-size: 1.6vw;">🗄 </span>Cadastro </a></p>
-            <p><a id="reportNav" href="../report/report.html"> <span style="font-size: 1.6vw;">🗒 </span>Relatórios </a></p>
+            <a id="dashboardNav" href="../dashboard/dashboard.html">Home</a>
+            <a id="registerNav" href="../register/register.html">Cadastro</a>
+            <a id="reportNav" href="../report/report.html">Relatórios</a>
         </div>
-        <input type="checkbox" id="themeToggle"> <span style="font-size: 1.8vw;">☾</span>
     </nav>
     `);
 
-    let themeToggle = document.getElementById("themeToggle");
+    html.themeIcon = document.getElementById("themeIcon");
 
-    themeToggle.checked = (pageTheme == "dark" ? true : false);
 
-    themeToggle.addEventListener("change", function () {
-        if (themeToggle.checked) {
+    html.themeIcon.addEventListener("click", function () {
+        if (pageTheme == "default") {
             applyTheme("dark")
         }
         else {
@@ -81,11 +84,12 @@ function loadTable() {
         `
         <article id="tableContainer">
             <div id="tableTop"></div>
-            <div id="tableWraper">
+            <div id="tableWrapper">
                 <table id="registrations"></table>
             </div>
-            <div class="tableButtons">
+            <div class="tablePaging">
                 <button id="previousButton">←</button>
+                <span id="pageNumber"></span>
                 <button id="nextButton">→</button>
             </div>
         </article>
@@ -93,7 +97,7 @@ function loadTable() {
     )
 
 
-
+    html.pageNumber = document.getElementById("pageNumber");
     html.tableOrder = "";
     html.arrow = {};
     html.orderReverse = false;
@@ -104,14 +108,14 @@ function loadTableContent(order = "default") {
 
     renderedRegistrations = [];
     registrations.forEach(register => {
-        let rowContent = `${register.name} ${register.email.split("@")[0]}`;
+        let rowContent = `${register.name}${register.email.split("@")[0]}`.toLowerCase();
 
-        if (rowContent.includes(html.search.value)) {
+        if (rowContent.includes(html.search.value.toLowerCase())) {
             renderedRegistrations.push(
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
-                    <td style="color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
+                    <td style="font-weight: bold; color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
                      <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
@@ -120,6 +124,11 @@ function loadTableContent(order = "default") {
                 </tr>`
             );
         }
+        if (search.value.length > 0) {
+            searchResults.innerText = `${renderedRegistrations.length} resultados`
+        } else {
+            searchResults.innerText = "";
+        }
 
     });
 
@@ -127,6 +136,17 @@ function loadTableContent(order = "default") {
 }
 
 function loadPaging(start = 0, increment = 10) {
+    if (start >= (renderedRegistrations.length))
+        start -= increment;
+
+    if (start < 0)
+        start = 0;
+
+    let totalPages = Math.ceil(renderedRegistrations.length / increment);
+    let currentPage = Math.round(start / increment) + 1;
+
+    html.pageNumber.innerText = `${currentPage}/${totalPages}`;
+
     html.registrations = document.getElementById("registrations");
 
     let nextButton = document.getElementById("nextButton");
@@ -135,11 +155,6 @@ function loadPaging(start = 0, increment = 10) {
     let previousButton = document.getElementById("previousButton");
     previousButton.onclick = () => loadPaging(start - increment);
 
-    if (start >= (registrations.length))
-        start -= increment;
-
-    if (start < 0)
-        start = 0;
 
     let stop = start + increment;
 
@@ -160,22 +175,18 @@ function loadPaging(start = 0, increment = 10) {
 function sortTable(order = "default") {
     let sortBy = {
         "name": (registrations) => {
-            html.arrow = {};
             html.arrow.name = "";
             return registrations.sort((a, b) => a.name.localeCompare(b.name))
         },
         "email": (registrations) => {
-            html.arrow = {};
             html.arrow.email = "";
             return registrations.sort((a, b) => a.email.localeCompare(b.email))
         },
         "status": (registrations) => {
-            html.arrow = {};
             html.arrow.status = "";
             return registrations.sort((a, b) => a.status.localeCompare(b.status))
         },
         "date": (registrations) => {
-            html.arrow = {};
             html.arrow.date = "";
             return registrations.sort((a, b) => new Date(b.date) - new Date(a.date));
         },
@@ -188,6 +199,7 @@ function sortTable(order = "default") {
         html.orderReverse = !html.orderReverse;
         registrations.reverse();
     } else {
+        html.arrow = {};
         sortBy[order](registrations);
         html.orderReverse = false;
     }
@@ -200,9 +212,9 @@ function sortTable(order = "default") {
 
 function getStorageRegistrations() {
     let registrationsKeys = [
-        'name','email', 'status',
+        'name', 'email', 'status',
         'pending', 'date', 'age',
-        'adress', 'other', 'interests',
+        'address', 'other', 'interests',
         'feelings', 'values',
     ]
     for (let index = 0; index < localStorage.length; index++) {
@@ -222,15 +234,17 @@ function applyTheme(theme = "default") {
             '--main-color': "white",
             '--second-color': "rgb(225, 225, 225)",
             '--font-color': "rgb(74, 74, 74)",
-            '--hover-color': "rgb(195, 195, 195)",
-            '--border-color': "rgb(203, 203, 203)"
+            '--highlight-color': "rgb(195, 195, 195)",
+            '--border-color': "rgb(203, 203, 203)",
+            "--border-style" : "solid"
         },
         dark: {
             '--main-color': "rgb(24, 26, 27)",
             '--second-color': "rgb(44, 47, 49)",
             '--font-color': "rgb(210, 210, 210)",
-            '--hover-color': "rgb(70, 75, 78)",
-            '--border-color': "rgb(60, 64, 66)"
+            '--highlight-color': "rgb(70, 75, 78)",
+            '--border-color': "rgb(60, 64, 66)",
+            "--border-style" : "none"
         }
     };
 
@@ -238,15 +252,19 @@ function applyTheme(theme = "default") {
         "--main-color",
         "--second-color",
         "--font-color",
-        "--hover-color",
-        "--border-color"
+        "--highlight-color",
+        "--border-color",
+        "--border-style"
     ]
 
     themeVariables.forEach(variable => {
         document.documentElement.style.setProperty(variable, themeColors[theme][variable])
     });
 
-    localStorage.setItem("theme", theme)
+    localStorage.setItem("theme", theme);
+    pageTheme = theme;
+
+    html.themeIcon.innerHTML = theme == "dark" ? `<span style="font-size: 1.8rem;">☼</span>` : `<span style="font-size: 2rem;">☾</span>`;
 }
 
 

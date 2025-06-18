@@ -2,8 +2,9 @@
     --main-color: white;
     --second-color: rgb(225, 225, 225);
     --font-color: rgb(74, 74, 74);
-    --hover-color: lightgray;
+    --highlight-color: lightgray;
     --border-color: rgb(203, 203, 203);
+    --border-style: solid;
 }
 
 /* dark theme
@@ -11,7 +12,7 @@
     --main-color: rgb(24, 26, 27);
     --second-color: rgb(44, 47, 49);
     --font-color: rgb(210, 210, 210);
-    --hover-color: rgb(70, 75, 78);
+    --highlight-color: rgb(70, 75, 78);
     --border-color: rgb(60, 64, 66);
 } */
 
@@ -38,23 +39,23 @@ nav,
 
 #search {
     background-color: var(--second-color);
+    color: var(--font-color);
 }
 
 a {
     color: var(--font-color);
 }
 
-p>a:hover,
 tr:hover {
-    background-color: var(--hover-color);
-}
-
-#tableHeader{
     background-color: var(--second-color);
-    border-color: var(--main-color);
 }
 
-.column:active{
+#tableHeader {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.column:active {
     background-color: var(--main-color);
 }
 
@@ -74,8 +75,7 @@ button {
     box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.400);
 }
 
-.aboutUser>input,
-.userData>input {
+.registerSection>input,textarea {
     background-color: var(--second-color);
     color: var(--font-color);
 }
@@ -95,4 +95,22 @@ button {
 button {
     color: white;
     background-color: black;
+}
+
+.tablePaging>button {
+    color: var(--font-color);
+}
+
+input {
+    border-style: var(--border-style);
+    color: var(--font-color);
+}
+
+textarea {
+    border-style: var(--border-style);
+}
+
+#themeIcon:hover{
+    background-color: var(--second-color);
+    cursor: pointer;
 }

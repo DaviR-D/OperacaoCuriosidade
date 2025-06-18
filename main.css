@@ -1,9 +1,18 @@
+:root {
+    --normal-font: 1.10rem;
+    --big-font: 1.25rem;
+    --small-font: 1rem;
+}
+
 body {
-    max-height: 95vh;
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 0.5fr 2fr 2fr;
+}
+
+body>* {
+    margin: 10px;
 }
 
 header {
@@ -16,23 +25,8 @@ header {
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-}
-
-nav {
-    grid-column-start: 1;
-    grid-row-start: 1;
-    grid-row-end: 4;
-    border-radius: 10px;
-    height: 100vh;
-    width: 15vw;
-    font-size: 1.25vw;
-}
-
-main {
-    grid-column-start: 2;
-    grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 4;
+    min-width: 650px;
+    min-height: 60px;
 }
 
 .login {
@@ -42,7 +36,7 @@ main {
 }
 
 #exit {
-    font-size: 1.5vw;
+    font-size: var(--big-font);
     border-left-style: solid;
     padding: 1vw;
 }
@@ -52,34 +46,98 @@ main {
 }
 
 #userDisplay {
-    font-size: 1.5rem;
+    font-size: var(--big-font);
     padding-right: 1vw;
 }
 
+#themeIcon {
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 15px;
+    user-select: none;
+
+}
+
+#searchResults {
+    margin-left: 2vw;
+    font-size: var(--big-font);
+    font-weight: bold;
+}
+
 #search {
-    padding: 1vw;
     margin-left: 1vw;
     border-radius: 10px;
-    width: 50%;
+    width: 40vw;
+    max-height: 55px;
+    min-height: 45px;
+    min-width: 300px;
+    font-size: var(--big-font);
 }
 
-.navLinks {
-    margin-left: 1.5vw;
+nav {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    border-radius: 10px;
+    height: 100%;
+    width: 15vw;
+    font-size: var(--big-font);
+    min-height: 700px;
+    min-width: 150px;
 }
 
+#navIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    background-color: var(--highlight-color);
+    font-size: 3rem;
+    font-weight: bolder;
+    justify-self: center;
+}
+
+
+.navLinks>a {
+    display: block;
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vw;
+    padding-left: 1.5vw;
+    padding: 1vw;
+}
 
 a {
     text-decoration: none;
 }
 
-p>a:hover {
+a:hover {
+    font-weight: bold;
+}
+
+a:hover {
     transition-duration: 100ms;
 }
 
+main {
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    margin-top: 0;
+}
+
+
 #tableContainer {
-    height: fit-content;
-    margin-top: 15px;
+    height: 80vh;
+    min-height: 550px;
     border-radius: 10px;
+    min-width: 600px;
+    padding: 5px;
 }
 
 #tableTop {
@@ -89,27 +147,32 @@ p>a:hover {
     display: flex;
 }
 
+#tableTop>button {
+    width: 12vw;
+}
 
-#tableWraper {
+#tableWrapper {
     overflow-inline: scroll;
     overflow-x: hidden;
-    height: 80%;
+    height: 62vh;
+    min-height: 400px;
 }
 
 table {
     width: 100%;
-    font-size: 1vw;
+    font-size: var(--normal-font);
     overflow: hidden;
     border-collapse: collapse;
 }
 
-#tableHeader{
-    border-style: solid;
+#tableHeader {
+    cursor: default;
+    user-select: none;
 }
 
 th,
 td {
-    padding: 10px;
+    padding: 1vh;
     text-align: center;
     border-bottom-style: solid;
 }
@@ -118,28 +181,26 @@ tr:hover {
     transition-duration: 100ms;
 }
 
+.tablePaging {
+    justify-items: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.tablePaging>button {
+    background-color: transparent;
+    font-size: var(--big-font);
+    max-width: 1px;
+}
 
 button {
     font-weight: bolder;
-    font-size: 1.5vw;
+    font-size: var(--small-font);
     border-radius: 10px;
     border-style: none;
     width: 15vw;
     margin: 10px;
     margin-left: auto;
-}
-
-.tableButtons{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-#nextButton{
-    grid-column-start: 2;
-    grid-column-end: 2;
-}
-
-#previousButton{
-    grid-column-start: 0;
-    grid-column-end: 1;
+    min-width: 150px;
+    cursor: pointer;
 }

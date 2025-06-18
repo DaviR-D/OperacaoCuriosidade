@@ -17,7 +17,7 @@ function insertReportData() {
     )
 
     navLink = document.getElementById("reportNav")
-    navLink.style.borderBottomStyle = "solid";
+    navLink.style.backgroundColor = "var(--highlight-color)";
 }
 
 function printTable() {
