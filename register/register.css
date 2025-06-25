@@ -1,5 +1,5 @@
 :root {
-    --register-font: 1.5rem;
+    --register-font: var(--big-font);
 }
 
 button {

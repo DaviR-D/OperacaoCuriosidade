@@ -43,7 +43,7 @@ button {
 }
 
 .loginBox>input {
-    font-size: var(--big-font);
+    font-size: var(--normal-font);
 }
 
 #errorMessage {
@@ -52,7 +52,7 @@ button {
     height: 8vh;
     width: 40vw;
     color: red;
-    font-size: var(--big-font);
+    font-size: var(--normal-font);
 }
 
 button {

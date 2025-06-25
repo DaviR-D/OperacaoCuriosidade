@@ -115,7 +115,7 @@ function loadTableContent(order = "default") {
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
-                    <td style="font-weight: bold; color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
+                    <td style="font-weight: bold; color:${register.status == "Ativo" ? "rgb(0, 181, 0)" : "rgb(255, 39, 39)"};">${register.status}</td>
                      <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
