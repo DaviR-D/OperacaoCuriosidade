@@ -2,6 +2,10 @@
     --register-font: var(--big-font);
 }
 
+body.blur{
+    filter: blur(2px);
+}
+
 button {
     background-color: rgb(0, 181, 0);
 }
@@ -53,6 +57,7 @@ td {
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+    outline: none;
 }
 
 .onionLayer{
@@ -83,6 +88,8 @@ td {
 #activeCheck {
     grid-column-start: 0;
     grid-column-end: 1;
+    grid-row-start: 0;
+    grid-row-end: 1;
     margin-right: auto;
     font-size: 1.5rem;
 }

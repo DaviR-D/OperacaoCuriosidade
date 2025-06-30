@@ -20,6 +20,12 @@ body {
     padding: 20px;
 }
 
+@media(max-width: 800px){
+    .loginBox{
+        width: 80vw;
+    }
+}
+
 #navIcon {
     display: flex;
     justify-content: center;
@@ -59,7 +65,7 @@ button {
 }
 
 .loginBox>input {
-    font-size: var(--normal-font);
+    font-size: var(--big-font);
 }
 
 #errorMessage {

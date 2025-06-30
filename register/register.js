@@ -21,6 +21,7 @@ function getRegisterElements() {
     html.register.valuesInput = document.getElementById("values");
 
     html.register.registerModal.addEventListener("close", function () {
+        document.body.classList.remove("blur");
         clearFields();
         resetFieldsStyle();
     });
@@ -102,6 +103,7 @@ function editRegistration(key) {
 }
 
 function showRegisterModal() {
+    document.body.classList.add("blur");
     registerModal.showModal();
 }
 
