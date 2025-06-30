@@ -94,6 +94,12 @@ td {
     font-size: var(--register-font);
 }
 
+#status{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
 .registerSection {
     display: block;
     margin-bottom: 2vh;
