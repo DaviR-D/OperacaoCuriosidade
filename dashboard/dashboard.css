@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0px;
     margin-bottom: 10px;
 }
 
@@ -14,14 +13,14 @@
     grid-template-rows: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 8px;
     min-height: 200px;
     min-width: 210px;
 }
 
 @media(max-width:1250px){
     .statsContainer{
-        height: 35vh;
+        height: max(35vh, 250px);
     }
 }
 
