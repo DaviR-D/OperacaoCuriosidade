@@ -21,6 +21,11 @@ body {
     width: 100vw;
 }
 
+body.blur {
+    filter: blur(2px);
+    transition: 0.2s;
+}
+
 header,
 #tableContainer,
 .statsContainersWrapper {
