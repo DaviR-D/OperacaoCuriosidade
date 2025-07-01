@@ -119,7 +119,7 @@ function loadTableContent(order = "default") {
                      <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
                         <button class="editButton" onclick="editRegistration('${register.key}')"><span class="material-symbols-outlined">edit</span></button>
-                        <button class="deleteButton" onclick="deleteRegistration('${register.key}')"><span class="material-symbols-outlined">delete</span></button>
+                        <button class="deleteButton" onclick="showDeleteConfirmation('${register.key}')"><span class="material-symbols-outlined">delete</span></button>
                     </td>
                 </tr>`
             );
