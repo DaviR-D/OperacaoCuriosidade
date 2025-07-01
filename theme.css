@@ -78,7 +78,7 @@ button {
     border-color: black;
 }
 
-.loginBox>input {
+#loginInfo>input {
     background-color: var(--second-color);
 }
 
