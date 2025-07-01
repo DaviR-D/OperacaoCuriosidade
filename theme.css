@@ -77,7 +77,7 @@ input:focus, textarea:focus{
 button {
     color: white;
     background-color: black;
-    border: 1px solid rgba(0, 0, 0, 0.300);
+    border: none;
 }
 
 .tablePaging>button {
