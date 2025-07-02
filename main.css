@@ -195,7 +195,7 @@ table {
 
 th,
 td {
-    padding: 1.5vh;
+    line-height: max(5.5vh, 40px);
     text-align: center;
     border-bottom-style: solid;
 }
