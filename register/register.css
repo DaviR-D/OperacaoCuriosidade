@@ -27,6 +27,10 @@ button {
     font-size: var(--normal-font);
     color: var(--font-color);
     background-color: transparent;
+    width: min-content;
+    height: min-content;
+    min-width: 10px;
+    padding: 0;
     position: absolute;
 }
 
