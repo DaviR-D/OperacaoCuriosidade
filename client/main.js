@@ -1,3 +1,5 @@
+let apiUrl = "http://localhost:5204";
+
 let loggedUser = JSON.parse(localStorage.getItem("login"));
 
 let html = {};
@@ -103,8 +105,8 @@ function loadTable() {
     html.orderReverse = false;
 }
 
-function loadTableContent(order = "default") {
-    sortTable(order);
+async function loadTableContent(order = "default") {
+    await sortTable(order);
 
     renderedRegistrations = [];
     registrations.forEach(register => {
@@ -118,8 +120,8 @@ function loadTableContent(order = "default") {
                     <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
                      <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
-                        <button class="editButton material-symbols-outlined" onclick="editRegistration('${register.key}')">edit</button>
-                        <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.key}')">delete</button>
+                        <button class="editButton material-symbols-outlined" onclick="editRegistration('${register.id}')">edit</button>
+                        <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
                     </td>
                 </tr>`
             );
@@ -172,7 +174,7 @@ function loadPaging(start = 0, increment = 10) {
     html.addActions?.();
 }
 
-function sortTable(order = "default") {
+async function sortTable(order = "default") {
     let sortBy = {
         "name": (registrations) => {
             html.arrow.name = "";
@@ -195,7 +197,7 @@ function sortTable(order = "default") {
     if (order == "default") {
         html.arrow = {};
         registrations = [];
-        getStorageRegistrations();
+        await getStorageRegistrations();
     } else if (order == html.tableOrder) {
         html.orderReverse = !html.orderReverse;
         registrations.reverse();
@@ -211,22 +213,12 @@ function sortTable(order = "default") {
     html.tableOrder = order;
 }
 
-function getStorageRegistrations() {
-    let registrationsKeys = [
-        'name', 'email', 'status',
-        'pending', 'date', 'age',
-        'address', 'other', 'interests',
-        'feelings', 'values',
-    ]
-    for (let index = 0; index < localStorage.length; index++) {
-        let key = localStorage.key(index);
-        let content = localStorage.getItem(key);
-        let isRegistration = registrationsKeys.every(k => content.includes(k));
-        if (!isRegistration) continue;
-        let item = JSON.parse(content);
-        item.key = key;
-        registrations.push(item);
-    }
+async function getStorageRegistrations() {
+    await fetch(`${apiUrl}/register`)
+        .then(response => { return response.json() })
+        .then(data => {
+            registrations = Object.values(data);
+        });
 }
 
 function applyTheme(theme = "default") {
