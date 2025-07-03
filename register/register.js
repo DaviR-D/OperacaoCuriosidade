@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function getRegisterElements() {
     html.register.tableTop = document.getElementById("tableTop");
 
-    html.register.registerModal = document.getElementById("registerModal")
+    html.register.registerModal = document.getElementById("registerModal");
+    html.register.deleteConfirmModal = document.getElementById("confirmDelete");
 
     html.register.statusCheck = document.getElementById("status");
     html.register.nameInput = document.getElementById("name");
@@ -20,10 +21,21 @@ function getRegisterElements() {
     html.register.feelingsInput = document.getElementById("feelings");
     html.register.valuesInput = document.getElementById("values");
 
+    html.register.confirmTitle = document.getElementById("confirmTitle");
+    html.register.confirmDeleteButton = document.getElementById("confirmDeleteButton");
+    html.register.cancelDeleteButton = document.getElementById("cancelDeleteButton");
+
+    html.register.deleteConfirmModal.addEventListener("close", function () {
+        document.body.classList.remove("blur");
+    });
+
     html.register.registerModal.addEventListener("close", function () {
+        document.body.classList.remove("blur");
         clearFields();
         resetFieldsStyle();
     });
+
+    addInputEvents();
 
 }
 
@@ -39,7 +51,7 @@ function insertRegisterData() {
     navLink.style.backgroundColor = "var(--highlight-color)";
 
     html.addActions = () => {
-        tableHeader.insertAdjacentHTML("beforeend", "<th>Ações</th>");
+        tableHeader.insertAdjacentHTML("beforeend", "<th style='cursor: default;'>Ações</th>");
         document.querySelectorAll(".actions").forEach(row => {
             row.style.display = "table-cell";
         })
@@ -77,17 +89,14 @@ function saveRegistration(event, key = crypto.randomUUID()) {
 }
 
 function deleteRegistration(key) {
-    let deletedUser = JSON.parse(localStorage.getItem(key)).name
-    let response = confirm(`Deseja mesmo deletar ${deletedUser}?`)
-    if (response) {
-        localStorage.removeItem(key);
-        loadTableContent();
-    }
+    localStorage.removeItem(key);
+    loadTableContent();
+    hideDeleteConfirmation()
 }
 
 function editRegistration(key) {
     registerModal.dataset.userKey = key;
-    registerModal.showModal();
+    showRegisterModal();
     let editItem = JSON.parse(localStorage.getItem(key));
 
     html.register.nameInput.value = editItem.name;
@@ -102,11 +111,24 @@ function editRegistration(key) {
 }
 
 function showRegisterModal() {
+    document.body.classList.add("blur");
     registerModal.showModal();
 }
 
 function hideRegisterModal() {
     registerModal.close();
+}
+
+function showDeleteConfirmation(key) {
+    let deletedUser = JSON.parse(localStorage.getItem(key)).name
+    html.register.confirmTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    document.body.classList.add("blur");
+    html.register.deleteConfirmModal.showModal();
+    html.register.confirmDeleteButton.onclick = () => deleteRegistration(key);
+}
+
+function hideDeleteConfirmation() {
+    html.register.deleteConfirmModal.close();
 }
 
 function clearFields() {
@@ -122,43 +144,44 @@ function clearFields() {
     html.register.statusCheck.checked = false;
 }
 
+function resetFieldStyle(field) {
+    let errorMessage;
+    field.style.borderColor = "black";
+    errorMessage = document.getElementById(`${field.id}Error`) ?? {};
+    errorMessage.innerText = "";
+}
+
 function resetFieldsStyle() {
     let errorMessage;
     [...registerForm.elements].forEach(field => {
-        field.style.borderColor = "black";
-        errorMessage = document.getElementById(`${field.id}Error`) ?? {};
-        errorMessage.innerText = "";
+        resetFieldStyle(field);
     });
+}
+
+function highlightInvalidField(field, message) {
+    let errorMessage;
+    field.style.borderColor = "red";
+    errorMessage = document.getElementById(`${field.id}Error`) ?? {};
+    errorMessage.innerText = message;
 }
 
 function highlightBlankFields() {
     let emptyFields = [...registerForm.elements].filter(field => !field.checkValidity());
-    let errorMessage;
     emptyFields.forEach(field => {
-        field.style.borderColor = "red";
-        errorMessage = document.getElementById(`${field.id}Error`)  ?? {};
-        errorMessage.innerText = "Campo obrigatório";
+        highlightInvalidField(field, "Campo obrigatório")
     });
 
-
+    emptyFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function checkFieldsValidity(key, newRegister) {
-    let errorMessage;
-    if (checkExistingEmail(key, newRegister.email)) {
-        errorMessage = document.getElementById(`emailError`)
-        errorMessage.innerText = "Email já cadastrado!";
-        html.register.emailInput.style.borderColor = "red";
-        return false;
-    } else if (!checkValidEmail(newRegister)) {
-        errorMessage = document.getElementById(`emailError`)
-        errorMessage.innerText = "Insira um email válido!";
-        html.register.emailInput.style.borderColor = "red";
-        return false;
-    } else if (!checkValidName(newRegister)) {
-        errorMessage = document.getElementById(`nameError`)
-        errorMessage.innerText = "Insira um nome válido!";
-        html.register.nameInput.style.borderColor = "red";
+    html.invalidFields = [];
+    checkValidName(newRegister.name);
+    checkValidEmail(newRegister.email);
+    checkExistingEmail(key, newRegister.email);
+
+    if (html.invalidFields.length) {
+        html.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
         return false;
     }
     return true;
@@ -167,16 +190,51 @@ function checkFieldsValidity(key, newRegister) {
 function checkExistingEmail(key, email) {
     let emailExists = registrations.map(registration => registration.email).includes(email);
     let sameKey = JSON.parse(localStorage.getItem(key))?.email == email;
-
-    return (emailExists && !sameKey);
+    let exists = (emailExists && !sameKey)
+    if (exists) {
+        highlightInvalidField(html.register.emailInput, "Email já cadastrado");
+        html.invalidFields.push(html.register.emailInput);
+    };
+    return exists;
 }
 
-function checkValidEmail(newRegister) {
+function checkValidEmail(email) {
     regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return regex.test(newRegister.email);
+    let valid = regex.test(email)
+    if (!valid) {
+        highlightInvalidField(html.register.emailInput, "Insira um email válido");
+        html.invalidFields.push(html.register.emailInput);
+    };
+    return valid;
 }
 
-function checkValidName(newRegister) {
+function checkValidName(name) {
     regex = /^[^0-9!@#$%*+={}?<>()]*$/
-    return regex.test(newRegister.name);
+    let valid = regex.test(name)
+    if (!valid) {
+        highlightInvalidField(html.register.nameInput, "Insira um nome válido")
+        html.invalidFields.push(html.register.nameInput);
+    };
+    return valid;
+}
+
+function addInputEvents() {
+    html.invalidFields = [];
+    [...registerForm.elements].forEach(field => {
+        let errorMessage;
+        field.addEventListener("input", function () {
+            errorMessage = document.getElementById(`${field.id}Error`) ?? {};
+            if (errorMessage.innerText == "Campo obrigatório") resetFieldStyle(field);
+        })
+    });
+
+    html.register.nameInput.addEventListener("input", function () {
+        resetFieldStyle(html.register.nameInput)
+        checkValidName(html.register.nameInput.value);
+    })
+    html.register.emailInput.addEventListener("input", function () {
+        resetFieldStyle(html.register.emailInput);
+        checkValidEmail(html.register.emailInput.value);
+        checkExistingEmail(registerModal.dataset.userKey, html.register.emailInput.value);
+    })
 }

@@ -25,7 +25,7 @@ function loadHeader() {
         <input type="text" placeholder="Pesquisar..." id="search">
         <span id="searchResults"></span>
         <div class="login">
-            <span id="themeIcon"></span>
+            <span id="themeIcon" class="material-symbols-outlined"></span>
             <span id="userDisplay"></span>
             <a href="../login/login.html" id="exit">SAIR</a>
         </div>
@@ -58,9 +58,9 @@ function loadNav() {
         <p id="navIcon">OC</p>
         <p style="text-align: center;">Operação<br>Curiosidade</p>
         <div class="navLinks">
-            <a id="dashboardNav" href="../dashboard/dashboard.html">Home</a>
-            <a id="registerNav" href="../register/register.html">Cadastro</a>
-            <a id="reportNav" href="../report/report.html">Relatórios</a>
+            <a id="dashboardNav" href="../dashboard/dashboard.html"><span class="material-symbols-outlined">home</span>Home</a>
+            <a id="registerNav" href="../register/register.html"><span class="material-symbols-outlined">group_add</span>Cadastro</a>
+            <a id="reportNav" href="../report/report.html"><span class="material-symbols-outlined">analytics</span>Relatórios</a>
         </div>
     </nav>
     `);
@@ -88,9 +88,9 @@ function loadTable() {
                 <table id="registrations"></table>
             </div>
             <div class="tablePaging">
-                <button id="previousButton">←</button>
+                <button id="previousButton" class="material-symbols-outlined">arrow_back</button>
                 <span id="pageNumber"></span>
-                <button id="nextButton">→</button>
+                <button id="nextButton" class="material-symbols-outlined">arrow_forward</button>
             </div>
         </article>
         `
@@ -115,11 +115,11 @@ function loadTableContent(order = "default") {
                 `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
-                    <td style="font-weight: bold; color:${register.status == "Ativo" ? "rgb(52, 255, 52)" : "rgb(255, 39, 39)"};">${register.status}</td>
+                    <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
                      <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                     <td class="actions" style="display: none;">
-                        <button class="editButton" onclick="editRegistration('${register.key}')">&#9998</button>
-                        <button class="deleteButton" onclick="deleteRegistration('${register.key}')">X</button>
+                        <button class="editButton material-symbols-outlined" onclick="editRegistration('${register.key}')">edit</button>
+                        <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.key}')">delete</button>
                     </td>
                 </tr>`
             );
@@ -237,7 +237,10 @@ function applyTheme(theme = "default") {
             '--font-color': "rgb(74, 74, 74)",
             '--highlight-color': "rgb(195, 195, 195)",
             '--border-color': "rgb(203, 203, 203)",
-            "--border-style" : "solid"
+            "--activeBackground": "rgb(204, 255, 204)",
+            "--activeFontColor": "rgb(0, 100, 0)",
+            "--inactiveBackground": "rgb(255, 215, 204)",
+            "--inactiveFontColor": "rgb(150, 0, 0)",
         },
         dark: {
             '--main-color': "rgb(24, 26, 27)",
@@ -245,7 +248,10 @@ function applyTheme(theme = "default") {
             '--font-color': "rgb(210, 210, 210)",
             '--highlight-color': "rgb(70, 75, 78)",
             '--border-color': "rgb(60, 64, 66)",
-            "--border-style" : "none"
+            "--activeBackground": "rgb(154, 205, 154)",
+            "--activeFontColor": "rgb(0, 100, 0)",
+            "--inactiveBackground": "rgb(205, 165, 154)",
+            "--inactiveFontColor": "rgb(150, 0, 0)",
         }
     };
 
@@ -255,7 +261,8 @@ function applyTheme(theme = "default") {
         "--font-color",
         "--highlight-color",
         "--border-color",
-        "--border-style"
+        "--activeBackground",
+        "--inactiveBackground"
     ]
 
     themeVariables.forEach(variable => {
@@ -265,7 +272,7 @@ function applyTheme(theme = "default") {
     localStorage.setItem("theme", theme);
     pageTheme = theme;
 
-    html.themeIcon.innerHTML = theme == "dark" ? `<span style="font-size: 1.8rem;">☼</span>` : `<span style="font-size: 2rem;">☾</span>`;
+    html.themeIcon.innerText = theme == "dark" ? `light_mode` : `dark_mode`;
 }
 
 
