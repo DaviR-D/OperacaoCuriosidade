@@ -45,16 +45,16 @@ app.MapDelete("/register/{id}", (string id) => { registrations.Remove(id); });
 app.Run();
 
 public record Registration(
-    string id,
-    string name,
-    string email,
-    string status,
-    bool pending,
-    string date,
-    int age,
-    string address,
-    string other,
-    string interests,
-    string feelings,
-    string values
+    string Id,
+    string Name,
+    string Email,
+    string Status,
+    bool Pending,
+    string Date,
+    int Age,
+    string Address,
+    string Other,
+    string Interests,
+    string Feelings,
+    string Values
 );
