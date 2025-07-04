@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     html.register = {};
     getRegisterElements();
     insertRegisterData();
-    //html.addActions();
+    try { html.addActions(); }
+    catch (error) { if (!(error instanceof ReferenceError)) throw error; }
 })
 
 function getRegisterElements() {
