@@ -83,7 +83,7 @@ function saveRegistration(event, id = crypto.randomUUID()) {
             newRegister.id = id;
             httpMethod = registerModal.dataset.userId == undefined ? "POST" : "PUT";
 
-            fetch(`${apiUrl}/register/${id}`, {
+            fetch(`${apiUrl}/api/registration/`, {
                 method: httpMethod,
                 headers: {
                     "Content-Type": "application/json"
@@ -99,7 +99,7 @@ function saveRegistration(event, id = crypto.randomUUID()) {
 }
 
 async function deleteRegistration(id) {
-    await fetch(`${apiUrl}/register/${id}`, {
+    await fetch(`${apiUrl}/api/registration/${id}`, {
         method: 'DELETE'
     })
     loadTableContent();

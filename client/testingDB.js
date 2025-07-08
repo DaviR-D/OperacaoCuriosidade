@@ -282,7 +282,7 @@ db = [
 ]
 
 db.forEach(register => {
-  fetch(`http://localhost:5204/register/${register.id}`, {
+  fetch(`http://localhost:5204/api/registration/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
