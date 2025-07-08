@@ -1,7 +1,7 @@
 namespace Api.Modules.Registrations;
 public class Registration
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
     public string Status { get; set; }
@@ -15,7 +15,7 @@ public class Registration
     public string Values { get; set; }
 
     public Registration(
-    string id,
+    Guid id,
     string name,
     string email,
     string status,

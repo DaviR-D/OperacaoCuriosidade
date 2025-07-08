@@ -20,7 +20,7 @@ public class RegistrationController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetSingle([FromRoute] string id)
+    public IActionResult GetSingle([FromRoute] Guid id)
     {
         var registration = _service.GetSingleRegistration(id);
         return Ok(registration);
@@ -41,7 +41,7 @@ public class RegistrationController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete([FromRoute] string id)
+    public IActionResult Delete([FromRoute] Guid id)
     {
         _service.DeleteRegistration(id);
         return Ok();

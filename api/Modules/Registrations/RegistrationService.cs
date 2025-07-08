@@ -10,9 +10,13 @@ public class RegistrationService : IRegistrationService
     }
     public void CreateRegistration(RegistrationDto registration)
     {
-        lock(_lock){_registrationsMock.Add(registration);}
+        lock (_lock)
+        {
+            registration.Id = Guid.NewGuid();
+            _registrationsMock.Add(registration);
+        }
     }
-    public RegistrationDto GetSingleRegistration(string id)
+    public RegistrationDto GetSingleRegistration(Guid id)
     {
         var registration = _registrationsMock.First(r => r.Id == id);
         return registration;
@@ -26,7 +30,7 @@ public class RegistrationService : IRegistrationService
         var registrationIndex = _registrationsMock.FindIndex(r => r.Id == registration.Id);
         _registrationsMock[registrationIndex] = registration;
     }
-    public void DeleteRegistration(string id)
+    public void DeleteRegistration(Guid id)
     {
         var registration = _registrationsMock.First(r => r.Id == id);
         _registrationsMock.Remove(registration);
