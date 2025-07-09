@@ -105,17 +105,18 @@ function loadTable() {
     html.orderReverse = false;
 }
 
-async function loadTableContent(order = "default", start = 0) {
-    await loadPaging(order, start);
-    await sortTable(order);
+async function loadTableContent(order = "default", start = 0, increment = 10) {
+    await getRegistrations(order, start, increment);
+    loadPaging(order, start, increment);
+
 
     renderedRegistrations =
         [`
         <tr id="tableHeader">
-            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+            <th class="column" onclick="sortTable('Name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="sortTable('Email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="sortTable('Status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="sortTable('Date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
         </tr>`
 
         ];
@@ -150,13 +151,7 @@ async function loadTableContent(order = "default", start = 0) {
 }
 
 async function loadPaging(order = "default", start = 0, increment = 10) {
-    let length;
-    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}`)
-        .then(response => { return response.json() })
-        .then(data => {
-            registrations = data.registrations;
-            length = data.registrationsLength;
-        });
+    let length = html.registrationsLength;
 
     let totalPages = Math.ceil(length / increment);
     let currentPage = Math.round(start / increment) + 1;
@@ -172,33 +167,28 @@ async function loadPaging(order = "default", start = 0, increment = 10) {
     previousButton.onclick = () => loadTableContent(order, (start - increment) < 0 ? 0 : (start - increment));
 }
 
-async function sortTable(order = "default") {
+function sortTable(order = "default") {
     let sortBy = {
-        "name": (registrations) => {
+        "Name": () => {
             html.arrow.name = "";
-            return registrations.sort((a, b) => a.name.localeCompare(b.name))
         },
-        "email": (registrations) => {
+        "Email": () => {
             html.arrow.email = "";
-            return registrations.sort((a, b) => a.email.localeCompare(b.email))
         },
-        "status": (registrations) => {
+        "Status": () => {
             html.arrow.status = "";
-            return registrations.sort((a, b) => a.status.localeCompare(b.status))
         },
-        "date": (registrations) => {
+        "Date": () => {
             html.arrow.date = "";
-            return registrations.sort((a, b) => new Date(b.date) - new Date(a.date));
         },
     }
     if (order == "default") {
         html.arrow = {};
     } else if (order == html.tableOrder) {
         html.orderReverse = !html.orderReverse;
-        registrations.reverse();
     } else {
         html.arrow = {};
-        sortBy[order](registrations);
+        sortBy[order]();
         html.orderReverse = false;
     }
 
@@ -206,13 +196,15 @@ async function sortTable(order = "default") {
     html.arrow[selectedColumn] = html.orderReverse ? "↓" : "↑";
 
     html.tableOrder = order;
+    loadTableContent(order);
 }
 
-async function getRegistrations() {
-    await fetch(`${apiUrl}/api/registration`)
+async function getRegistrations(order = "default", start = 0, increment = 10) {
+    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}&sortKey=${order}&descending=${html.orderReverse}`)
         .then(response => { return response.json() })
         .then(data => {
-            registrations = data;
+            registrations = data.registrations;
+            html.registrationsLength = data.registrationsLength;
         });
 }
 
