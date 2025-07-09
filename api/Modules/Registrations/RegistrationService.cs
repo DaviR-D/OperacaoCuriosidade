@@ -21,6 +21,14 @@ public class RegistrationService : IRegistrationService
         var registration = _registrationsMock.First(r => r.Id == id);
         return registration;
     }
+
+    public RegistrationsPageDto GetRegistrationsPage(int start, int increment)
+    {
+        var page = new RegistrationsPageDto(_registrationsMock.Skip(start).Take(increment).ToList(), _registrationsMock.Count); 
+
+        return page;
+    }
+
     public List<RegistrationDto> GetAllRegistrations()
     {
         return _registrationsMock;

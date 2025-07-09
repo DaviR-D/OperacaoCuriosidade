@@ -105,10 +105,20 @@ function loadTable() {
     html.orderReverse = false;
 }
 
-async function loadTableContent(order = "default") {
+async function loadTableContent(order = "default", start = 0) {
+    await loadPaging(order, start);
     await sortTable(order);
 
-    renderedRegistrations = [];
+    renderedRegistrations =
+        [`
+        <tr id="tableHeader">
+            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+        </tr>`
+
+        ];
     registrations.forEach(register => {
         let rowContent = `${register.name}${register.email.split("@")[0]}`.toLowerCase();
 
@@ -134,17 +144,21 @@ async function loadTableContent(order = "default") {
 
     });
 
-    loadPaging();
+
+    html.registrations.innerHTML = renderedRegistrations.join('');
+    html.addActions?.();
 }
 
-function loadPaging(start = 0, increment = 10) {
-    if (start >= (renderedRegistrations.length))
-        start -= increment;
+async function loadPaging(order = "default", start = 0, increment = 10) {
+    let length;
+    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}`)
+        .then(response => { return response.json() })
+        .then(data => {
+            registrations = data.registrations;
+            length = data.registrationsLength;
+        });
 
-    if (start < 0)
-        start = 0;
-
-    let totalPages = Math.ceil(renderedRegistrations.length / increment);
+    let totalPages = Math.ceil(length / increment);
     let currentPage = Math.round(start / increment) + 1;
 
     html.pageNumber.innerText = `${currentPage}/${totalPages}`;
@@ -152,26 +166,10 @@ function loadPaging(start = 0, increment = 10) {
     html.registrations = document.getElementById("registrations");
 
     let nextButton = document.getElementById("nextButton");
-    nextButton.onclick = () => loadPaging(start + increment);
+    nextButton.onclick = () => loadTableContent(order, (start + increment) >= length ? start : (start + increment));
 
     let previousButton = document.getElementById("previousButton");
-    previousButton.onclick = () => loadPaging(start - increment);
-
-
-    let stop = start + increment;
-
-    let page = renderedRegistrations.slice(start, stop);
-    page.unshift(`
-        <tr id="tableHeader">
-            <th class="column" onclick="loadTableContent('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="loadTableContent('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="loadTableContent('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="loadTableContent('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
-        </tr>
-        `);
-
-    html.registrations.innerHTML = page.join('');
-    html.addActions?.();
+    previousButton.onclick = () => loadTableContent(order, (start - increment) < 0 ? 0 : (start - increment));
 }
 
 async function sortTable(order = "default") {
@@ -193,11 +191,8 @@ async function sortTable(order = "default") {
             return registrations.sort((a, b) => new Date(b.date) - new Date(a.date));
         },
     }
-
     if (order == "default") {
         html.arrow = {};
-        registrations = [];
-        await getRegistrations();
     } else if (order == html.tableOrder) {
         html.orderReverse = !html.orderReverse;
         registrations.reverse();

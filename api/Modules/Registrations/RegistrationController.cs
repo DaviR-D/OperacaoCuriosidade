@@ -26,6 +26,13 @@ public class RegistrationController : ControllerBase
         return Ok(registration);
     }
 
+    [HttpGet("page")]
+    public IActionResult GetPage(int start, int increment)
+    {
+        var page = _service.GetRegistrationsPage(start, increment);
+        return Ok(page);
+    }
+
     [HttpGet]
     public IActionResult GetAll()
     {

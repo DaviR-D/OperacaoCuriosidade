@@ -4,6 +4,7 @@ public interface IRegistrationService
 {
     void CreateRegistration(RegistrationDto registration);
     RegistrationDto GetSingleRegistration(Guid id);
+    RegistrationsPageDto GetRegistrationsPage(int start, int increment);
     List<RegistrationDto> GetAllRegistrations();
     void UpdateRegistration(RegistrationDto registration);
     void DeleteRegistration(Guid id);
