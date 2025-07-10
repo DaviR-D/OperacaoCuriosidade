@@ -3,7 +3,7 @@ namespace Api.Modules.Registrations
     public class RegistrationService : IRegistrationService
     {
         private readonly List<RegistrationDto> _registrationsMock;
-        private readonly object _lock = new();
+        private static readonly object _lock = new();
         public RegistrationService(List<RegistrationDto> registrations)
         {
             _registrationsMock = registrations;
