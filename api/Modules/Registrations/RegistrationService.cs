@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Api.Modules.Registrations
 {
     public class RegistrationService : IRegistrationService
@@ -24,7 +26,7 @@ namespace Api.Modules.Registrations
 
         public RegistrationsPageDto GetRegistrationsPage(int start, int increment, string sortKey, bool descending, string query)
         {
-            var sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey);
+            var sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
             var sortedRegistrations = descending ? _registrationsMock.OrderByDescending(registration => sortProperty.GetValue(registration)) : _registrationsMock.OrderBy(registration => sortProperty.GetValue(registration));
             var registrationList = sortedRegistrations
                 .Where(registration => $"{registration.Name} {registration.Email.Split("@")[0]}"
