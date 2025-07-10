@@ -44,7 +44,7 @@ function loadHeader() {
     html.userDisplay.innerText = loggedUser.name;
 
     html.search.addEventListener("input", function () {
-        loadTableContent();
+        sortTable();
     });
 
     html.exit.addEventListener("click", function () {
@@ -109,7 +109,6 @@ async function loadTableContent(order = "default", start = 0, increment = 10) {
     await getRegistrations(order, start, increment);
     loadPaging(order, start, increment);
 
-
     renderedRegistrations =
         [`
         <tr id="tableHeader">
@@ -121,11 +120,8 @@ async function loadTableContent(order = "default", start = 0, increment = 10) {
 
         ];
     registrations.forEach(register => {
-        let rowContent = `${register.name}${register.email.split("@")[0]}`.toLowerCase();
-
-        if (rowContent.includes(html.search.value.toLowerCase())) {
-            renderedRegistrations.push(
-                `<tr>
+        renderedRegistrations.push(
+            `<tr>
                     <td>${register.name}</td>
                     <td>${register.email}</td>
                     <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
@@ -135,16 +131,13 @@ async function loadTableContent(order = "default", start = 0, increment = 10) {
                         <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
                     </td>
                 </tr>`
-            );
-        }
+        );
         if (search.value.length > 0) {
-            searchResults.innerText = `${renderedRegistrations.length} resultados`
+            searchResults.innerText = `${renderedRegistrations.length - 1} resultados`
         } else {
             searchResults.innerText = "";
         }
-
     });
-
 
     html.registrations.innerHTML = renderedRegistrations.join('');
     html.addActions?.();
@@ -200,7 +193,7 @@ function sortTable(order = "default") {
 }
 
 async function getRegistrations(order = "default", start = 0, increment = 10) {
-    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}&sortKey=${order}&descending=${html.orderReverse}`)
+    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}&sortKey=${order}&descending=${html.orderReverse}&query=${html.search.value.toLowerCase()}`)
         .then(response => { return response.json() })
         .then(data => {
             registrations = data.registrations;

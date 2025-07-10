@@ -22,11 +22,18 @@ public class RegistrationService : IRegistrationService
         return registration;
     }
 
-    public RegistrationsPageDto GetRegistrationsPage(int start, int increment, string sortKey, bool descending)
+    public RegistrationsPageDto GetRegistrationsPage(int start, int increment, string sortKey, bool descending, string query)
     {
         var sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey);
         var sortedRegistrations = descending ? _registrationsMock.OrderByDescending(registration => sortProperty.GetValue(registration)) : _registrationsMock.OrderBy(registration => sortProperty.GetValue(registration));
-        var page = new RegistrationsPageDto(sortedRegistrations.Skip(start).Take(increment).ToList(), _registrationsMock.Count); 
+        var registrationList = sortedRegistrations
+            .Where(registration => $"{registration.Name} {registration.Email.Split("@")[0]}"
+            .ToLower()
+            .Contains(query))
+            .Skip(start)
+            .Take(increment)
+            .ToList();
+        var page = new RegistrationsPageDto(registrationList, _registrationsMock.Count); 
 
         return page;
     }
