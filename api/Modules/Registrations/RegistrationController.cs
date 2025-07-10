@@ -53,4 +53,11 @@ public class RegistrationController : ControllerBase
         _service.DeleteRegistration(id);
         return Ok();
     }
+
+    [HttpGet("checkEmail")]
+    public IActionResult CheckEmail(Guid id, string email)
+    {
+        var emailAvailable = _service.VerifyAvailableEmail(id, email);
+        return Ok(emailAvailable);
+    }
 }

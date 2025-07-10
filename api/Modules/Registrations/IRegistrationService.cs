@@ -9,5 +9,7 @@ namespace Api.Modules.Registrations
         void UpdateRegistration(RegistrationDto registration);
         void DeleteRegistration(Guid id);
 
+        bool VerifyAvailableEmail(Guid id, string email);
+
     }
 }

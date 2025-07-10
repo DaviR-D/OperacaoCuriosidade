@@ -61,5 +61,14 @@ namespace Api.Modules.Registrations
             var registration = _registrationsMock.First(r => r.Id == id);
             _registrationsMock.Remove(registration);
         }
+        public bool VerifyAvailableEmail(Guid id, string email)
+        {
+            var existingEmail = _registrationsMock.FirstOrDefault(registration => registration.Email == email);
+            if (existingEmail != null)
+            {
+                return existingEmail.Id.Equals(id);
+            }
+            return true;
+        }
     }
 }

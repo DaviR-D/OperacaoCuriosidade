@@ -59,7 +59,7 @@ function insertRegisterData() {
     }
 }
 
-function saveRegistration(event, id = undefined) {
+async function saveRegistration(event, id = undefined) {
     event.preventDefault();
     resetFieldsStyle();
 
@@ -79,7 +79,7 @@ function saveRegistration(event, id = undefined) {
             values: html.register.valuesInput.value,
         };
 
-        if (checkFieldsValidity(id, newRegister)) {
+        if (await checkFieldsValidity(id, newRegister)) {
             httpMethod = id == undefined ? "POST" : "PUT";
 
             fetch(`${apiUrl}/api/registration/`, {
@@ -116,7 +116,6 @@ async function editRegistration(id) {
 
     registerModal.dataset.userId = id;
     showRegisterModal();
-    
 
     html.register.nameInput.value = editItem.name;
     html.register.emailInput.value = editItem.email;
@@ -193,11 +192,11 @@ function highlightBlankFields() {
     emptyFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function checkFieldsValidity(id, newRegister) {
+async function checkFieldsValidity(id, newRegister) {
     html.invalidFields = [];
     checkValidName(newRegister.name);
     checkValidEmail(newRegister.email);
-    checkExistingEmail(id, newRegister.email);
+    await checkExistingEmail(id, newRegister.email);
 
     if (html.invalidFields.length) {
         html.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
@@ -206,15 +205,17 @@ function checkFieldsValidity(id, newRegister) {
     return true;
 }
 
-function checkExistingEmail(id, email) {
-    let emailExists = registrations.map(registration => registration.email).includes(email);
-    let sameId = registrations.filter((register) => register.id == id)[0]?.email == email;
-    let exists = (emailExists && !sameId)
-    if (exists) {
+async function checkExistingEmail(id, email) {
+    let availableEmail;
+    await fetch(`${apiUrl}/api/registration/checkEmail?id=${id}&email=${email}`)
+        .then(response => { return response.json() })
+        .then(data => { availableEmail = data; });
+
+    if (!availableEmail) {
         highlightInvalidField(html.register.emailInput, "Email já cadastrado");
         html.invalidFields.push(html.register.emailInput);
     };
-    return exists;
+    return availableEmail;
 }
 
 function checkValidEmail(email) {
@@ -254,6 +255,8 @@ function addInputEvents() {
     html.register.emailInput.addEventListener("input", function () {
         resetFieldStyle(html.register.emailInput);
         checkValidEmail(html.register.emailInput.value);
+    })
+    html.register.emailInput.addEventListener("blur", function () {
         checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
     })
 }
