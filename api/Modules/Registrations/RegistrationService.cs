@@ -33,7 +33,16 @@ public class RegistrationService : IRegistrationService
             .Skip(start)
             .Take(increment)
             .ToList();
-        var page = new RegistrationsPageDto(registrationList, _registrationsMock.Count); 
+        List<RegistrationPreviewDto> registrationPreviewList = registrationList
+            .Select(registration => 
+            new RegistrationPreviewDto(
+                registration.Id,
+                registration.Name,
+                registration.Email,
+                registration.Status,
+                registration.Date))
+            .ToList();
+        var page = new RegistrationsPageDto(registrationPreviewList, _registrationsMock.Count); 
 
         return page;
     }

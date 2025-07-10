@@ -105,10 +105,18 @@ async function deleteRegistration(id) {
     hideDeleteConfirmation()
 }
 
-function editRegistration(id) {
+async function editRegistration(id) {
+    let editItem;
+
+    await fetch(`${apiUrl}/api/registration/${id}`)
+        .then(response => { return response.json() })
+        .then(data => {
+            editItem = data;
+        });
+
     registerModal.dataset.userId = id;
     showRegisterModal();
-    let editItem = registrations.filter((register) => register.id == id)[0];
+    
 
     html.register.nameInput.value = editItem.name;
     html.register.emailInput.value = editItem.email;
