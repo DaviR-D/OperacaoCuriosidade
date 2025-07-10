@@ -34,7 +34,7 @@ namespace Api.Modules.Registrations
                 .Take(increment)
                 .ToList();
             List<RegistrationPreviewDto> registrationPreviewList = registrationList
-                .Select(registration => 
+                .Select(registration =>
                 new RegistrationPreviewDto(
                     registration.Id,
                     registration.Name,
@@ -42,7 +42,7 @@ namespace Api.Modules.Registrations
                     registration.Status,
                     registration.Date))
                 .ToList();
-            var page = new RegistrationsPageDto(registrationPreviewList, _registrationsMock.Count); 
+            var page = new RegistrationsPageDto(registrationPreviewList, _registrationsMock.Count);
 
             return page;
         }

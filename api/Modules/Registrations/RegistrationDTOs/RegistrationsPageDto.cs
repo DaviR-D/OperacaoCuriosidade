@@ -1,7 +1,7 @@
 ﻿namespace Api.Modules.Registrations
 {
-        public class RegistrationsPageDto
-        {
+    public class RegistrationsPageDto
+    {
         public List<RegistrationPreviewDto> registrations { get; set; }
         public int registrationsLength { get; set; }
 
@@ -10,5 +10,5 @@
             registrations = r;
             registrationsLength = length;
         }
-        }
+    }
 }
