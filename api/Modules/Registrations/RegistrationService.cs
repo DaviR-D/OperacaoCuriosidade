@@ -15,6 +15,7 @@ namespace Api.Modules.Registrations
             lock (_lock)
             {
                 registration.Id = Guid.NewGuid();
+                registration.Date = DateTime.Now;
                 _registrationsMock.Add(registration);
             }
         }
@@ -44,7 +45,10 @@ namespace Api.Modules.Registrations
                     registration.Status,
                     registration.Date))
                 .ToList();
-            var page = new RegistrationsPageDto(registrationPreviewList, _registrationsMock.Count);
+
+            var lastMonth = _registrationsMock.Where(registration => registration.Date >= DateTime.Now.AddMonths(-1)).Count();
+            var pending = _registrationsMock.Where(registration => registration.Pending == true).Count();
+            var page = new RegistrationsPageDto(registrationPreviewList, _registrationsMock.Count, lastMonth, pending);
 
             return page;
         }

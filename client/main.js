@@ -100,7 +100,7 @@ function loadTable() {
 
 
     html.pageNumber = document.getElementById("pageNumber");
-    html.tableOrder = "";
+    html.tableOrder = "default";
     html.arrow = {};
     html.orderReverse = false;
 }
@@ -161,11 +161,7 @@ function sortTable(order = "default") {
     html.arrow = {};
     html.arrow[order] = "";
 
-    if (order == html.tableOrder) {
-        html.orderReverse = !html.orderReverse;
-    } else {
-        html.orderReverse = false;
-    }
+    if (order == html.tableOrder) html.orderReverse = !html.orderReverse;
 
     html.arrow[order] = html.orderReverse ? "↓" : "↑";
 
@@ -179,6 +175,8 @@ async function getRegistrations(order = "default", start = 0, increment = 10) {
         .then(data => {
             registrations = data.registrations;
             html.registrationsLength = data.registrationsLength;
+            html.lastMonthRegistrations = data.lastMonthRegistrations;
+            html.pendingRegistrations = data.pendingRegistrations;
         });
 }
 
