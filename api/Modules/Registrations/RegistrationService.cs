@@ -18,30 +18,21 @@ namespace Api.Modules.Registrations
         }
         public RegistrationDto GetSingleRegistration(Guid id)
         {
-            var registration = registrations.First(r => r.Id == id);
+            RegistrationDto registration = registrations.First(r => r.Id == id);
             return registration;
         }
 
         public RegistrationsPageDto GetRegistrationsPage(int start, int increment, string sortKey, bool descending, string query)
         {
-            var sortedRegistrations = SortRegistrations(sortKey, descending);
+            List<RegistrationDto> activeRegistrations = FilterDeletedRegistrations(registrations);
+            List<RegistrationDto> filteredRegistrations = SearchRegistrations(activeRegistrations, query);
+            List<RegistrationDto> sortedRegistrations = SortRegistrations(filteredRegistrations, sortKey, descending);
+            List<RegistrationDto> slicedRegistrations = SliceRegistrations(sortedRegistrations, start, increment);
+            List<RegistrationPreviewDto> registrationPreviewList = MapPreview(slicedRegistrations);
 
-            var filteredRegistrations = SearchRegistrations(sortedRegistrations, query);
-
-            var slicedRegistrations = SliceRegistrations(filteredRegistrations, start, increment);
-
-            List<RegistrationPreviewDto> registrationPreviewList = [.. slicedRegistrations
-                .Select(registration =>
-                new RegistrationPreviewDto(
-                    registration.Id,
-                    registration.Name,
-                    registration.Email,
-                    registration.Status,
-                    registration.Date))];
-
-            var lastMonth = registrations.Where(registration => registration.Date >= DateTime.Now.AddMonths(-1)).Count();
-            var pending = registrations.Where(registration => registration.Pending == true).Count();
-            var page = new RegistrationsPageDto(registrationPreviewList, registrations.Count, lastMonth, pending);
+            int lastMonth = activeRegistrations.Where(registration => registration.Date >= DateTime.Now.AddMonths(-1)).Count();
+            int pending = activeRegistrations.Where(registration => registration.Pending == true).Count();
+            RegistrationsPageDto page = new(registrationPreviewList, activeRegistrations.Count, lastMonth, pending);
 
             return page;
         }
@@ -50,48 +41,66 @@ namespace Api.Modules.Registrations
         {
             return registrations;
         }
+
         public void UpdateRegistration(RegistrationDto registration)
         {
-            var registrationIndex = registrations.FindIndex(r => r.Id == registration.Id);
+            int registrationIndex = registrations.FindIndex(r => r.Id == registration.Id);
             registrations[registrationIndex] = registration;
         }
+
         public void DeleteRegistration(Guid id)
         {
-            var registration = registrations.First(r => r.Id == id);
-            registrations.Remove(registration);
+            RegistrationDto registration = registrations.First(r => r.Id == id);
+            registration.Deleted = true;
         }
+
         public bool VerifyAvailableEmail(Guid id, string email)
         {
-            var existingEmail = registrations.FirstOrDefault(registration => registration.Email == email);
+            RegistrationDto? existingEmail = registrations.FirstOrDefault(registration => registration.Email == email);
             if (existingEmail != null)
             {
                 return existingEmail.Id.Equals(id);
             }
             return true;
         }
-        public List<RegistrationDto> SortRegistrations(string sortKey, bool descending)
+
+        public List<RegistrationDto> FilterDeletedRegistrations(List<RegistrationDto> registrations)
         {
-            var sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-            var sortedRegistrations = descending ? registrations.OrderByDescending(registration => sortProperty.GetValue(registration)) : registrations.OrderBy(registration => sortProperty.GetValue(registration));
+            return [.. registrations.Where(registration => registration.Deleted == false)];
+        }
+
+        public List<RegistrationDto> SortRegistrations(List<RegistrationDto> registrations, string sortKey, bool descending)
+        {
+            PropertyInfo? sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            IOrderedEnumerable<RegistrationDto> sortedRegistrations = descending ? registrations.OrderByDescending(sortProperty.GetValue) : registrations.OrderBy(sortProperty.GetValue);
 
             return [.. sortedRegistrations];
         }
+
         public List<RegistrationDto> SearchRegistrations(List<RegistrationDto> registrations, string query)
         {
-            var queryResults = registrations
+            return [.. registrations
                 .Where(registration => $"{registration.Name} {registration.Email.Split("@")[0]}"
-                .Contains(query, StringComparison.CurrentCultureIgnoreCase));
-
-            return [.. queryResults];
+                .Contains(query, StringComparison.CurrentCultureIgnoreCase))];
         }
+
         public List<RegistrationDto> SliceRegistrations(List<RegistrationDto> registrations, int start, int increment)
         {
-            var slicedRegistrations = registrations
-                .Skip(start)
-                .Take(increment)
-                .ToList();
+            return [.. registrations.Skip(start).Take(increment)];
+        }
 
-            return slicedRegistrations;
+        public List<RegistrationPreviewDto> MapPreview(List<RegistrationDto> registrations)
+        {
+            return [.. registrations
+                .Select(registration =>
+                new RegistrationPreviewDto(
+                    registration.Id,
+                    registration.Name,
+                    registration.Email,
+                    registration.Status,
+                    registration.Date
+                    )
+                )];
         }
     }
 }

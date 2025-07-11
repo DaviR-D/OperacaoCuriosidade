@@ -14,6 +14,7 @@ namespace Api.Modules.Registrations
         public string Interests { get; set; }
         public string Feelings { get; set; }
         public string Values { get; set; }
+        public bool Deleted { get; set; }
 
         public RegistrationDto(
         Guid id,
