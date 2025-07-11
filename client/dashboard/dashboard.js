@@ -21,18 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
     html.dashboard = {};
     getDashboardElements();
     insertDashboardData();
-
 })
 
 function getDashboardElements() {
     html.dashboard.tableTop = document.getElementById("tableTop");
-
     html.dashboard.total = document.getElementById("total");
     html.dashboard.pending = document.getElementById("pending");
     html.dashboard.lastMonth = document.getElementById("lastMonth");
-
 }
-
 
 async function insertDashboardData() {
     await updateTable();

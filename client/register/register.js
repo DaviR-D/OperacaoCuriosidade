@@ -37,7 +37,6 @@ function getRegisterElements() {
     });
 
     addInputEvents();
-
 }
 
 function insertRegisterData() {
