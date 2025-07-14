@@ -8,6 +8,7 @@ html.endpoint = "page"
 html.params = ""
 
 let registrations = [];
+let registrationsCache = [];
 
 let pageTheme = localStorage.getItem("theme");
 
@@ -47,6 +48,7 @@ function loadHeader() {
     html.userDisplay.innerText = loggedUser.name;
 
     html.search.addEventListener("input", function () {
+        registrationsCache = []
         html.arrow = {};
         html.tableOrder = "default"
         html.endpoint = html.search.value.length > 0 ? `page/search` : "page";
@@ -136,7 +138,7 @@ async function loadTableContent() {
             </tr>
             `
         );
-        
+
         if (search.value.length > 0) {
             searchResults.innerText = `${renderedRegistrations.length - 1} resultados`
         } else {
@@ -156,14 +158,31 @@ async function loadPaging(start = 0, increment = 10) {
 
     html.pageNumber.innerText = `${currentPage}/${totalPages}`;
 
-    let nextPageStart = (start + increment) >= length ? start : (start + increment);
-    let previousPageStart = (start - increment) < 0 ? 0 : (start - increment);
-    
-    html.nextButton.onclick = () => updateTable(nextPageStart);
-    html.previousButton.onclick = () => updateTable(previousPageStart);
+    let nextPageStart = currentPage == totalPages ? start : (start + increment);
+    let previousPageStart = currentPage == 1 ? 0 : (start - increment);
+
+    html.nextButton.onclick = () => {
+        if (registrationsCache.length > currentPage) {
+            registrations = registrationsCache[currentPage];
+            loadTableContent();
+            loadPaging(nextPageStart);
+        }
+        else if (currentPage < totalPages) return updateTable(nextPageStart);
+        else return () => { };
+    };
+    html.previousButton.onclick = () => {
+        if (currentPage == 1) return () => { };
+        else if (registrationsCache.length >= currentPage) {
+            registrations = registrationsCache[currentPage - 2];
+            loadTableContent();
+            loadPaging(previousPageStart);
+        }
+        else if (currentPage > 1) return updateTable(previousPageStart);
+    };
 }
 
 function sortTable(order = "default") {
+    registrationsCache = [];
     html.arrow = {};
     html.arrow[order] = "";
 
@@ -182,6 +201,7 @@ async function getRegistrations(start = 0, increment = 10) {
         .then(response => { return response.json() })
         .then(data => {
             registrations = data.registrations;
+            registrationsCache.push(data.registrations);
             html.registrationsLength = data.registrationsLength;
             html.lastMonthRegistrations = data.lastMonthRegistrations;
             html.pendingRegistrations = data.pendingRegistrations;
