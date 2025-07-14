@@ -138,13 +138,13 @@ async function loadTableContent() {
             </tr>
             `
         );
-
-        if (search.value.length > 0) {
-            searchResults.innerText = `${renderedRegistrations.length - 1} resultados`
-        } else {
-            searchResults.innerText = "";
-        }
     });
+
+    if (search.value.length > 0) {
+        searchResults.innerText = `${renderedRegistrations.length - 1} resultados`
+    } else {
+        searchResults.innerText = "";
+    }
 
     html.registrations.innerHTML = renderedRegistrations.join('');
     html.addActions?.();
