@@ -7,6 +7,7 @@ namespace Api.Modules.Registrations
     public class RegistrationService(List<RegistrationDto> registrations) : IRegistrationService
     {
         private static readonly Lock _lock = new();
+        private readonly DtoMapper _dtoMapper = new();
 
         public void CreateRegistration(RegistrationDto registration)
         {
@@ -27,7 +28,7 @@ namespace Api.Modules.Registrations
         {
             List<RegistrationDto> activeRegistrations = [.. registrations.Where(registration => registration.Deleted == false)];
             List<RegistrationDto> slicedRegistrations = [.. activeRegistrations.Skip(start).Take(increment)];
-            List<RegistrationPreviewDto> registrationPreviewList = MapPreview(slicedRegistrations);
+            List<RegistrationPreviewDto> registrationPreviewList = _dtoMapper.MapPreview(slicedRegistrations);
 
             int lastMonth = activeRegistrations.Where(registration => registration.Date >= DateTime.Now.AddMonths(-1)).Count();
             int pending = activeRegistrations.Where(registration => registration.Pending == true).Count();
@@ -80,20 +81,6 @@ namespace Api.Modules.Registrations
                 .Contains(query, StringComparison.CurrentCultureIgnoreCase))];
 
             return GetPagedRegistrations(start, increment, filteredRegistrations);
-        }
-
-        public List<RegistrationPreviewDto> MapPreview(List<RegistrationDto> registrations)
-        {
-            return [.. registrations
-                .Select(registration =>
-                new RegistrationPreviewDto(
-                    registration.Id,
-                    registration.Name,
-                    registration.Email,
-                    registration.Status,
-                    registration.Date
-                    )
-                )];
         }
     }
 }
