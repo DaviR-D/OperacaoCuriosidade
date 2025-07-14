@@ -8,7 +8,7 @@ html.endpoint = "page"
 html.params = ""
 
 let registrations = [];
-let registrationsCache = [];
+let registrationsCache = {};
 
 let pageTheme = localStorage.getItem("theme");
 
@@ -48,7 +48,7 @@ function loadHeader() {
     html.userDisplay.innerText = loggedUser.name;
 
     html.search.addEventListener("input", function () {
-        registrationsCache = []
+        registrationsCache = {}
         html.arrow = {};
         html.tableOrder = "default"
         html.endpoint = html.search.value.length > 0 ? `page/search` : "page";
@@ -158,12 +158,14 @@ async function loadPaging(start = 0, increment = 10) {
 
     html.pageNumber.innerText = `${currentPage}/${totalPages}`;
 
+    registrationsCache[currentPage] = registrations;
+
     let nextPageStart = currentPage == totalPages ? start : (start + increment);
     let previousPageStart = currentPage == 1 ? 0 : (start - increment);
 
     html.nextButton.onclick = () => {
-        if (registrationsCache.length > currentPage) {
-            registrations = registrationsCache[currentPage];
+        if (registrationsCache[currentPage + 1] != undefined) {
+            registrations = registrationsCache[currentPage + 1];
             loadTableContent();
             loadPaging(nextPageStart);
         }
@@ -172,8 +174,8 @@ async function loadPaging(start = 0, increment = 10) {
     };
     html.previousButton.onclick = () => {
         if (currentPage == 1) return () => { };
-        else if (registrationsCache.length >= currentPage) {
-            registrations = registrationsCache[currentPage - 2];
+        else if (registrationsCache[currentPage - 1] != undefined) {
+            registrations = registrationsCache[currentPage - 1];
             loadTableContent();
             loadPaging(previousPageStart);
         }
@@ -182,7 +184,7 @@ async function loadPaging(start = 0, increment = 10) {
 }
 
 function sortTable(order = "default") {
-    registrationsCache = [];
+    registrationsCache = {};
     html.arrow = {};
     html.arrow[order] = "";
 
@@ -201,7 +203,6 @@ async function getRegistrations(start = 0, increment = 10) {
         .then(response => { return response.json() })
         .then(data => {
             registrations = data.registrations;
-            registrationsCache.push(data.registrations);
             html.registrationsLength = data.registrationsLength;
             html.lastMonthRegistrations = data.lastMonthRegistrations;
             html.pendingRegistrations = data.pendingRegistrations;

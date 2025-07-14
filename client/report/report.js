@@ -24,7 +24,7 @@ async function printTable() {
     document.body.classList.add("blur");
     await updateTable(0, html.registrationsLength);
     window.print();
-    registrationsCache = [];
+    registrationsCache = {};
     updateTable();
     document.body.classList.remove("blur");
 }

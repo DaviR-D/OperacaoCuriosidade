@@ -100,7 +100,7 @@ async function deleteRegistration(id) {
     await fetch(`${apiUrl}/api/registration/${id}`, {
         method: 'DELETE'
     })
-    registrationsCache = [];
+    registrationsCache = {};
     updateTable();
     hideDeleteConfirmation()
 }
