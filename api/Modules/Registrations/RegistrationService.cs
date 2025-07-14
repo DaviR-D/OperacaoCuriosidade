@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 
@@ -22,12 +23,10 @@ namespace Api.Modules.Registrations
             return registration;
         }
 
-        public RegistrationsPageDto GetRegistrationsPage(int start, int increment, string sortKey, bool descending, string query)
+        public RegistrationsPageDto GetPagedRegistrations(int start, int increment, List<RegistrationDto> registrations)
         {
             List<RegistrationDto> activeRegistrations = FilterDeletedRegistrations(registrations);
-            List<RegistrationDto> filteredRegistrations = SearchRegistrations(activeRegistrations, query);
-            List<RegistrationDto> sortedRegistrations = SortRegistrations(filteredRegistrations, sortKey, descending);
-            List<RegistrationDto> slicedRegistrations = SliceRegistrations(sortedRegistrations, start, increment);
+            List<RegistrationDto> slicedRegistrations = SliceRegistrations(activeRegistrations, start, increment);
             List<RegistrationPreviewDto> registrationPreviewList = MapPreview(slicedRegistrations);
 
             int lastMonth = activeRegistrations.Where(registration => registration.Date >= DateTime.Now.AddMonths(-1)).Count();
@@ -69,19 +68,23 @@ namespace Api.Modules.Registrations
             return [.. registrations.Where(registration => registration.Deleted == false)];
         }
 
-        public List<RegistrationDto> SortRegistrations(List<RegistrationDto> registrations, string sortKey, bool descending)
+        public RegistrationsPageDto GetSortedRegistrations(string sortKey, bool descending, int start, int increment)
         {
+            List<RegistrationDto> activeRegistrations = FilterDeletedRegistrations(registrations);
             PropertyInfo? sortProperty = sortKey == "default" ? typeof(RegistrationDto).GetProperty("Id") : typeof(RegistrationDto).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-            IOrderedEnumerable<RegistrationDto> sortedRegistrations = descending ? registrations.OrderByDescending(sortProperty.GetValue) : registrations.OrderBy(sortProperty.GetValue);
+            IOrderedEnumerable<RegistrationDto> sortedRegistrations = descending ? activeRegistrations.OrderByDescending(sortProperty.GetValue) : activeRegistrations.OrderBy(sortProperty.GetValue);
 
-            return [.. sortedRegistrations];
+            return GetPagedRegistrations(start, increment, [.. sortedRegistrations]);
         }
 
-        public List<RegistrationDto> SearchRegistrations(List<RegistrationDto> registrations, string query)
+        public RegistrationsPageDto SearchRegistrations(string query, int start, int increment)
         {
-            return [.. registrations
+            List<RegistrationDto> activeRegistrations = FilterDeletedRegistrations(registrations);
+            List<RegistrationDto> filteredRegistrations = [.. activeRegistrations
                 .Where(registration => $"{registration.Name} {registration.Email.Split("@")[0]}"
                 .Contains(query, StringComparison.CurrentCultureIgnoreCase))];
+
+            return GetPagedRegistrations(start, increment, filteredRegistrations);
         }
 
         public List<RegistrationDto> SliceRegistrations(List<RegistrationDto> registrations, int start, int increment)

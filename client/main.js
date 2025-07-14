@@ -4,6 +4,9 @@ let loggedUser = JSON.parse(localStorage.getItem("login"));
 
 let html = {};
 
+html.endpoint = "page"
+html.params = ""
+
 let registrations = [];
 
 let pageTheme = localStorage.getItem("theme");
@@ -44,7 +47,11 @@ function loadHeader() {
     html.userDisplay.innerText = loggedUser.name;
 
     html.search.addEventListener("input", function () {
-        sortTable();
+        html.arrow = {};
+        html.tableOrder = "default"
+        html.endpoint = html.search.value.length > 0 ? `page/search` : "page";
+        html.params = html.search.value.length > 0 ? `query=${html.search.value.toLowerCase()}` : "";
+        updateTable();
     });
 
     html.exit.addEventListener("click", function () {
@@ -141,7 +148,7 @@ async function loadTableContent() {
     html.addActions?.();
 }
 
-async function loadPaging(order = "default", start = 0, increment = 10) {
+async function loadPaging(start = 0, increment = 10) {
     let length = html.registrationsLength;
 
     let totalPages = Math.ceil(length / increment);
@@ -152,8 +159,8 @@ async function loadPaging(order = "default", start = 0, increment = 10) {
     let nextPageStart = (start + increment) >= length ? start : (start + increment);
     let previousPageStart = (start - increment) < 0 ? 0 : (start - increment);
     
-    html.nextButton.onclick = () => updateTable(order, nextPageStart);
-    html.previousButton.onclick = () => updateTable(order, previousPageStart);
+    html.nextButton.onclick = () => updateTable(nextPageStart);
+    html.previousButton.onclick = () => updateTable(previousPageStart);
 }
 
 function sortTable(order = "default") {
@@ -165,11 +172,13 @@ function sortTable(order = "default") {
     html.arrow[order] = html.orderReverse ? "↓" : "↑";
 
     html.tableOrder = order;
-    updateTable(order);
+    html.endpoint = "page/sorted";
+    html.params = `sortKey=${order}&descending=${html.orderReverse}`;
+    updateTable();
 }
 
-async function getRegistrations(order = "default", start = 0, increment = 10) {
-    await fetch(`${apiUrl}/api/registration/page?start=${start}&increment=${increment}&sortKey=${order}&descending=${html.orderReverse}&query=${html.search.value.toLowerCase()}`)
+async function getRegistrations(start = 0, increment = 10) {
+    await fetch(`${apiUrl}/api/registration/${html.endpoint}?start=${start}&increment=${increment}&${html.params}`)
         .then(response => { return response.json() })
         .then(data => {
             registrations = data.registrations;
@@ -179,9 +188,9 @@ async function getRegistrations(order = "default", start = 0, increment = 10) {
         });
 }
 
-async function updateTable(order = "default", start = 0, increment = 10) {
-    await getRegistrations(order, start, increment);
-    loadPaging(order, start, increment);
+async function updateTable(start = 0, increment = 10) {
+    await getRegistrations(start, increment);
+    loadPaging(start, increment);
     loadTableContent();
 }
 
