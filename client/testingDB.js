@@ -601,12 +601,15 @@ db = [
   }
 ]
 
-db.forEach(register => {
-  fetch(`http://localhost:5204/api/registration/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(register)
-  })
-});
+function createDB(token) {
+  db.forEach(register => {
+    fetch(`http://localhost:5204/api/registration/`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(register)
+    })
+  });
+}
