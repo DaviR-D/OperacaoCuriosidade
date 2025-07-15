@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Api.Modules.Registrations;
 
@@ -11,7 +12,8 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         service.CreateRegistration(registration);
         return Ok();
     }
-
+    
+    //[Authorize]
     [HttpGet("{id}")]
     public IActionResult GetSingle([FromRoute] Guid id)
     {
@@ -19,6 +21,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok(registration);
     }
 
+    //[Authorize]
     [HttpGet("page")]
     public IActionResult GetPage(int start, int increment)
     {
@@ -26,6 +29,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok(page);
     }
 
+    //[Authorize]
     [HttpGet("page/sorted")]
     public IActionResult GetSortedPage(string sortKey, bool descending, int start, int increment)
     {
@@ -33,6 +37,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok(page);
     }
 
+    //[Authorize]
     [HttpGet("page/search")]
     public IActionResult SearchRegistrations(int start, int increment, string query = "")
     {
@@ -40,6 +45,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok(results);
     }
 
+    //[Authorize]
     [HttpGet]
     public IActionResult GetAll()
     {
@@ -47,6 +53,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok(registrations);
     }
 
+    //[Authorize]
     [HttpPut]
     public IActionResult Update([FromBody] RegistrationDto registration)
     {
@@ -54,6 +61,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok();
     }
 
+    //[Authorize]
     [HttpDelete("{id}")]
     public IActionResult Delete([FromRoute] Guid id)
     {
@@ -61,6 +69,7 @@ public class RegistrationController(IRegistrationService service, List<Registrat
         return Ok();
     }
 
+    //[Authorize]
     [HttpGet("checkEmail")]
     public IActionResult CheckEmail(Guid id, string email)
     {

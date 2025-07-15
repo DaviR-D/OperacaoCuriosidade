@@ -10,7 +10,7 @@ namespace Api.Modules.Authentication
         public ActionResult Authenticate([FromBody] UserDto user)
         {
             var token = service.Authenticate(user);
-            if(token != null) return Ok(token);
+            if(token != null) return Ok(new { Token = token });
             else return Unauthorized();
         }
     }
