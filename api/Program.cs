@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Authentication;
 using Api.Modules.Registrations;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-var registrationsMock = new List<RegistrationDto>();
-var usersMock = new List<User>();
-usersMock.Add(new User("Davi", "davi@gmail.com", "senha123"));
+List<RegistrationDto> registrationsMock = [];
+List<User> usersMock = [new User("Davi", "davi@gmail.com", "senha123")];
 
 builder.Services.AddTransient<AuthenticationService>();
 
@@ -36,7 +36,7 @@ builder.Services.AddSingleton(usersMock);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("policy", builder =>
+    options.AddPolicy("localhost", builder =>
     {
         builder.WithOrigins("http://127.0.0.1:5500")
                .AllowAnyHeader()
@@ -64,7 +64,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("policy");
+app.UseCors("localhost");
 
 app.UseHttpsRedirection();
 

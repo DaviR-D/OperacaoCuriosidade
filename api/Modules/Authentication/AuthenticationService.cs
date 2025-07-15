@@ -1,27 +1,27 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Security.Claims;
+using System.Text;
 
 namespace Api.Modules.Authentication
 {
     public class AuthenticationService(List<User> users)
     {
-        public string Authenticate(UserDto user)
+        public string? Authenticate(UserDto userCredentials)
         {
-            foreach (var u in users)
+            foreach (var user in users)
             {
-                if(user.Email == u.Email)
+                if (userCredentials.Email == user.Email)
                 {
-                    if(user.Password == u.Password)
+                    if (userCredentials.Password == user.Password)
                     {
-                        return GenerateToken(u);
+                        return GenerateToken(user);
                     }
                 }
             }
             return null;
         }
-        private string GenerateToken(User user)
+        private static string GenerateToken(User user)
         {
             var handler = new JwtSecurityTokenHandler();
 
@@ -44,10 +44,10 @@ namespace Api.Modules.Authentication
         }
         private static ClaimsIdentity GenerateClaims(User user)
         {
-            var ci = new ClaimsIdentity();
-            ci.AddClaim(new Claim(type: ClaimTypes.Name, value: user.Name));
+            var claimsIdentity = new ClaimsIdentity();
+            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Name, value: user.Name));
 
-            return ci;
+            return claimsIdentity;
         }
     }
 }

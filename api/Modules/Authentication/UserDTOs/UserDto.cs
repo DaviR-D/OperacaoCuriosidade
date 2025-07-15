@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Api.Modules.Authentication
+﻿namespace Api.Modules.Authentication
 {
     public class UserDto(string email, string password)
     {
