@@ -1,10 +1,16 @@
+using Api.Modules.Authentication;
 using Api.Modules.Registrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var registrationsMock = new List<RegistrationDto>();
+var usersMock = new List<User>();
+usersMock.Add(new User("Davi", "davi@gmail.com", "senha123"));
+
+builder.Services.AddTransient<AuthenticationService>();
 
 builder.Services.AddSingleton(registrationsMock);
+builder.Services.AddSingleton(usersMock);
 
 builder.Services.AddCors(options =>
 {
