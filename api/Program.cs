@@ -52,6 +52,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseCors("localhost");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -63,8 +65,6 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-app.UseCors("localhost");
 
 app.UseHttpsRedirection();
 

@@ -205,7 +205,13 @@ async function getRegistrations(start = 0, increment = 10) {
             "Content-Type": "application/json"
         },
     })
-        .then(response => { return response.json() })
+        .then(response => { 
+            if(response.status == 401){
+                localStorage.removeItem("login");
+                window.location = "../login/login.html";
+            }
+            return response.json() 
+        })
         .then(data => {
             registrations = data.registrations;
             html.registrationsLength = data.registrationsLength;
