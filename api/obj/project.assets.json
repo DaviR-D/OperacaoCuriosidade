@@ -389,9 +389,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\api.csproj",
-      "projectName": "api",
-      "projectPath": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\Api.csproj",
+      "projectName": "Api",
+      "projectPath": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\Api.csproj",
       "packagesPath": "C:\\Users\\DaviRodriguesDavanzo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\obj\\",
       "projectStyle": "PackageReference",
@@ -460,7 +460,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
