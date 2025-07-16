@@ -27,12 +27,16 @@ builder.Services.AddAuthentication(options =>
     });
 
 List<RegistrationDto> registrationsMock = [];
-List<User> usersMock = [new User("Davi", "davi@gmail.com", "senha123")];
+List<User> usersMock = [];
+
 
 builder.Services.AddTransient<AuthenticationService>();
 
 builder.Services.AddSingleton(registrationsMock);
 builder.Services.AddSingleton(usersMock);
+
+AuthenticationService service = new(usersMock);
+service.CreateUser(new UserDto("Davi", "davi@gmail.com", "senha123"));
 
 builder.Services.AddCors(options =>
 {
