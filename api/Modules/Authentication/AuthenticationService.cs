@@ -9,16 +9,11 @@ namespace Api.Modules.Authentication
     {
         public string? Authenticate(UserDto userCredentials)
         {
-            foreach (var user in users)
-            {
-                if (userCredentials.Email == user.Email)
-                {
-                    if (userCredentials.Password == user.Password)
-                    {
-                        return GenerateToken(user);
-                    }
-                }
-            }
+            var user = users.FirstOrDefault(user =>
+                       userCredentials.Email == user.Email && 
+                       userCredentials.Password == user.Password);
+
+            if (user != null) return GenerateToken(user);
             return null;
         }
         private static string GenerateToken(User user)
