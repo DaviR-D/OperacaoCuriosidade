@@ -43,7 +43,8 @@ async function tryLogin() {
       });
 
     if (token) {
-      localStorage.setItem("login", JSON.stringify({ "name": "Davi", "token": token }))
+      tokenData = parseToken(token);
+      localStorage.setItem("login", JSON.stringify({ "name": tokenData.unique_name, "token": token }))
       window.location = "../dashboard/dashboard.html";
     }
     else {
@@ -60,6 +61,12 @@ function checkValidEmail(email) {
   if (!validEmail) html.errorMessage.innerText = "Insira um email válido!";;
 
   return validEmail;
+}
+
+function parseToken(token){
+  const payload = token.split('.')[1];
+  const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, ';'));
+  return JSON.parse(decodedPayload);
 }
 
 function applyTheme(theme = "default") {
