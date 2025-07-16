@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 60vh;
-    min-height: 350px;
+    min-height: 450px;
     width: 30vw;
     margin: auto;
     border-radius: 8px;
@@ -80,4 +80,8 @@ button {
     margin-top: 8vh;
     margin-bottom: 0;
     height: 6vh;
+}
+
+#signup{
+    align-self: flex-end;
 }

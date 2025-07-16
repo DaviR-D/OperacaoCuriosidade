@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../theme.css">
-    <link rel="stylesheet" href="login.css">
-    <script src="../token.js" defer></script>
+    <link rel="stylesheet" href="../login/login.css">
+    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
     <main class="loginBox">
@@ -15,13 +15,14 @@
             <p style="text-align: center;">Operação<br>Curiosidade</p>
         </div>  
         <div id="loginInfo">
+            <input type="text" id="name" placeholder="Nome"/>
             <input type="text" id="email" placeholder="Email"/>
             <input type="password" id="password" placeholder="Senha"/>
-            <button id="login" onclick="tryLogin()">ENTRAR</button>
+            <button id="login" onclick="tryRegister()">REGISTRAR</button>
             <span id="errorMessage"></span>
         </div>
-        <span id="signup">Não tem uma conta? <a href="../signup/signup.html"> registrar-se</a></span>
+        
     </main>
 </body>
-<script src="login.js" defer></script>
+<script src="signup.js" defer></script>
 </html>
