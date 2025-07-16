@@ -45,7 +45,7 @@ async function tryLogin() {
     if (token) {
       tokenData = parseToken(token);
       localStorage.setItem("login", JSON.stringify({ "name": tokenData.unique_name, "token": token }))
-      window.location = "../dashboard/dashboard.html";
+      window.location = "../../dashboard/dashboard.html";
     }
     else {
       html.errorMessage.innerText = "Login incorreto!";
@@ -58,7 +58,7 @@ function checkValidEmail(email) {
 
   let validEmail = regex.test(email);
 
-  if (!validEmail) html.errorMessage.innerText = "Insira um email válido!";;
+  if (!validEmail) html.errorMessage.innerText = "Insira um email válido!";
 
   return validEmail;
 }

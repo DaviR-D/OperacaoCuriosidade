@@ -33,7 +33,7 @@ function loadHeader() {
         <div class="login">
             <span id="themeIcon" class="material-symbols-outlined"></span>
             <span id="userDisplay"></span>
-            <a href="../login/login.html" id="exit">SAIR</a>
+            <a href="../authentication/login/login.html" id="exit">SAIR</a>
         </div>
     </header>
     `);
@@ -208,7 +208,7 @@ async function getRegistrations(start = 0, increment = 10) {
         .then(response => { 
             if(response.status == 401){
                 localStorage.removeItem("login");
-                window.location = "../login/login.html";
+                window.location = "../authentication/login/login.html";
             }
             return response.json() 
         })
