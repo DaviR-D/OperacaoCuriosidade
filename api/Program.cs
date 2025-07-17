@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-List<RegistrationDto> registrationsMock = [];
+List<Registration> registrationsMock = [];
 List<User> usersMock = [];
 
 builder.Services.AddSingleton(registrationsMock);
