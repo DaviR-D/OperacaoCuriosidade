@@ -61,5 +61,14 @@ namespace Api.Modules.Authentication
 
             return claimsIdentity;
         }
+        public bool VerifyAvailableEmail(Guid id, string email)
+        {
+            User? existingEmail = users.FirstOrDefault(user => user.Email == email);
+            if (existingEmail != null)
+            {
+                return existingEmail.Id.Equals(id);
+            }
+            return true;
+        }
     }
 }

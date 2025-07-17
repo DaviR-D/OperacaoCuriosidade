@@ -13,7 +13,7 @@ namespace Api.Modules.Registrations
             {
                 registration.Id = Guid.NewGuid();
                 registration.Date = DateTime.Now;
-                registrations.Add(registration);
+                if(VerifyAvailableEmail(registration.Id, registration.Email)) registrations.Add(registration);
             }
         }
         public RegistrationDto GetSingleRegistration(Guid id)
