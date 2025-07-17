@@ -8,6 +8,9 @@ function getSignupElements() {
     html.nameInput.addEventListener("keydown", e => {
         if (e.key === "Enter") html.emailInput.focus();
     })
+    html.passwordInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") trySignup();
+    })
 }
 
 async function trySignup() {

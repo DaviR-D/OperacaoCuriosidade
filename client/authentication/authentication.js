@@ -7,7 +7,6 @@ let html = {}
 document.addEventListener("DOMContentLoaded", function () {
   getAuthElements();
   applyTheme(pageTheme ?? "default");
-
 })
 
 function getAuthElements() {
@@ -18,9 +17,6 @@ function getAuthElements() {
 
   html.emailInput.addEventListener("keydown", e => {
     if (e.key === "Enter") html.passwordInput.focus();
-  })
-  html.passwordInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") tryLogin();
   })
 }
 
