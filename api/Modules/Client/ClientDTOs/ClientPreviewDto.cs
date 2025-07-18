@@ -1,6 +1,6 @@
-﻿namespace Api.Modules.Registrations
+﻿namespace Api.Modules.Clients
 {
-    public class RegistrationPreviewDto(
+    public class ClientPreviewDto(
         Guid id,
         string name,
         string email,

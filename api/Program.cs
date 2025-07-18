@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Authentication;
-using Api.Modules.Registrations;
+using Api.Modules.Clients;
 using System.Text;
 
 
@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-List<Registration> registrationsMock = [];
+List<Client> registrationsMock = [];
 List<User> usersMock = [];
 
 builder.Services.AddSingleton(registrationsMock);
@@ -48,7 +48,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 builder.Services.AddControllers();
 

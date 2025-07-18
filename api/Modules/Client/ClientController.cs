@@ -1,65 +1,65 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Modules.Registrations
+namespace Api.Modules.Clients
 {
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class RegistrationController(IRegistrationService service, List<Registration> registrations) : ControllerBase
+    public class ClientController(IClientService service, List<Client> clients) : ControllerBase
     {
         [HttpPost]
-        public IActionResult Create([FromBody] RegistrationDto registration)
+        public IActionResult Create([FromBody] ClientDto client)
         {
-            service.CreateRegistration(registration);
+            service.CreateClient(client);
             return Ok();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetSingle([FromRoute] Guid id)
         {
-            var registration = service.GetSingleRegistration(id);
-            return Ok(registration);
+            var client = service.GetSingleClient(id);
+            return Ok(client);
         }
 
         [HttpGet("stats")]
         public IActionResult GetStats()
         {
-            return Ok(service.GetRegistrationsStats());
+            return Ok(service.GetClientsStats());
         }
 
         [HttpGet("page")]
         public IActionResult GetPage(int start, int increment)
         {
-            var page = service.GetPagedRegistrations(start, increment, registrations);
+            var page = service.GetPagedClients(start, increment, clients);
             return Ok(page);
         }
 
         [HttpGet("page/sorted")]
         public IActionResult GetSortedPage(string sortKey, bool descending, int start, int increment)
         {
-            var page = service.GetSortedRegistrations(sortKey, descending, start, increment);
+            var page = service.GetSortedClients(sortKey, descending, start, increment);
             return Ok(page);
         }
 
         [HttpGet("page/search")]
-        public IActionResult SearchRegistrations(int start, int increment, string query = "")
+        public IActionResult SearchClients(int start, int increment, string query = "")
         {
-            var results = service.SearchRegistrations(query, start, increment);
+            var results = service.SearchClients(query, start, increment);
             return Ok(results);
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] RegistrationDto registration)
+        public IActionResult Update([FromBody] ClientDto client)
         {
-            service.UpdateRegistration(registration);
+            service.UpdateClient(client);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] Guid id)
         {
-            service.DeleteRegistration(id);
+            service.DeleteClient(id);
             return Ok();
         }
 
