@@ -1,0 +1,114 @@
+:root {
+    --main-color: white;
+    --second-color: rgb(225, 225, 225);
+    --font-color: rgb(74, 74, 74);
+    --highlight-color: lightgray;
+    --border-color: rgb(203, 203, 203);
+    --activeBackground: rgb(204, 255, 204);
+    --activeFontColor: rgb(0, 100, 0);
+    --inactiveBackground: rgb(255, 215, 204);
+    --inactiveFontColor: rgb(150, 0, 0);
+}
+
+body {
+    background-color: var(--second-color);
+}
+
+header,
+nav,
+#tableContainer,
+.statsContainer,
+.loginBox,
+#registerModal,
+#alertModal {
+    background-color: var(--main-color);
+    border: 1px solid rgba(0, 0, 0, 0.300);
+    color: var(--font-color);
+}
+
+#exit {
+    border-left-color: var(--border-color);
+}
+
+#exit:hover {
+    color: firebrick;
+    border-left-color: firebrick;
+}
+
+#search {
+    background-color: var(--second-color);
+}
+
+a {
+    color: var(--font-color);
+}
+
+tr:hover {
+    background-color: var(--second-color);
+}
+
+#tableHeader {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.column:active {
+    background-color: var(--second-color);
+}
+
+td {
+    border-bottom-color: var(--border-color);
+}
+
+.active {
+    background-color: var(--activeBackground);
+    color: var(--activeFontColor);
+}
+
+.inactive {
+    background-color: var(--inactiveBackground);
+    color: var(--inactiveFontColor);
+}
+
+button {
+    color: white;
+}
+
+input,
+textarea {
+    background-color: var(--second-color);
+    color: var(--font-color);
+    border: 1px solid rgba(0, 0, 0, 0.300);
+}
+
+input:focus,
+textarea:focus {
+    outline: 1px solid rgba(0, 0, 0, 0.300);
+}
+
+button {
+    color: white;
+    background-color: black;
+    border: none;
+}
+
+.tablePaging>button {
+    color: var(--font-color);
+}
+
+#themeIcon:hover {
+    background-color: var(--second-color);
+    cursor: pointer;
+}
+
+#tableContainer>::-webkit-scrollbar,
+#registerModal>::-webkit-scrollbar {
+    width: 4px;
+    background-color: rgba(255, 255, 255, 0)
+}
+
+#tableContainer>::-webkit-scrollbar-thumb,
+#registerModal>::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 16px;
+}

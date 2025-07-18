@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="register.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="../token.js" defer></script>
+    <script src="../theme.js" defer></script>
+</head>
+
+<body>
+    <main id="mainContent">
+        <dialog id="registerModal">
+            <form id="registerForm">
+                <div id="modalTop">
+                    <span id="closeButton" class="material-symbols-outlined" onclick="hideRegisterModal()">close</span>
+                </div>
+                <div>
+                    <h2 class="onionLayer">
+                        <strong>1° Fatos e dados</strong>
+                        <span id="activeCheck">Ativo<input type="checkbox" id="status"></span>
+                    </h2>
+                    <div style="display: flex;">
+                        <div class="registerSection" style="width: 70%;">
+                            <div class="inputTitle">Nome*</div>
+                            <input type="text" id="name" required>
+                            <div id="nameError" class="errorMessage"></div>
+                        </div>
+                        <div class="registerSection" style="width: 20%; margin-left: 5%;">
+                            <div class="inputTitle">Idade*</div>
+                            <input type="number" id="age" min="14" max="120" style="min-width: 10px;" required>
+                            <div id="ageError" class="errorMessage"></div>
+                        </div>
+                    </div>
+                    <div class="registerSection">
+                        <div class="inputTitle">Email*</div>
+                        <input type="text" id="email" required>
+                        <div id="emailError" class="errorMessage"></div>
+                    </div>
+                    <div class="registerSection">
+                        <div class="inputTitle">Endereço*</div>
+                        <input type="text" id="address" required>
+                        <div id="addressError" class="errorMessage"></div>
+                    </div>
+                    <div class="registerSection">
+                        <div class="inputTitle">Outras informações</div>
+                        <input type="text" id="other">
+                        <div id="otherError" class="errorMessage"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="registerSection">
+                        <h2 class="onionLayer"><strong>2° Interesses*</strong></h2>
+                        <textarea id="interests" required></textarea>
+                        <div id="interestsError" class="errorMessage"></div>
+                    </div>
+                    <div class="registerSection">
+                        <h2 class="onionLayer"><strong>3° Sentimentos*</strong></h2>
+                        <textarea id="feelings" required></textarea>
+                        <div id="feelingsError" class="errorMessage"></div>
+                    </div>
+                    <div class="registerSection">
+                        <h2 class="onionLayer"><strong>4° Valores*</strong></h2>
+                        <textarea id="values" required></textarea>
+                        <div id="valuesError" class="errorMessage"></div>
+                    </div>
+                </div>
+                <div id="buttonContainer">
+                    <button type="submit" id="submitButton"
+                        onclick="saveRegistration(event, registerModal.dataset.userId)">GRAVAR</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="alertModal">
+            <div id="alertWrapper">
+                <p id="alertTitle"></p>
+                <span id="alertText">Essa ação não pode ser desfeita</span>
+                <div id="alertButtons">
+                    <button id="cancelDeleteButton" onclick="hideDeleteConfirmation()">CANCELAR</button>
+                    <button id="alertDeleteButton">DELETAR</button>
+                </div>
+            </div>
+        </dialog>
+    </main>
+</body>
+<script src="../main.js" defer></script>
+<script src="register.js" defer></script>
+
+</html>

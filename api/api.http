@@ -1,0 +1,12 @@
+@api_HostAddress = http://localhost:5204/api
+
+POST {{api_HostAddress}}/authentication
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Name": "Davi",
+  "Email": "davi@gmail.com", 
+  "Password": "senha123"
+}
+###
