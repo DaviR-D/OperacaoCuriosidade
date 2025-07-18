@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Authentication;
 using Api.Modules.Clients;
 using System.Text;
+using Api.Modules.Repositories;
+using Api.Modules.Clients.Commands.CreateClient;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,7 +50,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ClientRepository>();
+builder.Services.AddScoped<CreateClientHandler>();
 
 builder.Services.AddControllers();
 
