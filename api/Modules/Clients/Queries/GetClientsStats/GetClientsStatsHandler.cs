@@ -1,7 +1,6 @@
-﻿using Api.Modules.Clients;
-using Api.Modules.Repositories;
+﻿using Api.Modules.Repositories;
 
-namespace Api.Modules.Clients.Queries.Handlers
+namespace Api.Modules.Clients.Queries.GetClientsStats
 {
     public class GetClientsStatsHandler(ClientRepository repository)
     {

@@ -1,9 +1,8 @@
-﻿using Api.Modules.Clients.Commands.Interfaces;
-using Api.Modules.Clients.Queries.Interfaces;
+﻿using Api.Modules.Clients.Interfaces;
 
 namespace Api.Modules.Clients.Commands.CreateClient
 {
-    public class CreateClientResponse : ICommandResponse
+    public class CreateClientResponse : IClientOutput
     {
     }
 }

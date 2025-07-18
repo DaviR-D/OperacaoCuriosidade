@@ -1,8 +1,7 @@
-﻿using Api.Modules.Clients;
-using Api.Modules.Repositories;
+﻿using Api.Modules.Repositories;
 using System.Reflection;
 
-namespace Api.Modules.Clients.Queries.Handlers
+namespace Api.Modules.Clients.Queries.GetSortedClients
 {
     public class GetSortedClientsHandler(ClientRepository repository)
     {

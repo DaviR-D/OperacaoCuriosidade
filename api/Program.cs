@@ -5,6 +5,8 @@ using Api.Modules.Clients;
 using System.Text;
 using Api.Modules.Repositories;
 using Api.Modules.Clients.Commands.CreateClient;
+using Api.Modules.Clients.Interfaces;
+using Api.Modules.Clients.Queries.GetPagedClients;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +53,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<ClientRepository>();
-builder.Services.AddScoped<CreateClientHandler>();
+//builder.Services.AddScoped<IClientHandler<IClientOutput, IClientInput>, GetPagedClientsHandler>();
+//builder.Services.AddScoped<IClientHandler<IClientOutput, IClientInput>, CreateClientHandler>();
+
 
 builder.Services.AddControllers();
 

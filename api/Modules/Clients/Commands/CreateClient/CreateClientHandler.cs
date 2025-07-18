@@ -1,18 +1,19 @@
-﻿using Api.Modules.Repositories;
+﻿using Api.Modules.Clients.Interfaces;
+using Api.Modules.Repositories;
 
 namespace Api.Modules.Clients.Commands.CreateClient
 {
-    public class CreateClientHandler(ClientRepository repository) : IClientHandler<CreateClientResponse, CreateClientCommand>
+    public class CreateClientHandler(ClientRepository repository) : IClientHandler<IClientOutput, IClientInput>
     {
         private static readonly Lock _lock = new();
 
-        public CreateClientResponse Handle(CreateClientCommand command)
+        public IClientOutput Handle(IClientInput input)
         {
+            var command = (CreateClientCommand)input;
             lock (_lock)
             {
-                command.Id = Guid.NewGuid();
-                command.Date = DateTime.Now;
-                if (VerifyAvailableEmail(command.Id, command.Email)) repository.Create(command);
+                if (VerifyAvailableEmail(command.Client.Id, command.Client.Email))
+                    repository.Create(command.Client);
             }
             return new CreateClientResponse();
         }

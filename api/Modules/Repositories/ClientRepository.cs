@@ -8,6 +8,8 @@ namespace Api.Modules.Repositories
         private readonly List<Client> _activeClients = [..clients.Where(client => client.Deleted == false)];
         public void Create(ClientDto client)
         {
+            client.Id = Guid.NewGuid();
+            client.Date = DateTime.Now;
             clients.Add(DtoMapper.ToEntity(client));
         }
         public void Update(ClientDto client)

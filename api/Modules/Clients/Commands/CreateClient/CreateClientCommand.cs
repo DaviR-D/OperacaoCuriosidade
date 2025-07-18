@@ -1,10 +1,10 @@
-﻿using Api.Modules.Clients.Commands.Interfaces;
+﻿using Api.Modules.Clients.Interfaces;
 
 namespace Api.Modules.Clients.Commands.CreateClient
 {
-    public class CreateClientCommand(ClientDto client) : IClientCommand
+    public class CreateClientCommand(ClientDto client) : IClientInput
     {
-        public string Name { get; set; } = client.Name;
+        public ClientDto Client { get; set; } = client;
 
     }
 }

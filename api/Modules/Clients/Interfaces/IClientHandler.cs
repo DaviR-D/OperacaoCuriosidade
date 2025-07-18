@@ -1,4 +1,4 @@
-﻿namespace Api.Modules.Clients
+﻿namespace Api.Modules.Clients.Interfaces
 {
     public interface IClientHandler<Output, Input>
     {
