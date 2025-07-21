@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Authentication;
-using Api.Modules.Clients;
 using System.Text;
-using Api.Modules.Repositories;
-using Api.Modules.Clients.Commands.CreateClient;
-using Api.Modules.Clients.Interfaces;
-using Api.Modules.Clients.Queries.GetPagedClients;
+using Api.Modules.Clients.Domain;
+using Api.Modules.Clients.Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
