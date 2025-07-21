@@ -13,6 +13,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
         {
             var command = (CreateUserCommand)input;
             var user = command.User;
+            if (!VerifyAvailableEmail(user.Email)) return new CreateUserResponse("Email already in use");
 
             string salt = new Guid().ToString();
             string password = user.Password + salt;
@@ -24,14 +25,11 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
 
             return new CreateUserResponse();
         }
-        //public bool VerifyAvailableEmail(Guid id, string email)
-        //{
-        //    User? existingEmail = users.FirstOrDefault(user => user.Email == email);
-        //    if (existingEmail != null)
-        //    {
-        //        return existingEmail.Id.Equals(id);
-        //    }
-        //    return true;
-        //}
+        public bool VerifyAvailableEmail(string email)
+        {
+            User? existingEmail = repository.GetAll().FirstOrDefault(user => user.Email == email);
+            if (existingEmail != null) return false;
+            return true;
+        }
     }
 }

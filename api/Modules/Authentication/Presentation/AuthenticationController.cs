@@ -15,8 +15,8 @@ namespace Api.Modules.Authentication.Presentation
         public IActionResult Create([FromBody] UserDto user)
         {
             var handler = new CreateUserHandler(repository);
-            handler.Handle(new CreateUserCommand(user));
-            return Ok();
+            var response = handler.Handle(new CreateUserCommand(user));
+            return Ok(response);
         }
 
         [HttpPost]
