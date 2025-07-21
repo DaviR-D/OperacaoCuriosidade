@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Api.Modules.Clients.Interfaces;
 using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Clients.Application.Queries.GetPagedClients;
 using Api.Modules.Clients.Infrastructure.Repositories;

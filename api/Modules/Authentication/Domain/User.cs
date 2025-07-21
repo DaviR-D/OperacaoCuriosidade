@@ -1,4 +1,4 @@
-﻿namespace Api.Modules.Authentication
+﻿namespace Api.Modules.Authentication.Domain
 {
     public class User(string name, string email, string password, string salt)
     {

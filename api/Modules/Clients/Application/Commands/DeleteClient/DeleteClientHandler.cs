@@ -1,11 +1,11 @@
 ﻿using Api.Modules.Clients.Infrastructure.Repositories;
-using Api.Modules.Clients.Interfaces;
+using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.DeleteClient
 {
-    public class DeleteClientHandler(ClientRepository repository) : IClientHandler<IClientOutput, IClientInput>
+    public class DeleteClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IClientOutput Handle(IClientInput input)
+        public IRequestOutput Handle(IRequestInput input)
         {
             var command = (DeleteClientCommand)input;
             repository.Delete(command.Id);

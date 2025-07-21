@@ -1,35 +1,29 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Api.Modules.Authentication.Domain;
+using Api.Modules.Authentication.Infrastructure.Repositories;
+using Api.Shared.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Api.Modules.Authentication
+namespace Api.Modules.Authentication.Application.Commands.Authenticate
 {
-    public class AuthenticationService(List<User> users, AuthenticationSettings auth)
+    public class AuthenticateHandler(UserRepository repository, AuthenticationSettings auth) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public void CreateUser(UserDto user)
+        public IRequestOutput? Handle(IRequestInput input)
         {
-            string salt = new Guid().ToString();
-            string password = user.Password + salt;
-            byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
-            byte[] passwordHash = SHA256.HashData(encodedPassword);
-
-            User newUser = new(user.Name, user.Email, Convert.ToBase64String(passwordHash), salt);
-            users.Add(newUser);
-        }
-        public string? Authenticate(UserDto userCredentials)
-        {
-            var user = users.FirstOrDefault(user => userCredentials.Email == user.Email);
+            var command = input as AuthenticateCommand;
+            var user = repository.GetAll().FirstOrDefault(user => command.UserCredentials.Email == user.Email);
 
             if (user != null)
             {
                 string salt = user.Salt;
-                string password = userCredentials.Password + salt;
+                string password = command.UserCredentials.Password + salt;
                 byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
                 byte[] passwordHash = SHA256.HashData(encodedPassword);
 
-                if (Convert.ToBase64String(passwordHash) == user.Password) return GenerateToken(user);
+                if (Convert.ToBase64String(passwordHash) == user.Password) return new AuthenticateResponse(GenerateToken(user));
             }
             return null;
         }
@@ -60,15 +54,6 @@ namespace Api.Modules.Authentication
             claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Name, value: user.Name));
 
             return claimsIdentity;
-        }
-        public bool VerifyAvailableEmail(Guid id, string email)
-        {
-            User? existingEmail = users.FirstOrDefault(user => user.Email == email);
-            if (existingEmail != null)
-            {
-                return existingEmail.Id.Equals(id);
-            }
-            return true;
         }
     }
 }

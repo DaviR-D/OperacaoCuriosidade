@@ -1,13 +1,13 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
-using Api.Modules.Clients.Interfaces;
 using Api.Modules.Clients.Presentation.ClientDTOs;
+using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.SearchClients
 {
     public class SearchClientsHandler(ClientRepository repository)
     {
-        public IClientOutput Handle(IClientInput input)
+        public IRequestOutput Handle(IRequestInput input)
         {
             var query = (SearchClientsQuery)input;
             List<Client> filteredClients = repository.Search(query.Query);

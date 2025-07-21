@@ -1,4 +1,4 @@
-﻿namespace Api.Modules.Authentication
+﻿namespace Api.Modules.Authentication.Presentation.UserDTOs
 {
     public class UserDto(string? name, string email, string password)
     {

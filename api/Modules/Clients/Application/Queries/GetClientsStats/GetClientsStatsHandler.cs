@@ -1,12 +1,12 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
-using Api.Modules.Clients.Interfaces;
+using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.GetClientsStats
 {
-    public class GetClientsStatsHandler(ClientRepository repository) : IClientHandler<IClientOutput, IClientInput>
+    public class GetClientsStatsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IClientOutput Handle(IClientInput input)
+        public IRequestOutput Handle(IRequestInput input)
         {
             List<Client> activeClients = repository.GetAll();
             int lastMonth = activeClients.Where(client => client.Date >= DateTime.Now.AddMonths(-1)).Count();

@@ -1,8 +1,8 @@
-﻿using Api.Modules.Clients.Interfaces;
+﻿using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.DeleteClient
 {
-    public class DeleteClientResponse : IClientOutput
+    public class DeleteClientResponse : IRequestOutput
     {
     }
 }
