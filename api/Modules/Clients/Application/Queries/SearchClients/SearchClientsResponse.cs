@@ -3,8 +3,8 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.SearchClients
 {
-    public class SearchClientsResponse(List<ClientPreviewDto> results) : IRequestOutput
+    public class SearchClientsResponse(List<ClientPreviewDto> page) : IRequestOutput
     {
-        public List<ClientPreviewDto> Results { get; set; } = results;
+        public List<ClientPreviewDto> Page { get; set; } = page;
     }
 }

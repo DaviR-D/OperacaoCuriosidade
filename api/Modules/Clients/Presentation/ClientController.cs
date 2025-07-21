@@ -32,15 +32,15 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = new GetSingleClientHandler(repository);
             var response = handler.Handle(new GetSingleClientQuery(id));
-            var client = (GetSingleClientResponse)response;
-            return Ok(client.Client);
+            return Ok(response);
         }
 
         [HttpGet("stats")]
         public IActionResult GetStats()
         {
             var handler = new GetClientsStatsHandler(repository);
-            return Ok(handler.Handle(new GetClientsStatsQuery()));
+            var response = handler.Handle(new GetClientsStatsQuery());
+            return Ok(response);
         }
 
         [HttpGet("page")]
@@ -48,8 +48,7 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = new GetPagedClientsHandler(repository);
             var response = handler.Handle(new GetPagedClientsQuery(start, increment));
-            var page = (GetPagedClientsResponse)response;
-            return Ok(page.Page);
+            return Ok(response);
         }
 
         [HttpGet("page/sorted")]
@@ -57,8 +56,7 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = new GetSortedClientsHandler(repository);
             var response = handler.Handle(new GetSortedClientsQuery(sortKey, descending, start, increment));
-            var page = (GetSortedClientsResponse)response; 
-            return Ok(page.Page);
+            return Ok(response);
         }
 
         [HttpGet("page/search")]
@@ -66,9 +64,7 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = new SearchClientsHandler(repository);
             var response = handler.Handle(new SearchClientsQuery(start, increment, query));
-            var results = (SearchClientsResponse)response;
-
-            return Ok(results.Results);
+            return Ok(response);
         }
 
         [HttpPut]
@@ -92,8 +88,7 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = new VerifyAvailableEmailHandler(repository);
             var response = handler.Handle(new VerifyAvailableEmailQuery(id, email));
-            var available = (VerifyAvailableEmailResponse)response;
-            return Ok(available.IsAvailable);
+            return Ok(response);
         }
     }
 }

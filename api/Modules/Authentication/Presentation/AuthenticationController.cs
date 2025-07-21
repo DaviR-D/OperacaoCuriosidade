@@ -24,12 +24,7 @@ namespace Api.Modules.Authentication.Presentation
         {
             var handler = new AuthenticateHandler(repository, auth);
             var response = handler.Handle(new AuthenticateCommand(user));
-            if (response != null)
-            {
-                var authentication = response as AuthenticateResponse;
-                var token = authentication.Token;
-                return Ok(new { Token = token });
-            }
+            if (response != null) return Ok(response);
             else return Unauthorized();
         }
     }
