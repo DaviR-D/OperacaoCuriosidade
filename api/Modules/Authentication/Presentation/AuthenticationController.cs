@@ -3,6 +3,7 @@ using Api.Modules.Authentication.Application.Commands.Authenticate;
 using Api.Modules.Authentication.Application.Commands.CreateUser;
 using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Authentication.Presentation.UserDTOs;
+using Api.Shared.Configurations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Modules.Authentication.Presentation

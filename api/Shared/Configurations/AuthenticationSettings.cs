@@ -1,4 +1,4 @@
-﻿namespace Api.Modules.Authentication
+﻿namespace Api.Shared.Configurations
 {
     public class AuthenticationSettings
     {

@@ -5,7 +5,7 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.SearchClients
 {
-    public class SearchClientsHandler(ClientRepository repository)
+    public class SearchClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         public IRequestOutput Handle(IRequestInput input)
         {

@@ -1,5 +1,6 @@
 ﻿using Api.Modules.Authentication.Domain;
 using Api.Modules.Authentication.Infrastructure.Repositories;
+using Api.Shared.Configurations;
 using Api.Shared.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

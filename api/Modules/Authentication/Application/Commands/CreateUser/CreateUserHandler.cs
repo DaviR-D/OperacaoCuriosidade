@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Api.Modules.Authentication.Application.Commands.CreateUser
 {
-    public class CreateUserHandler(UserRepository repository)
+    public class CreateUserHandler(UserRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         public IRequestOutput Handle(IRequestInput input)
         {
