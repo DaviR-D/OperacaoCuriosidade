@@ -10,11 +10,11 @@ namespace Api.Modules.Authentication.Application
         {
             IRequestHandler<IRequestOutput, IRequestInput> handler;
 
-            if (endpoint == "/api/authentication/signup")
+            if (endpoint == "Signup")
             {
                 handler = service.GetService<CreateUserHandler>();
                 return handler;
-            } else if (endpoint == "/api/authentication/")
+            } else if (endpoint == "Authenticate")
             {
                 handler = service.GetService<AuthenticateHandler>();
                 return handler;

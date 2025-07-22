@@ -13,7 +13,7 @@ namespace Api.Modules.Authentication.Presentation
         [HttpPost("signup")]
         public IActionResult Create([FromBody] UserDto user)
         {
-            var handler = factory.GetHandler(HttpContext.Request.Path);
+            var handler = factory.GetHandler("Signup");
             var response = handler.Handle(new CreateUserCommand(user));
             return Ok(response);
         }
@@ -21,7 +21,7 @@ namespace Api.Modules.Authentication.Presentation
         [HttpPost]
         public ActionResult Authenticate([FromBody] UserDto user)
         {
-            var handler = factory.GetHandler(HttpContext.Request.Path);
+            var handler = factory.GetHandler("Authenticate");
             var response = handler.Handle(new AuthenticateCommand(user));
             if (response != null) return Ok(response);
             else return Unauthorized();

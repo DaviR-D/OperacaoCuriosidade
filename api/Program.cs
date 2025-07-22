@@ -68,6 +68,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<AuthenticationHandlerFactory>();
+builder.Services.AddScoped<ClientsHandlerFactory>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<GetPagedClientsHandler>();
 builder.Services.AddScoped<GetClientsStatsHandler>();
