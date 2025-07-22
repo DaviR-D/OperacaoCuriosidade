@@ -25,7 +25,7 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
                 byte[] passwordHash = SHA256.HashData(encodedPassword);
 
                 if (Convert.ToBase64String(passwordHash) == user.Password)
-                    return new AuthenticateResponse(token:GenerateToken(user));
+                    return new AuthenticateResponse(token: GenerateToken(user));
                 else
                     return new AuthenticateResponse(message: "incorrect password");
 
