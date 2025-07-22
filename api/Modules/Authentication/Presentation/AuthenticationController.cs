@@ -23,7 +23,7 @@ namespace Api.Modules.Authentication.Presentation
         {
             var handler = factory.GetHandler("Authenticate");
             var response = handler.Handle(new AuthenticateCommand(user));
-            if (response != null) return Ok(response);
+            if (response.Message == null) return Ok(response);
             else return Unauthorized();
         }
     }
