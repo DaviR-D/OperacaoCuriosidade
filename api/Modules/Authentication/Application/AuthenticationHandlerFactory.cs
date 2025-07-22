@@ -6,20 +6,14 @@ namespace Api.Modules.Authentication.Application
 {
     public class AuthenticationHandlerFactory(IServiceProvider service)
     {
+        private static readonly Dictionary<String, Type> Handlers = new()
+        {
+            {"Signup", typeof(CreateUserHandler) },
+            {"Authenticate", typeof(AuthenticateHandler)}
+        };
         public IRequestHandler<IRequestOutput, IRequestInput> GetHandler(string endpoint)
         {
-            IRequestHandler<IRequestOutput, IRequestInput> handler;
-
-            if (endpoint == "Signup")
-            {
-                handler = service.GetService<CreateUserHandler>();
-                return handler;
-            } else if (endpoint == "Authenticate")
-            {
-                handler = service.GetService<AuthenticateHandler>();
-                return handler;
-            }
-            return null;
+            return (IRequestHandler<IRequestOutput, IRequestInput>)service.GetService(Handlers[endpoint]);
         }
     }
 }
