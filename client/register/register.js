@@ -215,7 +215,7 @@ async function checkFieldsValidity(id, newRegister) {
 
 async function checkExistingEmail(id = null, email) {
     let availableEmail;
-    let idParam = id == null ? "" : `id=${id}&`;
+    let idParam = String(id) == "null" ? "" : `id=${id}&`;
 
     await fetch(`${apiUrl}/api/client/checkEmail?${idParam}email=${email}`, {
         headers: {
@@ -271,6 +271,7 @@ function addInputEvents() {
         checkValidEmail(html.register.emailInput.value);
     })
     html.register.emailInput.addEventListener("blur", function () {
-        checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
+        if(html.register.emailInput.value.length > 0)
+            checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
     })
 }
