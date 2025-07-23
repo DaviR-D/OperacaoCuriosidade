@@ -10,7 +10,7 @@ using Api.Modules.Clients.Application.Commands.DeleteClient;
 using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Application.Commands.UpdateClient;
 using Api.Modules.Clients.Application.Queries.SearchClients;
-using Api.Modules.Authentication.Application;
+using Api.Modules.Clients.Application;
 
 namespace Api.Modules.Clients.Presentation
 {

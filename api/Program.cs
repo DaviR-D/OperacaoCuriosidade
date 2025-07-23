@@ -15,6 +15,7 @@ using Api.Modules.Clients.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Api.Modules.Authentication.Application;
 using Api.Modules.Authentication.Domain;
+using Api.Modules.Clients.Application;
 using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Clients.Domain;
 using Api.Shared.Configurations;
