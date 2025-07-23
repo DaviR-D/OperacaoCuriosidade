@@ -84,7 +84,7 @@ namespace Api.Modules.Clients.Presentation
         }
 
         [HttpGet("checkEmail")]
-        public IActionResult CheckEmail(Guid id, string email)
+        public IActionResult CheckEmail(string email, Guid? id = null)
         {
             var handler = factory.GetHandler("CheckEmail");
             var response = handler.Handle(new VerifyAvailableEmailQuery(id, email));
