@@ -2,7 +2,7 @@
 
 namespace Api.Modules.Logs.Presentation.LogDTOs
 {
-    public class DtoMapper
+    public class LogDtoMapper
     {
         public static Log ToEntity(LogDto log)
         {

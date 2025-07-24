@@ -2,7 +2,7 @@
 
 namespace Api.Modules.Clients.Presentation.ClientDTOs
 {
-    public class DtoMapper
+    public class ClientDtoMapper
     {
         public static ClientDto ToDto(Client client)
         {

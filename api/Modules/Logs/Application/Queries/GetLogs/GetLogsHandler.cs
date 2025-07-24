@@ -8,7 +8,7 @@ namespace Api.Modules.Logs.Application.Queries.GetLogs
     {
         public IRequestOutput Handle(IRequestInput input)
         {
-            return new GetLogsResponse(logs: [.. repository.GetAll().Select(log => DtoMapper.ToDto(log))]);
+            return new GetLogsResponse(logs: [.. repository.GetAll().Select(log => LogDtoMapper.ToDto(log))]);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Api.Modules.Logs.Application.Commands.CreateLog
             var command = (CreateLogCommand)input;
             command.Log.Id = new Guid();
             command.Log.TimeStamp = DateTime.Now;
-            repository.Create(DtoMapper.ToEntity(command.Log));
+            repository.Create(LogDtoMapper.ToEntity(command.Log));
             return new CreateLogResponse();
         }
     }
