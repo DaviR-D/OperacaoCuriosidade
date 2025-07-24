@@ -6,7 +6,7 @@ namespace Api.Modules.Logs.Application.Commands.CreateLog
 {
     public class CreateLogHandler(LogRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input) 
+        public IRequestOutput Handle(IRequestInput input)
         {
             var command = (CreateLogCommand)input;
             command.Log.Id = Guid.NewGuid();

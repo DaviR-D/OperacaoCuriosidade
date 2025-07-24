@@ -9,17 +9,17 @@ namespace Api.Modules.Logs.Presentation.LogDTOs
         public static Log ToEntity(CreateLogDto log)
         {
             return new Log(
-                id:(Guid)log.Id,
-                userId:(Guid)log.UserId,
-                clientId:log.ClientId,
-                timeStamp:(DateTime)log.TimeStamp,
-                action:log.Action
+                id: (Guid)log.Id,
+                userId: (Guid)log.UserId,
+                clientId: log.ClientId,
+                timeStamp: (DateTime)log.TimeStamp,
+                action: log.Action
                 );
         }
         public static CreateLogDto ToDto(Log log)
         {
             return new CreateLogDto(
-                id:log.Id,
+                id: log.Id,
                 userId: log.UserId,
                 clientId: log.ClientId,
                 timeStamp: log.TimeStamp,

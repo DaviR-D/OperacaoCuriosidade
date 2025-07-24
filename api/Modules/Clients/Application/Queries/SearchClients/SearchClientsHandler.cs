@@ -13,7 +13,7 @@ namespace Api.Modules.Clients.Application.Queries.SearchClients
             List<Client> filteredClients = repository.Search(query.Query);
             List<Client> slicedClients = [.. filteredClients.Skip(query.Start).Take(query.Increment)];
             var response = new SearchClientsResponse(
-                page:ClientDtoMapper.ToPreviewDto(slicedClients),
+                page: ClientDtoMapper.ToPreviewDto(slicedClients),
                 resultsLength: filteredClients.Count
                 );
 

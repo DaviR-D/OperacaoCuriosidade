@@ -18,8 +18,8 @@ namespace Api.Modules.Logs.Presentation
         {
             var handler = factory.GetHandler("Create");
             var response = handler.Handle(new CreateLogCommand(
-                log:log,
-                userId:Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
+                log: log,
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
                 );
             return Ok(response);
         }
