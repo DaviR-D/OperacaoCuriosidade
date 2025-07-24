@@ -21,7 +21,6 @@ function loadLayout() {
     loadHeader();
     loadNav();
     loadTable();
-    updateTable();
 }
 
 function loadHeader() {
@@ -72,6 +71,7 @@ function loadNav() {
             <a id="dashboardNav" href="../dashboard/dashboard.html"><span class="material-symbols-outlined">home</span>Home</a>
             <a id="registerNav" href="../register/register.html"><span class="material-symbols-outlined">group_add</span>Cadastro</a>
             <a id="reportNav" href="../report/report.html"><span class="material-symbols-outlined">analytics</span>Relatórios</a>
+            <a id="logsNav" href="../logs/logs.html"><span class="material-symbols-outlined">document_search</span>Logs</a>
         </div>
     </nav>
     `);
@@ -246,16 +246,4 @@ async function updateTable(start = 0, increment = 10) {
     await getClients(start, increment);
     loadPaging(start, increment);
     loadTableContent();
-}
-
-async function getLogs() {
-    fetch(`${apiUrl}/api/log/`, {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${loggedUser.token}`,
-            "Content-Type": "application/json"
-        }
-    })
-        .then(response => { return response.json() })
-        .then(data => console.log(data))
 }

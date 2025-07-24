@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
     html.register = {};
     getRegisterElements();
     insertRegisterData();
@@ -137,6 +138,7 @@ async function editClient(id) {
     html.register.feelingsInput.value = editItem.feelings;
     html.register.valuesInput.value = editItem.values;
     html.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
+    registerLog("Read", id)
 }
 
 function showRegisterModal() {
