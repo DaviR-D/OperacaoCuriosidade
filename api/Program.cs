@@ -12,19 +12,19 @@ using Api.Modules.Clients.Application.Commands.UpdateClient;
 using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Authentication.Presentation.UserDTOs;
 using Api.Modules.Clients.Infrastructure.Repositories;
+using Api.Modules.Logs.Application.Commands.CreateLog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.Modules.Logs.Infrastructure.Repositories;
+using Api.Modules.Logs.Application.Queries.GetLogs;
 using Api.Modules.Authentication.Application;
 using Api.Modules.Authentication.Domain;
 using Api.Modules.Clients.Application;
 using Microsoft.IdentityModel.Tokens;
+using Api.Modules.Logs.Application;
 using Api.Modules.Clients.Domain;
 using Api.Shared.Configurations;
-using System.Text;
-using Api.Modules.Logs.Application;
-using Api.Modules.Logs.Infrastructure.Repositories;
-using Api.Modules.Logs.Application.Commands.CreateLog;
-using Api.Modules.Logs.Application.Queries.GetLogs;
 using Api.Modules.Logs.Domain;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,7 +78,7 @@ builder.Services.AddScoped<GetLogsHandler>();
 
 UserRepository repository = new(usersMock);
 var handler = new CreateUserHandler(repository);
-handler.Handle(new CreateUserCommand(new UserDto("Davi", "davi@gmail.com", "senha123")));
+handler.Handle(new CreateUserCommand(new UserDto("Davi", "davi@gmail.com", "123")));
 
 builder.Services.AddCors(options =>
 {
