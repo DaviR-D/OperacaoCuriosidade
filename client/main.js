@@ -217,7 +217,7 @@ async function getClients(start = 0, increment = 10) {
             html.clientsLength = data.resultsLength;
         });
 
-    if(html.endpoint != "page/search")
+    if (html.endpoint != "page/search")
         await getStats();
 }
 
@@ -246,4 +246,16 @@ async function updateTable(start = 0, increment = 10) {
     await getClients(start, increment);
     loadPaging(start, increment);
     loadTableContent();
+}
+
+async function getLogs() {
+    fetch(`${apiUrl}/api/log/`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => { return response.json() })
+        .then(data => console.log(data))
 }

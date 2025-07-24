@@ -25,7 +25,7 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         }
         public Client? GetOne(Guid id)
         {
-            return _activeClients.FirstOrDefault(c => c.Id == id);
+            return clients.FirstOrDefault(c => c.Id == id);
         }
         public List<Client> GetAll()
         {

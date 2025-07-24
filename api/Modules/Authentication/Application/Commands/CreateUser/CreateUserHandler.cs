@@ -20,7 +20,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
             byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
             byte[] passwordHash = SHA256.HashData(encodedPassword);
 
-            User newUser = new(user.Name, user.Email, Convert.ToBase64String(passwordHash), salt);
+            User newUser = new(Guid.NewGuid(), user.Name, user.Email, Convert.ToBase64String(passwordHash), salt);
             repository.Create(newUser);
 
             return new CreateUserResponse();

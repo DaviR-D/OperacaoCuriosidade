@@ -14,7 +14,7 @@ namespace Api.Modules.Logs.Presentation
     public class LogController(LogHandlerFactory factory) : ControllerBase
     {
         [HttpPost]
-        public IActionResult Create([FromBody] LogDto log)
+        public IActionResult Create([FromBody] CreateLogDto log)
         {
             var handler = factory.GetHandler("Create");
             var response = handler.Handle(new CreateLogCommand(

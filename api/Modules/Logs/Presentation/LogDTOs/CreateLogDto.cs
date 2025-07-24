@@ -1,6 +1,6 @@
 ﻿namespace Api.Modules.Logs.Presentation.LogDTOs
 {
-    public class LogDto(Guid? id, Guid? userId, Guid clientId, DateTime? timeStamp, string action)
+    public class CreateLogDto(Guid? id, Guid? userId, Guid clientId, DateTime? timeStamp, string action)
     {
         public Guid? Id { get; set; } = id;
         public Guid? UserId { get; set; } = userId;
