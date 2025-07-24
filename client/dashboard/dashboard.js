@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    await updateTable();
+    
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('afterbegin',
         `
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     html.dashboard = {};
     getDashboardElements();
     insertDashboardData();
+    await updateTable();
 })
 
 function getDashboardElements() {
@@ -49,4 +50,29 @@ async function insertDashboardData() {
 
     navLink = document.getElementById("dashboardNav")
     navLink.style.backgroundColor = "var(--highlight-color)";
+}
+
+function setTableSettings(){
+    html.tableHeader = [`
+        <tr id="tableHeader">
+            <th class="column" onclick="sortTable('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="sortTable('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="sortTable('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="sortTable('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+        </tr>`
+    ];
+    html.tableContent = (register) => {
+        return `
+            <tr>
+                <td>${register.name}</td>
+                <td>${register.email}</td>
+                <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
+                <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
+                <td class="actions" style="display: none;">
+                    <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
+                    <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
+                </td>
+            </tr>
+            `}
+    html.get = getClients;
 }

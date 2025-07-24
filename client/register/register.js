@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    await updateTable();
     html.register = {};
     getRegisterElements();
     insertRegisterData();
     try { html.addActions(); }
     catch (error) { if (!(error instanceof ReferenceError)) throw error; }
+    await updateTable();
 })
 
 function getRegisterElements() {
     html.register.tableTop = document.getElementById("tableTop");
+    let tableHeader = document.getElementById("tableHeader");
 
     html.register.registerModal = document.getElementById("registerModal");
     html.register.alertModal = document.getElementById("alertModal");
@@ -70,7 +71,7 @@ async function saveClient(event, id = null) {
             email: html.register.emailInput.value,
             status: html.register.statusCheck.checked ? "Ativo" : "Inativo",
             pending: true,
-            date: id ? clients.filter((register) => register.id == id)[0].date : new Date(),
+            date: id ? html.data.filter((register) => register.id == id)[0].date : new Date(),
             age: html.register.ageInput.value,
             address: html.register.addressInput.value,
             other: html.register.otherInput.value,
@@ -91,7 +92,7 @@ async function saveClient(event, id = null) {
                 body: JSON.stringify(newRegister)
             })
             registerForm.submit();
-            if(httpMethod == "PUT")
+            if (httpMethod == "PUT")
                 registerLog("Edit", id);
         }
     }
@@ -151,7 +152,7 @@ function hideRegisterModal() {
 }
 
 function showDeleteConfirmation(id) {
-    let deletedUser = clients.filter((register) => register.id == id)[0].name
+    let deletedUser = html.data.filter((register) => register.id == id)[0].name
     html.register.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
     document.body.classList.add("blur");
     html.register.alertModal.showModal();
@@ -290,4 +291,29 @@ function addInputEvents() {
         if (html.register.emailInput.value.length > 0)
             checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
     })
+}
+
+function setTableSettings(){
+    html.tableHeader = [`
+        <tr id="tableHeader">
+            <th class="column" onclick="sortTable('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
+            <th class="column" onclick="sortTable('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
+            <th class="column" onclick="sortTable('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
+            <th class="column" onclick="sortTable('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+        </tr>`
+    ];
+    html.tableContent = (register) => {
+        return `
+            <tr>
+                <td>${register.name}</td>
+                <td>${register.email}</td>
+                <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
+                <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
+                <td class="actions" style="display: none;">
+                    <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
+                    <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
+                </td>
+            </tr>
+            `}
+    html.get = getClients;
 }

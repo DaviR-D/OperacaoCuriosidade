@@ -7,7 +7,6 @@ let html = {};
 html.endpoint = "page"
 html.params = ""
 
-let clients = [];
 let clientsCache = {};
 
 let pageTheme = localStorage.getItem("theme");
@@ -114,30 +113,8 @@ function loadTable() {
 }
 
 async function loadTableContent() {
-    renderedClients =
-        [`
-        <tr id="tableHeader">
-            <th class="column" onclick="sortTable('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="sortTable('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="sortTable('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="sortTable('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
-        </tr>`
-        ];
-    clients.forEach(register => {
-        renderedClients.push(
-            `
-            <tr>
-                <td>${register.name}</td>
-                <td>${register.email}</td>
-                <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
-                <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
-                <td class="actions" style="display: none;">
-                    <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
-                    <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
-                </td>
-            </tr>
-            `
-        );
+    html.data.forEach(register => {
+        html.tableHeader.push(html.tableContent(register));
     });
 
     if (search.value.length > 0) {
@@ -146,7 +123,7 @@ async function loadTableContent() {
         searchResults.innerText = "";
     }
 
-    html.clients.innerHTML = renderedClients.join('');
+    html.clients.innerHTML = html.tableHeader.join('');
     html.addActions?.();
 }
 
@@ -158,14 +135,14 @@ async function loadPaging(start = 0, increment = 10) {
 
     html.pageNumber.innerText = `${currentPage}/${totalPages}`;
 
-    clientsCache[currentPage] = clients;
+    clientsCache[currentPage] = html.data;
 
     let nextPageStart = currentPage == totalPages ? start : (start + increment);
     let previousPageStart = currentPage == 1 ? 0 : (start - increment);
 
     html.nextButton.onclick = () => {
         if (clientsCache[currentPage + 1] != undefined) {
-            clients = clientsCache[currentPage + 1];
+            html.data = clientsCache[currentPage + 1];
             loadTableContent();
             loadPaging(nextPageStart);
         }
@@ -175,7 +152,7 @@ async function loadPaging(start = 0, increment = 10) {
     html.previousButton.onclick = () => {
         if (currentPage == 1) return () => { };
         else if (clientsCache[currentPage - 1] != undefined) {
-            clients = clientsCache[currentPage - 1];
+            html.data = clientsCache[currentPage - 1];
             loadTableContent();
             loadPaging(previousPageStart);
         }
@@ -213,7 +190,7 @@ async function getClients(start = 0, increment = 10) {
             return response.json()
         })
         .then(data => {
-            clients = data.page;
+            html.data = data.page;
             html.clientsLength = data.resultsLength;
         });
 
@@ -243,7 +220,8 @@ async function getStats() {
 }
 
 async function updateTable(start = 0, increment = 10) {
-    await getClients(start, increment);
+    setTableSettings();
+    await html.get(start, increment);
     loadPaging(start, increment);
     loadTableContent();
 }
