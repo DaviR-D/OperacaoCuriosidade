@@ -10,7 +10,15 @@ namespace Api.Modules.Logs.Application.Queries.GetLogs
     {
         public IRequestOutput Handle(IRequestInput input)
         {
-            return new GetLogsResponse(logs: [.. logRepository.GetAll().Select(log => LogDtoMapper.ToResponseDto(log, clients, users))]);
+            var query = (GetLogsQuery)input;
+            var logs = logRepository.GetAll();
+            var logsPage = logs
+                .Skip(query.Start)
+                .Take(query.Increment)
+                .Select(log => LogDtoMapper
+                .ToResponseDto(log, clients, users))
+                .ToList();
+            return new GetLogsResponse(logs: logsPage, logsLenth: logs.Count);
         }
     }
 }

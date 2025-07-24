@@ -24,10 +24,10 @@ namespace Api.Modules.Logs.Presentation
             return Ok(response);
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int start, int increment)
         {
             var handler = factory.GetHandler("GetAll");
-            var response = handler.Handle(new GetLogsQuery());
+            var response = handler.Handle(new GetLogsQuery(start: start, increment: increment));
             return Ok(response);
         }
     }
