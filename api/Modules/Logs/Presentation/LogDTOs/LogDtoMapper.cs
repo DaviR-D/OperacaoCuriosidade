@@ -8,7 +8,7 @@ namespace Api.Modules.Logs.Presentation.LogDTOs
         {
             return new Log(
                 id:(Guid)log.Id,
-                userId:log.UserId,
+                userId:(Guid)log.UserId,
                 clientId:log.ClientId,
                 timeStamp:(DateTime)log.TimeStamp,
                 action:log.Action

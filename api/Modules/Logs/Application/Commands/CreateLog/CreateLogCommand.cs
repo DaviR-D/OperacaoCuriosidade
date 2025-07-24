@@ -3,8 +3,9 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Logs.Application.Commands.CreateLog
 {
-    public class CreateLogCommand(LogDto log) : IRequestInput
+    public class CreateLogCommand(LogDto log, Guid userId) : IRequestInput
     {
         public LogDto Log = log;
+        public Guid UserId { get; set; } = userId; 
     }
 }

@@ -15,7 +15,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
             var user = command.User;
             if (!VerifyAvailableEmail(user.Email)) return new CreateUserResponse("email already in use");
 
-            string salt = new Guid().ToString();
+            string salt = Guid.NewGuid().ToString();
             string password = user.Password + salt;
             byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
             byte[] passwordHash = SHA256.HashData(encodedPassword);

@@ -90,6 +90,8 @@ async function saveClient(event, id = null) {
                 body: JSON.stringify(newRegister)
             })
             registerForm.submit();
+            if(httpMethod == "PUT")
+                registerLog("Edit", id);
         }
     }
     else {
@@ -106,7 +108,8 @@ async function deleteClient(id) {
     })
     clientsCache = {};
     updateTable();
-    hideDeleteConfirmation()
+    hideDeleteConfirmation();
+    registerLog("Delete", id);
 }
 
 async function editClient(id) {
@@ -252,6 +255,17 @@ function checkValidName(name) {
     return valid;
 }
 
+async function registerLog(userAction, id) {
+    fetch(`${apiUrl}/api/log/`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ clientId: id, action: userAction })
+    })
+}
+
 function addInputEvents() {
     html.invalidFields = [];
     [...registerForm.elements].forEach(field => {
@@ -271,7 +285,7 @@ function addInputEvents() {
         checkValidEmail(html.register.emailInput.value);
     })
     html.register.emailInput.addEventListener("blur", function () {
-        if(html.register.emailInput.value.length > 0)
+        if (html.register.emailInput.value.length > 0)
             checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
     })
 }
