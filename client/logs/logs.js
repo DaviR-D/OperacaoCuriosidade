@@ -7,11 +7,11 @@ let dictionary = {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
     html.logs = {};
     getLogsElements();
     insertLogsData();
     html.search.disabled = true;
-    await updateTable();
 });
 
 function getLogsElements() {

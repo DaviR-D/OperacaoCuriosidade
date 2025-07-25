@@ -142,6 +142,7 @@ async function loadPaging(start = 0, increment = 10) {
 
     html.nextButton.onclick = () => {
         if (clientsCache[currentPage + 1] != undefined) {
+            setTableSettings();
             html.data = clientsCache[currentPage + 1];
             loadTableContent();
             loadPaging(nextPageStart);
@@ -152,6 +153,7 @@ async function loadPaging(start = 0, increment = 10) {
     html.previousButton.onclick = () => {
         if (currentPage == 1) return () => { };
         else if (clientsCache[currentPage - 1] != undefined) {
+            setTableSettings();
             html.data = clientsCache[currentPage - 1];
             loadTableContent();
             loadPaging(previousPageStart);

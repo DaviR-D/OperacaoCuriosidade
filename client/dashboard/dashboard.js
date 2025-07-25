@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    
+    await updateTable();
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('afterbegin',
         `
@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     html.dashboard = {};
     getDashboardElements();
     insertDashboardData();
-    await updateTable();
 })
 
 function getDashboardElements() {

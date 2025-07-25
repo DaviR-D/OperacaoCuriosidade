@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
     html.register = {};
     getRegisterElements();
     insertRegisterData();
     try { html.addActions(); }
     catch (error) { if (!(error instanceof ReferenceError)) throw error; }
-    await updateTable();
 })
 
 function getRegisterElements() {

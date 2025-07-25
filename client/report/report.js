@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
     html.report = {};
     getReportElements();
     insertReportData();
-    await updateTable();
 });
 
 function getReportElements() {
