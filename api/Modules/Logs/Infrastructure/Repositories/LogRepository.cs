@@ -1,4 +1,5 @@
 ﻿using Api.Modules.Logs.Domain;
+using System.Reflection;
 
 namespace Api.Modules.Logs.Infrastructure.Repositories
 {
@@ -10,7 +11,10 @@ namespace Api.Modules.Logs.Infrastructure.Repositories
         }
         public List<Log> GetAll()
         {
-            return logs;
+            PropertyInfo? sortProperty = typeof(Log).GetProperty("TimeStamp");
+            IOrderedEnumerable<Log> sortedLogs = logs.OrderByDescending(sortProperty.GetValue);
+
+            return [.. sortedLogs];
         }
     }
 }
