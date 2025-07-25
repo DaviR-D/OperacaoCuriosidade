@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    await updateTable();
+    if (await getStats("length") == 0) await createDB(loggedUser.token);
     main.lastMonthClients = await getStats("lastMonth");
     main.pendingClients = await getStats("pending");
+    await updateTable();
     
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('afterbegin',
@@ -35,7 +36,6 @@ function getDashboardElements() {
 }
 
 async function insertDashboardData() {
-    if (main.clientsLength == 0) createDB(loggedUser.token);
     main.sortDescending = true;
     await sortTable("date");
 
