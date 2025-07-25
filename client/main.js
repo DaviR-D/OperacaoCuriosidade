@@ -192,11 +192,12 @@ async function getClients(start = 0, increment = 10) {
         });
 
     if (main.endpoint != "page/search")
-        await getStats();
+        main.clientsLength = await getStats("length");
 }
 
-async function getStats() {
-    await fetch(`${apiUrl}/api/client/stats`, {
+async function getStats(stat) {
+    let length;
+    await fetch(`${apiUrl}/api/client/${stat}`, {
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`,
             "Content-Type": "application/json"
@@ -210,10 +211,9 @@ async function getStats() {
             return response.json()
         })
         .then(data => {
-            main.clientsLength = data.clientsLength;
-            main.lastMonthClients = data.lastMonthClients;
-            main.pendingClients = data.pendingClients;
+            length = data.length;
         });
+    return length;
 }
 
 async function updateTable(start = 0, increment = 10) {

@@ -1,9 +1,11 @@
 using Api.Modules.Authentication.Application.Commands.Authenticate;
 using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
+using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
 using Api.Modules.Authentication.Application.Commands.CreateUser;
+using Api.Modules.Clients.Application.Queries.GetPendingClients;
+using Api.Modules.Clients.Application.Queries.GetClientsLength;
 using Api.Modules.Clients.Application.Queries.GetSortedClients;
 using Api.Modules.Clients.Application.Queries.GetPagedClients;
-using Api.Modules.Clients.Application.Queries.GetClientsStats;
 using Api.Modules.Clients.Application.Queries.GetSingleClient;
 using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Clients.Application.Queries.SearchClients;
@@ -25,6 +27,7 @@ using Api.Modules.Clients.Domain;
 using Api.Shared.Configurations;
 using Api.Modules.Logs.Domain;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,7 +68,9 @@ builder.Services.AddScoped<LogRepository>();
 builder.Services.AddScoped<AuthenticateHandler>();
 builder.Services.AddScoped<CreateUserHandler>();
 builder.Services.AddScoped<GetPagedClientsHandler>();
-builder.Services.AddScoped<GetClientsStatsHandler>();
+builder.Services.AddScoped<GetClientsLengthHandler>();
+builder.Services.AddScoped<GetLastMonthClientsHandler>();
+builder.Services.AddScoped<GetPendingClientsHandler>();
 builder.Services.AddScoped<GetSingleClientHandler>();
 builder.Services.AddScoped<GetSortedClientsHandler>();
 builder.Services.AddScoped<SearchClientsHandler>();

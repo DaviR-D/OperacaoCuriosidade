@@ -1,16 +1,18 @@
+using Api.Modules.Clients.Application;
+using Api.Modules.Clients.Application.Commands.CreateClient;
+using Api.Modules.Clients.Application.Commands.DeleteClient;
+using Api.Modules.Clients.Application.Commands.UpdateClient;
+using Api.Modules.Clients.Application.Queries.GetClientsLength;
+using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
+using Api.Modules.Clients.Application.Queries.GetPagedClients;
+using Api.Modules.Clients.Application.Queries.GetPendingClients;
+using Api.Modules.Clients.Application.Queries.GetSingleClient;
+using Api.Modules.Clients.Application.Queries.GetSortedClients;
+using Api.Modules.Clients.Application.Queries.SearchClients;
+using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
+using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Api.Modules.Clients.Application.Commands.CreateClient;
-using Api.Modules.Clients.Application.Queries.GetPagedClients;
-using Api.Modules.Clients.Presentation.ClientDTOs;
-using Api.Modules.Clients.Application.Queries.GetClientsStats;
-using Api.Modules.Clients.Application.Queries.GetSortedClients;
-using Api.Modules.Clients.Application.Queries.GetSingleClient;
-using Api.Modules.Clients.Application.Commands.DeleteClient;
-using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
-using Api.Modules.Clients.Application.Commands.UpdateClient;
-using Api.Modules.Clients.Application.Queries.SearchClients;
-using Api.Modules.Clients.Application;
 
 namespace Api.Modules.Clients.Presentation
 {
@@ -35,11 +37,27 @@ namespace Api.Modules.Clients.Presentation
             return Ok(response);
         }
 
-        [HttpGet("stats")]
-        public IActionResult GetStats()
+        [HttpGet("length")]
+        public IActionResult GetLength()
         {
-            var handler = factory.GetHandler("GetStats");
-            var response = handler.Handle(new GetClientsStatsQuery());
+            var handler = factory.GetHandler("GetLength");
+            var response = handler.Handle(new GetClientsLengthQuery());
+            return Ok(response);
+        }
+
+        [HttpGet("lastMonth")]
+        public IActionResult GetLastMonth()
+        {
+            var handler = factory.GetHandler("GetLastMonth");
+            var response = handler.Handle(new GetLastMonthClientsQuery());
+            return Ok(response);
+        }
+
+        [HttpGet("pending")]
+        public IActionResult GetPending()
+        {
+            var handler = factory.GetHandler("GetPending");
+            var response = handler.Handle(new GetPendingClientsQuery());
             return Ok(response);
         }
 

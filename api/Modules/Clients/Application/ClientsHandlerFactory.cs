@@ -1,12 +1,14 @@
 ﻿using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Clients.Application.Commands.DeleteClient;
 using Api.Modules.Clients.Application.Commands.UpdateClient;
-using Api.Modules.Clients.Application.Queries.GetClientsStats;
 using Api.Modules.Clients.Application.Queries.GetPagedClients;
 using Api.Modules.Clients.Application.Queries.GetSingleClient;
 using Api.Modules.Clients.Application.Queries.GetSortedClients;
 using Api.Modules.Clients.Application.Queries.SearchClients;
 using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
+using Api.Modules.Clients.Application.Queries.GetClientsLength;
+using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
+using Api.Modules.Clients.Application.Queries.GetPendingClients;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application
@@ -17,7 +19,9 @@ namespace Api.Modules.Clients.Application
         {
             { "Create", typeof(CreateClientHandler) },
             { "GetSingle", typeof(GetSingleClientHandler) },
-            { "GetStats", typeof(GetClientsStatsHandler) },
+            { "GetLength", typeof(GetClientsLengthHandler) },
+            { "GetLastMonth", typeof(GetLastMonthClientsHandler) },
+            { "GetPending", typeof(GetPendingClientsHandler) },
             { "GetPage", typeof(GetPagedClientsHandler) },
             { "GetSortedPage", typeof(GetSortedClientsHandler) },
             { "SearchClients", typeof(SearchClientsHandler) },
