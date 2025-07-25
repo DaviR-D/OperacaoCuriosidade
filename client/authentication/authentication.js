@@ -2,7 +2,7 @@ let apiUrl = "http://localhost:5204";
 
 let pageTheme = localStorage.getItem("theme");
 
-let html = {}
+let main = {}
 
 document.addEventListener("DOMContentLoaded", function () {
   getAuthElements();
@@ -10,18 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function getAuthElements() {
-  html.loginButton = document.getElementById("login");
-  html.emailInput = document.getElementById("email");
-  html.passwordInput = document.getElementById("password");
-  html.errorMessage = document.getElementById("errorMessage");
+  main.loginButton = document.getElementById("login");
+  main.emailInput = document.getElementById("email");
+  main.passwordInput = document.getElementById("password");
+  main.errorMessage = document.getElementById("errorMessage");
 
-  html.emailInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") html.passwordInput.focus();
+  main.emailInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") main.passwordInput.focus();
   })
 }
 
 async function tryLogin() {
-  let login = { email: html.emailInput.value, password: html.passwordInput.value }
+  let login = { email: main.emailInput.value, password: main.passwordInput.value }
 
 
   if (checkValidEmail(login.email)) {
@@ -45,10 +45,10 @@ async function tryLogin() {
       window.location = "../../dashboard/dashboard.html";
     }
     else if (responseMessage == "incorrect email") {
-      html.errorMessage.innerText = "Email incorreto";
+      main.errorMessage.innerText = "Email incorreto";
     }
     else if (responseMessage == "incorrect password") {
-      html.errorMessage.innerText = "Senha incorreta";
+      main.errorMessage.innerText = "Senha incorreta";
     }
   }
 }
@@ -58,7 +58,7 @@ function checkValidEmail(email) {
 
   let validEmail = regex.test(email);
 
-  if (!validEmail) html.errorMessage.innerText = "Insira um email válido";
+  if (!validEmail) main.errorMessage.innerText = "Insira um email válido";
 
   return validEmail;
 }

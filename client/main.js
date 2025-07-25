@@ -2,12 +2,12 @@ let apiUrl = "http://localhost:5204";
 
 let loggedUser = JSON.parse(localStorage.getItem("login"));
 
-let html = {};
+let main = {};
 
-html.endpoint = "page"
-html.params = ""
+main.endpoint = "page"
+main.params = ""
 
-let clientsCache = {};
+let tablePagesCache = {};
 
 let pageTheme = localStorage.getItem("theme");
 
@@ -36,25 +36,25 @@ function loadHeader() {
     </header>
     `);
 
-    html.exit = document.getElementById("exit");
+    main.exit = document.getElementById("exit");
 
-    html.search = document.getElementById("search");
+    main.search = document.getElementById("search");
 
-    html.searchResults = document.getElementById("searchResults");
+    main.searchResults = document.getElementById("searchResults");
 
-    html.userDisplay = document.getElementById("userDisplay");
-    html.userDisplay.innerText = loggedUser.name;
+    main.userDisplay = document.getElementById("userDisplay");
+    main.userDisplay.innerText = loggedUser.name;
 
-    html.search.addEventListener("input", function () {
-        clientsCache = {}
-        html.arrow = {};
-        html.tableOrder = "default"
-        html.endpoint = html.search.value.length > 0 ? `page/search` : "page";
-        html.params = html.search.value.length > 0 ? `query=${html.search.value.toLowerCase()}` : "";
+    main.search.addEventListener("input", function () {
+        tablePagesCache = {}
+        main.arrow = {};
+        main.tableOrder = "default"
+        main.endpoint = main.search.value.length > 0 ? `page/search` : "page";
+        main.params = main.search.value.length > 0 ? `query=${main.search.value.toLowerCase()}` : "";
         updateTable();
     });
 
-    html.exit.addEventListener("click", function () {
+    main.exit.addEventListener("click", function () {
         localStorage.removeItem("login");
     })
 
@@ -75,8 +75,8 @@ function loadNav() {
     </nav>
     `);
 
-    html.themeIcon = document.getElementById("themeIcon");
-    html.themeIcon.addEventListener("click", function () {
+    main.themeIcon = document.getElementById("themeIcon");
+    main.themeIcon.addEventListener("click", function () {
         if (pageTheme == "default") {
             applyTheme("dark")
         }
@@ -103,58 +103,58 @@ function loadTable() {
         </article>
         `
     )
-    html.clients = document.getElementById("clients");
-    html.pageNumber = document.getElementById("pageNumber");
-    html.nextButton = document.getElementById("nextButton");
-    html.previousButton = document.getElementById("previousButton");
-    html.tableOrder = "default";
-    html.arrow = {};
-    html.orderReverse = false;
+    main.clients = document.getElementById("clients");
+    main.pageNumber = document.getElementById("pageNumber");
+    main.nextButton = document.getElementById("nextButton");
+    main.previousButton = document.getElementById("previousButton");
+    main.tableOrder = "default";
+    main.arrow = {};
+    main.orderReverse = false;
 }
 
 async function loadTableContent() {
-    html.data.forEach(register => {
-        html.tableHeader.push(html.tableContent(register));
+    main.tablePage.forEach(register => {
+        main.tableHeader.push(main.tableContent(register));
     });
 
     if (search.value.length > 0) {
-        searchResults.innerText = `${html.clientsLength} resultados`
+        searchResults.innerText = `${main.clientsLength} resultados`
     } else {
         searchResults.innerText = "";
     }
 
-    html.clients.innerHTML = html.tableHeader.join('');
-    html.addActions?.();
+    main.clients.innerHTML = main.tableHeader.join('');
+    main.addActions?.();
 }
 
 async function loadPaging(start = 0, increment = 10) {
-    let length = html.clientsLength;
+    let length = main.clientsLength;
 
     let totalPages = Math.ceil(length / increment);
     let currentPage = Math.round(start / increment) + 1;
 
-    html.pageNumber.innerText = `${currentPage}/${totalPages}`;
+    main.pageNumber.innerText = `${currentPage}/${totalPages}`;
 
-    clientsCache[currentPage] = html.data;
+    tablePagesCache[currentPage] = main.tablePage;
 
     let nextPageStart = currentPage == totalPages ? start : (start + increment);
     let previousPageStart = currentPage == 1 ? 0 : (start - increment);
 
-    html.nextButton.onclick = () => {
-        if (clientsCache[currentPage + 1] != undefined) {
+    main.nextButton.onclick = () => {
+        if (tablePagesCache[currentPage + 1] != undefined) {
             setTableSettings();
-            html.data = clientsCache[currentPage + 1];
+            main.tablePage = tablePagesCache[currentPage + 1];
             loadTableContent();
             loadPaging(nextPageStart);
         }
         else if (currentPage < totalPages) return updateTable(nextPageStart);
         else return () => { };
     };
-    html.previousButton.onclick = () => {
+    main.previousButton.onclick = () => {
         if (currentPage == 1) return () => { };
-        else if (clientsCache[currentPage - 1] != undefined) {
+        else if (tablePagesCache[currentPage - 1] != undefined) {
             setTableSettings();
-            html.data = clientsCache[currentPage - 1];
+            main.tablePage = tablePagesCache[currentPage - 1];
             loadTableContent();
             loadPaging(previousPageStart);
         }
@@ -163,22 +163,22 @@ async function loadPaging(start = 0, increment = 10) {
 }
 
 function sortTable(order = "default") {
-    clientsCache = {};
-    html.arrow = {};
-    html.arrow[order] = "";
+    tablePagesCache = {};
+    main.arrow = {};
+    main.arrow[order] = "";
 
-    if (order == html.tableOrder) html.orderReverse = !html.orderReverse;
+    if (order == main.tableOrder) main.orderReverse = !main.orderReverse;
 
-    html.arrow[order] = html.orderReverse ? "↓" : "↑";
+    main.arrow[order] = main.orderReverse ? "↓" : "↑";
 
-    html.tableOrder = order;
-    html.endpoint = "page/sorted";
-    html.params = `sortKey=${order}&descending=${html.orderReverse}`;
+    main.tableOrder = order;
+    main.endpoint = "page/sorted";
+    main.params = `sortKey=${order}&descending=${main.orderReverse}`;
     updateTable();
 }
 
 async function getClients(start = 0, increment = 10) {
-    await fetch(`${apiUrl}/api/client/${html.endpoint}?start=${start}&increment=${increment}&${html.params}`, {
+    await fetch(`${apiUrl}/api/client/${main.endpoint}?start=${start}&increment=${increment}&${main.params}`, {
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`,
             "Content-Type": "application/json"
@@ -192,11 +192,11 @@ async function getClients(start = 0, increment = 10) {
             return response.json()
         })
         .then(data => {
-            html.data = data.page;
-            html.clientsLength = data.resultsLength;
+            main.tablePage = data.page;
+            main.clientsLength = data.resultsLength;
         });
 
-    if (html.endpoint != "page/search")
+    if (main.endpoint != "page/search")
         await getStats();
 }
 
@@ -215,15 +215,15 @@ async function getStats() {
             return response.json()
         })
         .then(data => {
-            html.clientsLength = data.clientsLength;
-            html.lastMonthClients = data.lastMonthClients;
-            html.pendingClients = data.pendingClients;
+            main.clientsLength = data.clientsLength;
+            main.lastMonthClients = data.lastMonthClients;
+            main.pendingClients = data.pendingClients;
         });
 }
 
 async function updateTable(start = 0, increment = 10) {
     setTableSettings();
-    await html.get(start, increment);
+    await main.getTablePage(start, increment);
     loadPaging(start, increment);
     loadTableContent();
 }

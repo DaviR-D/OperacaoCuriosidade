@@ -8,19 +8,19 @@ let dictionary = {
 
 document.addEventListener("DOMContentLoaded", async function () {
     await updateTable();
-    html.logs = {};
+    main.logs = {};
     getLogsElements();
     insertLogsData();
-    html.search.disabled = true;
+    main.search.disabled = true;
 });
 
 function getLogsElements() {
-    html.logs.tableTop = document.getElementById("tableTop");
-    html.logs.table = document.getElementById("clients");
+    main.logs.tableTop = document.getElementById("tableTop");
+    main.logs.table = document.getElementById("clients");
 }
 
 function insertLogsData() {
-    html.logs.tableTop.insertAdjacentHTML('beforeend',
+    main.logs.tableTop.insertAdjacentHTML('beforeend',
         `
         <h1><strong>Logs</strong></h1>
         `
@@ -46,13 +46,13 @@ async function getLogs(start, increment) {
             return response.json()
         })
         .then(data => {
-            html.data = data.logs;
-            html.clientsLength = data.logsLength;
+            main.tablePage = data.logs;
+            main.clientsLength = data.logsLength;
         })
 }
 
 function setTableSettings() {
-    html.tableHeader = [`
+    main.tableHeader = [`
         <tr id="tableHeader">
             <th class="column">Usuário</th>
             <th class="column">Cliente</th>
@@ -60,7 +60,7 @@ function setTableSettings() {
             <th class="column">Momento</th>
         </tr>`
     ];
-    html.tableContent = (log) => {
+    main.tableContent = (log) => {
         return `
             <tr>
                 <td>${log.userEmail}</td>
@@ -80,5 +80,5 @@ function setTableSettings() {
                 </td>
             </tr>
             `}
-    html.get = getLogs;
+    main.getTablePage = getLogs;
 }

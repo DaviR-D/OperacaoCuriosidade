@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", async function () {
     await updateTable();
-    html.report = {};
+    main.report = {};
     getReportElements();
     insertReportData();
 });
 
 function getReportElements() {
-    html.report.tableTop = document.getElementById("tableTop");
+    main.report.tableTop = document.getElementById("tableTop");
 }
 
 function insertReportData() {
-    html.report.tableTop.insertAdjacentHTML('beforeend',
+    main.report.tableTop.insertAdjacentHTML('beforeend',
         `
         <h1><strong>Lista de usuários</strong></h1>
         <button onclick="printTable()">IMPRIMIR</button>
@@ -23,7 +23,7 @@ function insertReportData() {
 
 async function printTable() {
     document.body.classList.add("blur");
-    await updateTable(0, html.clientsLength);
+    await updateTable(0, main.clientsLength);
     window.print();
     clientsCache = {};
     updateTable();
@@ -31,15 +31,15 @@ async function printTable() {
 }
 
 function setTableSettings(){
-    html.tableHeader = [`
+    main.tableHeader = [`
         <tr id="tableHeader">
-            <th class="column" onclick="sortTable('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="sortTable('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="sortTable('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="sortTable('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+            <th class="column" onclick="sortTable('name')">Nome ${main.arrow.name ? main.arrow.name : ""}</th>
+            <th class="column" onclick="sortTable('email')">Email ${main.arrow.email ? main.arrow.email : ""}</th>
+            <th class="column" onclick="sortTable('status')">Status ${main.arrow.status ? main.arrow.status : ""}</th>
+            <th class="column" onclick="sortTable('date')">Data ${main.arrow.date ? main.arrow.date : ""}</th>
         </tr>`
     ];
-    html.tableContent = (register) => {
+    main.tableContent = (register) => {
         return `
             <tr>
                 <td>${register.name}</td>
@@ -52,5 +52,5 @@ function setTableSettings(){
                 </td>
             </tr>
             `}
-    html.get = getClients;
+    main.getTablePage = getClients;
 }

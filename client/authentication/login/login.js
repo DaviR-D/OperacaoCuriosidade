@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   getAuthElements();
   applyTheme(pageTheme ?? "default");
-  html.passwordInput.addEventListener("keydown", e => {
+  main.passwordInput.addEventListener("keydown", e => {
     if (e.key === "Enter") tryLogin();
   })
 })

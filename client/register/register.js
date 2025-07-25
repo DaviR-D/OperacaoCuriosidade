@@ -1,38 +1,38 @@
 document.addEventListener("DOMContentLoaded", async function () {
     await updateTable();
-    html.register = {};
+    main.register = {};
     getRegisterElements();
     insertRegisterData();
-    try { html.addActions(); }
+    try { main.addActions(); }
     catch (error) { if (!(error instanceof ReferenceError)) throw error; }
 })
 
 function getRegisterElements() {
-    html.register.tableTop = document.getElementById("tableTop");
+    main.register.tableTop = document.getElementById("tableTop");
     let tableHeader = document.getElementById("tableHeader");
 
-    html.register.registerModal = document.getElementById("registerModal");
-    html.register.alertModal = document.getElementById("alertModal");
+    main.register.registerModal = document.getElementById("registerModal");
+    main.register.alertModal = document.getElementById("alertModal");
 
-    html.register.statusCheck = document.getElementById("status");
-    html.register.nameInput = document.getElementById("name");
-    html.register.ageInput = document.getElementById("age");
-    html.register.emailInput = document.getElementById("email");
-    html.register.addressInput = document.getElementById("address");
-    html.register.otherInput = document.getElementById("other");
-    html.register.interestsInput = document.getElementById("interests");
-    html.register.feelingsInput = document.getElementById("feelings");
-    html.register.valuesInput = document.getElementById("values");
+    main.register.statusCheck = document.getElementById("status");
+    main.register.nameInput = document.getElementById("name");
+    main.register.ageInput = document.getElementById("age");
+    main.register.emailInput = document.getElementById("email");
+    main.register.addressInput = document.getElementById("address");
+    main.register.otherInput = document.getElementById("other");
+    main.register.interestsInput = document.getElementById("interests");
+    main.register.feelingsInput = document.getElementById("feelings");
+    main.register.valuesInput = document.getElementById("values");
 
-    html.register.alertTitle = document.getElementById("alertTitle");
-    html.register.alertDeleteButton = document.getElementById("alertDeleteButton");
-    html.register.cancelDeleteButton = document.getElementById("cancelDeleteButton");
+    main.register.alertTitle = document.getElementById("alertTitle");
+    main.register.alertDeleteButton = document.getElementById("alertDeleteButton");
+    main.register.cancelDeleteButton = document.getElementById("cancelDeleteButton");
 
-    html.register.alertModal.addEventListener("close", function () {
+    main.register.alertModal.addEventListener("close", function () {
         document.body.classList.remove("blur");
     });
 
-    html.register.registerModal.addEventListener("close", function () {
+    main.register.registerModal.addEventListener("close", function () {
         document.body.classList.remove("blur");
         clearFields();
         resetFieldsStyle();
@@ -42,7 +42,7 @@ function getRegisterElements() {
 }
 
 function insertRegisterData() {
-    html.register.tableTop.insertAdjacentHTML('beforeend',
+    main.register.tableTop.insertAdjacentHTML('beforeend',
         `
             <h1><strong>Cadastros</strong></h1>
             <button onclick="showRegisterModal()"> + NOVO CADASTRO</button>
@@ -52,7 +52,7 @@ function insertRegisterData() {
     navLink = document.getElementById("registerNav")
     navLink.style.backgroundColor = "var(--highlight-color)";
 
-    html.addActions = () => {
+    main.addActions = () => {
         tableHeader.insertAdjacentHTML("beforeend", "<th style='cursor: default;'>Ações</th>");
         document.querySelectorAll(".actions").forEach(row => {
             row.style.display = "table-cell";
@@ -67,17 +67,17 @@ async function saveClient(event, id = null) {
     if (registerForm.checkValidity()) {
         let newRegister = {
             id: id,
-            name: html.register.nameInput.value,
-            email: html.register.emailInput.value,
-            status: html.register.statusCheck.checked ? "Ativo" : "Inativo",
+            name: main.register.nameInput.value,
+            email: main.register.emailInput.value,
+            status: main.register.statusCheck.checked ? "Ativo" : "Inativo",
             pending: true,
-            date: id ? html.data.filter((register) => register.id == id)[0].date : new Date(),
-            age: html.register.ageInput.value,
-            address: html.register.addressInput.value,
-            other: html.register.otherInput.value,
-            interests: html.register.interestsInput.value,
-            feelings: html.register.feelingsInput.value,
-            values: html.register.valuesInput.value,
+            date: id ? main.tablePage.filter((register) => register.id == id)[0].date : new Date(),
+            age: main.register.ageInput.value,
+            address: main.register.addressInput.value,
+            other: main.register.otherInput.value,
+            interests: main.register.interestsInput.value,
+            feelings: main.register.feelingsInput.value,
+            values: main.register.valuesInput.value,
         };
 
         if (await checkFieldsValidity(id, newRegister)) {
@@ -130,15 +130,15 @@ async function editClient(id) {
     registerModal.dataset.userId = id;
     showRegisterModal();
 
-    html.register.nameInput.value = editItem.name;
-    html.register.emailInput.value = editItem.email;
-    html.register.ageInput.value = editItem.age;
-    html.register.addressInput.value = editItem.address;
-    html.register.otherInput.value = editItem.other;
-    html.register.interestsInput.value = editItem.interests;
-    html.register.feelingsInput.value = editItem.feelings;
-    html.register.valuesInput.value = editItem.values;
-    html.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
+    main.register.nameInput.value = editItem.name;
+    main.register.emailInput.value = editItem.email;
+    main.register.ageInput.value = editItem.age;
+    main.register.addressInput.value = editItem.address;
+    main.register.otherInput.value = editItem.other;
+    main.register.interestsInput.value = editItem.interests;
+    main.register.feelingsInput.value = editItem.feelings;
+    main.register.valuesInput.value = editItem.values;
+    main.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
     registerLog("Read", id)
 }
 
@@ -152,28 +152,28 @@ function hideRegisterModal() {
 }
 
 function showDeleteConfirmation(id) {
-    let deletedUser = html.data.filter((register) => register.id == id)[0].name
-    html.register.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    let deletedUser = main.tablePage.filter((register) => register.id == id)[0].name
+    main.register.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
     document.body.classList.add("blur");
-    html.register.alertModal.showModal();
-    html.register.alertDeleteButton.onclick = () => deleteClient(id);
+    main.register.alertModal.showModal();
+    main.register.alertDeleteButton.onclick = () => deleteClient(id);
 }
 
 function hideDeleteConfirmation() {
-    html.register.alertModal.close();
+    main.register.alertModal.close();
 }
 
 function clearFields() {
     registerModal.dataset.userId = null;
-    html.register.nameInput.value = "";
-    html.register.emailInput.value = "";
-    html.register.ageInput.value = "";
-    html.register.addressInput.value = "";
-    html.register.otherInput.value = "";
-    html.register.interestsInput.value = "";
-    html.register.feelingsInput.value = "";
-    html.register.valuesInput.value = "";
-    html.register.statusCheck.checked = false;
+    main.register.nameInput.value = "";
+    main.register.emailInput.value = "";
+    main.register.ageInput.value = "";
+    main.register.addressInput.value = "";
+    main.register.otherInput.value = "";
+    main.register.interestsInput.value = "";
+    main.register.feelingsInput.value = "";
+    main.register.valuesInput.value = "";
+    main.register.statusCheck.checked = false;
 }
 
 function resetFieldStyle(field) {
@@ -207,13 +207,13 @@ function highlightBlankFields() {
 }
 
 async function checkFieldsValidity(id, newRegister) {
-    html.invalidFields = [];
+    main.invalidFields = [];
     checkValidName(newRegister.name);
     checkValidEmail(newRegister.email);
     await checkExistingEmail(id, newRegister.email);
 
-    if (html.invalidFields.length) {
-        html.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
+    if (main.invalidFields.length) {
+        main.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
         return false;
     }
     return true;
@@ -232,8 +232,8 @@ async function checkExistingEmail(id = null, email) {
         .then(data => { availableEmail = data.isAvailable; });
 
     if (!availableEmail) {
-        highlightInvalidField(html.register.emailInput, "Email já cadastrado");
-        html.invalidFields.push(html.register.emailInput);
+        highlightInvalidField(main.register.emailInput, "Email já cadastrado");
+        main.invalidFields.push(main.register.emailInput);
     };
     return availableEmail;
 }
@@ -242,8 +242,8 @@ function checkValidEmail(email) {
     regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let valid = regex.test(email)
     if (!valid) {
-        highlightInvalidField(html.register.emailInput, "Insira um email válido");
-        html.invalidFields.push(html.register.emailInput);
+        highlightInvalidField(main.register.emailInput, "Insira um email válido");
+        main.invalidFields.push(main.register.emailInput);
     };
     return valid;
 }
@@ -252,8 +252,8 @@ function checkValidName(name) {
     regex = /^[^0-9!@#$%*+={}?<>()]*$/
     let valid = regex.test(name)
     if (!valid) {
-        highlightInvalidField(html.register.nameInput, "Insira um nome válido")
-        html.invalidFields.push(html.register.nameInput);
+        highlightInvalidField(main.register.nameInput, "Insira um nome válido")
+        main.invalidFields.push(main.register.nameInput);
     };
     return valid;
 }
@@ -270,7 +270,7 @@ async function registerLog(userAction, id) {
 }
 
 function addInputEvents() {
-    html.invalidFields = [];
+    main.invalidFields = [];
     [...registerForm.elements].forEach(field => {
         let errorMessage;
         field.addEventListener("input", function () {
@@ -279,30 +279,30 @@ function addInputEvents() {
         })
     });
 
-    html.register.nameInput.addEventListener("input", function () {
-        resetFieldStyle(html.register.nameInput)
-        checkValidName(html.register.nameInput.value);
+    main.register.nameInput.addEventListener("input", function () {
+        resetFieldStyle(main.register.nameInput)
+        checkValidName(main.register.nameInput.value);
     })
-    html.register.emailInput.addEventListener("input", function () {
-        resetFieldStyle(html.register.emailInput);
-        checkValidEmail(html.register.emailInput.value);
+    main.register.emailInput.addEventListener("input", function () {
+        resetFieldStyle(main.register.emailInput);
+        checkValidEmail(main.register.emailInput.value);
     })
-    html.register.emailInput.addEventListener("blur", function () {
-        if (html.register.emailInput.value.length > 0)
-            checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
+    main.register.emailInput.addEventListener("blur", function () {
+        if (main.register.emailInput.value.length > 0)
+            checkExistingEmail(registerModal.dataset.userId, main.register.emailInput.value);
     })
 }
 
 function setTableSettings(){
-    html.tableHeader = [`
+    main.tableHeader = [`
         <tr id="tableHeader">
-            <th class="column" onclick="sortTable('name')">Nome ${html.arrow.name ? html.arrow.name : ""}</th>
-            <th class="column" onclick="sortTable('email')">Email ${html.arrow.email ? html.arrow.email : ""}</th>
-            <th class="column" onclick="sortTable('status')">Status ${html.arrow.status ? html.arrow.status : ""}</th>
-            <th class="column" onclick="sortTable('date')">Data ${html.arrow.date ? html.arrow.date : ""}</th>
+            <th class="column" onclick="sortTable('name')">Nome ${main.arrow.name ? main.arrow.name : ""}</th>
+            <th class="column" onclick="sortTable('email')">Email ${main.arrow.email ? main.arrow.email : ""}</th>
+            <th class="column" onclick="sortTable('status')">Status ${main.arrow.status ? main.arrow.status : ""}</th>
+            <th class="column" onclick="sortTable('date')">Data ${main.arrow.date ? main.arrow.date : ""}</th>
         </tr>`
     ];
-    html.tableContent = (register) => {
+    main.tableContent = (register) => {
         return `
             <tr>
                 <td>${register.name}</td>
@@ -315,5 +315,5 @@ function setTableSettings(){
                 </td>
             </tr>
             `}
-    html.get = getClients;
+    main.getTablePage = getClients;
 }

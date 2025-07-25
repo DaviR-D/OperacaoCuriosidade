@@ -3,19 +3,19 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function getSignupElements() {
-    html.nameInput = document.getElementById("name");
+    main.nameInput = document.getElementById("name");
 
-    html.nameInput.addEventListener("keydown", e => {
-        if (e.key === "Enter") html.emailInput.focus();
+    main.nameInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") main.emailInput.focus();
     })
-    html.passwordInput.addEventListener("keydown", e => {
+    main.passwordInput.addEventListener("keydown", e => {
         if (e.key === "Enter") trySignup();
     })
 }
 
 async function trySignup() {
-    if (checkValidEmail(html.emailInput.value)) {
-        let newUser = { name: encodeURIComponent(html.nameInput.value), email: html.emailInput.value, password: html.passwordInput.value }
+    if (checkValidEmail(main.emailInput.value)) {
+        let newUser = { name: encodeURIComponent(main.nameInput.value), email: main.emailInput.value, password: main.passwordInput.value }
         await fetch(`${apiUrl}/api/authentication/signup`, {
             method: "POST",
             headers: {
@@ -24,9 +24,9 @@ async function trySignup() {
             body: JSON.stringify(newUser)
         })
             .then(response => { return response.json() })
-            .then(data => html.message = data.message)
-        if (html.message == "email already in use")
-            html.errorMessage.innerText = "Este email já está em uso";
+            .then(data => main.message = data.message)
+        if (main.message == "email already in use")
+            main.errorMessage.innerText = "Este email já está em uso";
         else
             window.location = "../login/login.html";
     }

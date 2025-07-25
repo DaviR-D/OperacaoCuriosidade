@@ -41,5 +41,5 @@ function applyTheme(theme = "default") {
     localStorage.setItem("theme", theme);
     pageTheme = theme;
 
-    if(html.themeIcon) html.themeIcon.innerText = theme == "dark" ? `light_mode` : `dark_mode`;
+    if(main.themeIcon) main.themeIcon.innerText = theme == "dark" ? `light_mode` : `dark_mode`;
 }
