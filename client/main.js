@@ -20,6 +20,7 @@ function loadLayout() {
     loadHeader();
     loadNav();
     loadTable();
+    loadClientView();
 }
 
 function loadHeader() {
@@ -241,10 +242,10 @@ async function loadClientsTable() {
     main.renderTableContent = (register) => {
         return `
             <tr>
-                <td>${register.name}</td>
-                <td>${register.email}</td>
-                <td><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
-                <td>${new Date(register.date).toLocaleDateString('pt-BR')}</td>
+                <td onclick="viewClient('${register.id}')">${register.name}</td>
+                <td onclick="viewClient('${register.id}')">${register.email}</td>
+                <td onclick="viewClient('${register.id}')"><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
+                <td onclick="viewClient('${register.id}')">${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                 <td class="actions" style="display: none;">
                     <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
                     <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
@@ -252,4 +253,124 @@ async function loadClientsTable() {
             </tr>
             `}
     main.getTablePage = getClients;
+}
+
+function loadClientView() {
+    document.body.insertAdjacentHTML('beforeend',
+        `
+<dialog id="clientViewModal">
+<div id="clientViewWrapper">
+<div class="modalTop">
+    <span id="closeButtonView" class="material-symbols-outlined" onclick="main.clientViewModal.close()">close</span>
+</div>
+<div>
+    <h2 class="onionLayer">
+        <strong>1° Fatos e dados</strong>
+        <span class="activeCheck">Ativo<input type="checkbox" id="statusView"></span>
+    </h2>
+    <div style="display: flex;">
+        <div class="clientViewSection" style="width: 70%;">
+            <div class="inputTitle">Nome</div>
+            <input type="text" id="nameView">
+        </div>
+        <div class="clientViewSection" style="width: 20%; margin-left: 5%;">
+            <div class="inputTitle">Idade</div>
+            <input type="number" id="ageView" style="min-width: 10px;">
+        </div>
+    </div>
+    <div class="clientViewSection">
+        <div class="inputTitle">Email</div>
+        <input type="text" id="emailView">
+    </div>
+    <div class="clientViewSection">
+        <div class="inputTitle">Endereço</div>
+        <input type="text" id="addressView">
+    </div>
+    <div class="clientViewSection">
+        <div class="inputTitle">Outras informações</div>
+        <input type="text" id="otherView">
+    </div>
+</div>
+<div>
+    <div class="clientViewSection">
+        <h2 class="onionLayer"><strong>2° Interesses</strong></h2>
+        <textarea id="interestsView"></textarea>
+    </div>
+    <div class="clientViewSection">
+        <h2 class="onionLayer"><strong>3° Sentimentos</strong></h2>
+        <textarea id="feelingsView"></textarea>
+    </div>
+    <div class="clientViewSection">
+        <h2 class="onionLayer"><strong>4° Valores</strong></h2>
+        <textarea id="valuesView"></textarea>
+    </div>
+</div>
+</div>
+</dialog>        
+    `);
+
+    main.clientViewModal = document.getElementById("clientViewModal");
+
+    main.statusCheck = document.getElementById("statusView");
+    main.nameInput = document.getElementById("nameView");
+    main.ageInput = document.getElementById("ageView");
+    main.emailInput = document.getElementById("emailView");
+    main.addressInput = document.getElementById("addressView");
+    main.otherInput = document.getElementById("otherView");
+    main.interestsInput = document.getElementById("interestsView");
+    main.feelingsInput = document.getElementById("feelingsView");
+    main.valuesInput = document.getElementById("valuesView");
+
+    let inputs = main.clientViewModal.querySelectorAll("input");
+    inputs.forEach(input => input.disabled = true);
+    let textareas = main.clientViewModal.querySelectorAll("textarea");
+    textareas.forEach(textarea => textarea.disabled = true);
+
+    main.clientViewModal.addEventListener("close", function () {
+        document.body.classList.remove("blur");
+    });
+}
+
+async function viewClient(id) {
+    let viewItem;
+
+    await fetch(`${apiUrl}/api/client/${id}`, {
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+        }
+    })
+        .then(response => { return response.json() })
+        .then(data => {
+            viewItem = data.client;
+        });
+
+    main.clientViewModal.dataset.userId = id;
+    showClientViewModal();
+
+    main.nameInput.value = viewItem.name;
+    main.emailInput.value = viewItem.email;
+    main.ageInput.value = viewItem.age;
+    main.addressInput.value = viewItem.address;
+    main.otherInput.value = viewItem.other;
+    main.interestsInput.value = viewItem.interests;
+    main.feelingsInput.value = viewItem.feelings;
+    main.valuesInput.value = viewItem.values;
+    main.statusCheck.checked = viewItem.status == "Ativo" ? true : false;
+    registerLog("Read", id)
+}
+
+function showClientViewModal() {
+    document.body.classList.add("blur");
+    main.clientViewModal.showModal();
+}
+
+async function registerLog(userAction, id) {
+    fetch(`${apiUrl}/api/log/`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ clientId: id, action: userAction })
+    })
 }

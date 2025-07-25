@@ -258,17 +258,6 @@ function checkValidName(name) {
     return valid;
 }
 
-async function registerLog(userAction, id) {
-    fetch(`${apiUrl}/api/log/`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${loggedUser.token}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ clientId: id, action: userAction })
-    })
-}
-
 function addInputEvents() {
     main.invalidFields = [];
     [...registerForm.elements].forEach(field => {
