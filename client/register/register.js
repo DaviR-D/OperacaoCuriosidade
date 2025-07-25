@@ -285,3 +285,7 @@ function addInputEvents() {
 function setTableSettings() {
     loadClientsTable();
 }
+
+function openClient(id){
+    editClient(id);
+}

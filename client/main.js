@@ -242,10 +242,10 @@ async function loadClientsTable() {
     main.renderTableContent = (register) => {
         return `
             <tr>
-                <td onclick="viewClient('${register.id}')">${register.name}</td>
-                <td onclick="viewClient('${register.id}')">${register.email}</td>
-                <td onclick="viewClient('${register.id}')"><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
-                <td onclick="viewClient('${register.id}')">${new Date(register.date).toLocaleDateString('pt-BR')}</td>
+                <td onclick="openClient('${register.id}')">${register.name}</td>
+                <td onclick="openClient('${register.id}')">${register.email}</td>
+                <td onclick="openClient('${register.id}')"><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
+                <td onclick="openClient('${register.id}')">${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                 <td class="actions" style="display: none;">
                     <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
                     <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
@@ -331,7 +331,9 @@ function loadClientView() {
     });
 }
 
-async function viewClient(id) {
+
+
+async function readClient(id){
     let viewItem;
 
     await fetch(`${apiUrl}/api/client/${id}`, {

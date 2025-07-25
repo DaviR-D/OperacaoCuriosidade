@@ -33,3 +33,7 @@ async function printTable() {
 function setTableSettings() {
     loadClientsTable();
 }
+
+async function openClient(id) {
+    readClient(id);
+}

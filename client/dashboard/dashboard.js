@@ -54,3 +54,7 @@ async function insertDashboardData() {
 function setTableSettings() {
     loadClientsTable();
 }
+
+async function openClient(id) {
+    readClient(id);
+}
