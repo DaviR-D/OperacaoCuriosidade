@@ -52,7 +52,7 @@ async function getLogs(start, increment) {
 }
 
 function setTableSettings() {
-    main.tableHeader = [`
+    main.renderedTableContent = [`
         <tr id="tableHeader">
             <th class="column">Usuário</th>
             <th class="column">Cliente</th>
@@ -60,7 +60,7 @@ function setTableSettings() {
             <th class="column">Momento</th>
         </tr>`
     ];
-    main.tableContent = (log) => {
+    main.renderTableContent = (log) => {
         return `
             <tr>
                 <td>${log.userEmail}</td>

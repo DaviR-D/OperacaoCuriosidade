@@ -47,8 +47,8 @@ function loadHeader() {
 
     main.search.addEventListener("input", function () {
         tablePagesCache = {}
-        main.arrow = {};
-        main.tableOrder = "default"
+        main.sortByColumnArrow = {};
+        main.currentSortKey = "default"
         main.endpoint = main.search.value.length > 0 ? `page/search` : "page";
         main.params = main.search.value.length > 0 ? `query=${main.search.value.toLowerCase()}` : "";
         updateTable();
@@ -107,14 +107,14 @@ function loadTable() {
     main.pageNumber = document.getElementById("pageNumber");
     main.nextButton = document.getElementById("nextButton");
     main.previousButton = document.getElementById("previousButton");
-    main.tableOrder = "default";
-    main.arrow = {};
-    main.orderReverse = false;
+    main.currentSortKey = "default";
+    main.sortByColumnArrow = {};
+    main.sortDescending = false;
 }
 
 async function loadTableContent() {
-    main.tablePage.forEach(register => {
-        main.tableHeader.push(main.tableContent(register));
+    main.tablePage.forEach(row => {
+        main.renderedTableContent.push(main.renderTableContent(row));
     });
 
     if (search.value.length > 0) {
@@ -123,7 +123,7 @@ async function loadTableContent() {
         searchResults.innerText = "";
     }
 
-    main.clients.innerHTML = main.tableHeader.join('');
+    main.clients.innerHTML = main.renderedTableContent.join('');
     main.addActions?.();
 }
 
@@ -142,10 +142,7 @@ async function loadPaging(start = 0, increment = 10) {
 
     main.nextButton.onclick = () => {
         if (tablePagesCache[currentPage + 1] != undefined) {
-            setTableSettings();
-            main.tablePage = tablePagesCache[currentPage + 1];
-            loadTableContent();
-            loadPaging(nextPageStart);
+            loadCachedPage(currentPage + 1, nextPageStart)
         }
         else if (currentPage < totalPages) return updateTable(nextPageStart);
         else return () => { };
@@ -153,27 +150,24 @@ async function loadPaging(start = 0, increment = 10) {
     main.previousButton.onclick = () => {
         if (currentPage == 1) return () => { };
         else if (tablePagesCache[currentPage - 1] != undefined) {
-            setTableSettings();
-            main.tablePage = tablePagesCache[currentPage - 1];
-            loadTableContent();
-            loadPaging(previousPageStart);
+            loadCachedPage(currentPage - 1, previousPageStart)
         }
         else if (currentPage > 1) return updateTable(previousPageStart);
     };
 }
 
-function sortTable(order = "default") {
+function sortTable(sortKey = "default") {
     tablePagesCache = {};
-    main.arrow = {};
-    main.arrow[order] = "";
+    main.sortByColumnArrow = {};
+    main.sortByColumnArrow[sortKey] = "";
 
-    if (order == main.tableOrder) main.orderReverse = !main.orderReverse;
+    if (sortKey == main.currentSortKey) main.sortDescending = !main.sortDescending;
 
-    main.arrow[order] = main.orderReverse ? "↓" : "↑";
+    main.sortByColumnArrow[sortKey] = main.sortDescending ? "↓" : "↑";
 
-    main.tableOrder = order;
+    main.currentSortKey = sortKey;
     main.endpoint = "page/sorted";
-    main.params = `sortKey=${order}&descending=${main.orderReverse}`;
+    main.params = `sortKey=${sortKey}&descending=${main.sortDescending}`;
     updateTable();
 }
 
@@ -228,16 +222,23 @@ async function updateTable(start = 0, increment = 10) {
     loadTableContent();
 }
 
+function loadCachedPage(page, pageStart) {
+    setTableSettings();
+    main.tablePage = tablePagesCache[page];
+    loadTableContent();
+    loadPaging(pageStart);
+}
+
 async function loadClientsTable() {
-    main.tableHeader = [`
+    main.renderedTableContent = [`
         <tr id="tableHeader">
-            <th class="column" onclick="sortTable('name')">Nome ${main.arrow.name ? main.arrow.name : ""}</th>
-            <th class="column" onclick="sortTable('email')">Email ${main.arrow.email ? main.arrow.email : ""}</th>
-            <th class="column" onclick="sortTable('status')">Status ${main.arrow.status ? main.arrow.status : ""}</th>
-            <th class="column" onclick="sortTable('date')">Data ${main.arrow.date ? main.arrow.date : ""}</th>
+            <th class="column" onclick="sortTable('name')">Nome ${main.sortByColumnArrow.name ? main.sortByColumnArrow.name : ""}</th>
+            <th class="column" onclick="sortTable('email')">Email ${main.sortByColumnArrow.email ? main.sortByColumnArrow.email : ""}</th>
+            <th class="column" onclick="sortTable('status')">Status ${main.sortByColumnArrow.status ? main.sortByColumnArrow.status : ""}</th>
+            <th class="column" onclick="sortTable('date')">Data ${main.sortByColumnArrow.date ? main.sortByColumnArrow.date : ""}</th>
         </tr>`
     ];
-    main.tableContent = (register) => {
+    main.renderTableContent = (register) => {
         return `
             <tr>
                 <td>${register.name}</td>

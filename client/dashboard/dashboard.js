@@ -33,7 +33,7 @@ function getDashboardElements() {
 
 async function insertDashboardData() {
     if (main.clientsLength == 0) createDB(loggedUser.token);
-    main.orderReverse = true;
+    main.sortDescending = true;
     await sortTable("date");
 
 
