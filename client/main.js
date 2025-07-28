@@ -20,7 +20,7 @@ function loadLayout() {
     loadHeader();
     loadNav();
     loadTable();
-    loadClientView();
+    loadModals();
 }
 
 function loadHeader() {
@@ -255,57 +255,57 @@ async function loadClientsTable() {
     main.getTablePage = getClients;
 }
 
-function loadClientView() {
+function loadModals() {
     document.body.insertAdjacentHTML('beforeend',
         `
 <dialog id="clientViewModal">
-<div id="clientViewWrapper">
-<div class="modalTop">
-    <span id="closeButtonView" class="material-symbols-outlined" onclick="main.clientViewModal.close()">close</span>
-</div>
-<div>
-    <h2 class="onionLayer">
-        <strong>1° Fatos e dados</strong>
-        <span class="activeCheck">Ativo<input type="checkbox" id="statusView"></span>
-    </h2>
-    <div style="display: flex;">
-        <div class="clientViewSection" style="width: 70%;">
-            <div class="inputTitle">Nome</div>
-            <input type="text" id="nameView">
+    <div id="clientViewWrapper">
+        <div class="modalTop">
+            <span id="closeButtonView" class="material-symbols-outlined" onclick="main.clientViewModal.close()">close</span>
         </div>
-        <div class="clientViewSection" style="width: 20%; margin-left: 5%;">
-            <div class="inputTitle">Idade</div>
-            <input type="number" id="ageView" style="min-width: 10px;">
+        <div>
+            <h2 class="onionLayer">
+                <strong>1° Fatos e dados</strong>
+                <span class="activeCheck">Ativo<input type="checkbox" id="statusView"></span>
+            </h2>
+            <div style="display: flex;">
+                <div class="clientViewSection" style="width: 70%;">
+                    <div class="inputTitle">Nome</div>
+                    <input type="text" id="nameView">
+                </div>
+                <div class="clientViewSection" style="width: 20%; margin-left: 5%;">
+                    <div class="inputTitle">Idade</div>
+                    <input type="number" id="ageView" style="min-width: 10px;">
+                </div>
+            </div>
+            <div class="clientViewSection">
+                <div class="inputTitle">Email</div>
+                <input type="text" id="emailView">
+            </div>
+            <div class="clientViewSection">
+                <div class="inputTitle">Endereço</div>
+                <input type="text" id="addressView">
+            </div>
+            <div class="clientViewSection">
+                <div class="inputTitle">Outras informações</div>
+                <input type="text" id="otherView">
+            </div>
+        </div>
+        <div>
+            <div class="clientViewSection">
+                <h2 class="onionLayer"><strong>2° Interesses</strong></h2>
+                <textarea id="interestsView"></textarea>
+            </div>
+            <div class="clientViewSection">
+                <h2 class="onionLayer"><strong>3° Sentimentos</strong></h2>
+                <textarea id="feelingsView"></textarea>
+            </div>
+            <div class="clientViewSection">
+                <h2 class="onionLayer"><strong>4° Valores</strong></h2>
+                <textarea id="valuesView"></textarea>
+            </div>
         </div>
     </div>
-    <div class="clientViewSection">
-        <div class="inputTitle">Email</div>
-        <input type="text" id="emailView">
-    </div>
-    <div class="clientViewSection">
-        <div class="inputTitle">Endereço</div>
-        <input type="text" id="addressView">
-    </div>
-    <div class="clientViewSection">
-        <div class="inputTitle">Outras informações</div>
-        <input type="text" id="otherView">
-    </div>
-</div>
-<div>
-    <div class="clientViewSection">
-        <h2 class="onionLayer"><strong>2° Interesses</strong></h2>
-        <textarea id="interestsView"></textarea>
-    </div>
-    <div class="clientViewSection">
-        <h2 class="onionLayer"><strong>3° Sentimentos</strong></h2>
-        <textarea id="feelingsView"></textarea>
-    </div>
-    <div class="clientViewSection">
-        <h2 class="onionLayer"><strong>4° Valores</strong></h2>
-        <textarea id="valuesView"></textarea>
-    </div>
-</div>
-</div>
 </dialog>
 <dialog id="alertModal">
     <div id="alertWrapper">
@@ -355,8 +355,6 @@ function hideDeleteConfirmation() {
     main.alertModal.close();
 }
 
-
-
 async function readClient(id) {
     let viewItem;
     let responseMessage;
@@ -397,6 +395,16 @@ function showClientViewModal() {
     main.clientViewModal.showModal();
 }
 
+async function clientNotFoundAlert() {
+    main.alertTitle.innerText = `Cliente não encontrado`;
+    main.alertText.innerText = "Este cliente não existe ou foi deletado";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.cancelDeleteButton.innerText = "OK";
+    await updateTable();
+}
+
 async function registerLog(userAction, id) {
     fetch(`${apiUrl}/api/log/`, {
         method: "POST",
@@ -406,14 +414,4 @@ async function registerLog(userAction, id) {
         },
         body: JSON.stringify({ clientId: id, action: userAction })
     })
-}
-
-async function clientNotFoundAlert() {
-    main.alertTitle.innerText = `Cliente não encontrado`;
-    main.alertText.innerText = "Este cliente não existe ou foi deletado";
-    document.body.classList.add("blur");
-    main.alertModal.showModal();
-    main.alertDeleteButton.style.display = "none";
-    main.cancelDeleteButton.innerText = "OK";
-    await updateTable();
 }
