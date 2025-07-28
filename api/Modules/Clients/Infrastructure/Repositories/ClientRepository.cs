@@ -19,10 +19,13 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
             int clientIndex = clients.FindIndex(r => r.Id == client.Id);
             clients[clientIndex] = ClientDtoMapper.ToEntity(client);
         }
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             Client? client = clients.FirstOrDefault(c => c.Id == id);
+            if (client == null || client.Deleted)
+                return true;
             client.Deleted = true;
+            return false;
         }
         public Client? GetOne(Guid id)
         {

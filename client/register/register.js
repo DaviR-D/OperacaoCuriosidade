@@ -100,12 +100,24 @@ async function saveClient(event, id = null) {
 }
 
 async function deleteClient(id) {
+    let responseMessage;
+
     await fetch(`${apiUrl}/api/client/${id}`, {
         method: 'DELETE',
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`
         }
     })
+        .then(response => { return response.json() })
+        .then(data => {
+            responseMessage = data.message;
+        });
+
+    if (responseMessage == "client does not exist") {
+        clientNotFoundAlert();
+        return;
+    }
+
     clientsCache = {};
     updateTable();
     hideDeleteConfirmation();

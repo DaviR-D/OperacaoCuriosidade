@@ -8,9 +8,12 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (DeleteClientCommand)input;
-            repository.Delete(command.Id);
+            var alreadyDeleted = repository.Delete(command.Id);
 
-            return new DeleteClientResponse();
+            if(alreadyDeleted)
+                return new DeleteClientResponse(message:"client does not exist");
+            else
+                return new DeleteClientResponse();
         }
     }
 }
