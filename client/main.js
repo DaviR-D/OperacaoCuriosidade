@@ -306,6 +306,16 @@ function loadClientView() {
     </div>
 </div>
 </div>
+</dialog>
+<dialog id="alertModal">
+    <div id="alertWrapper">
+        <p id="alertTitle"></p>
+        <span id="alertText">Essa ação não pode ser desfeita</span>
+        <div id="alertButtons">
+            <button id="cancelDeleteButton" onclick="hideDeleteConfirmation()">CANCELAR</button>
+            <button id="alertDeleteButton">DELETAR</button>
+        </div>
+    </div>
 </dialog>        
     `);
 
@@ -329,12 +339,27 @@ function loadClientView() {
     main.clientViewModal.addEventListener("close", function () {
         document.body.classList.remove("blur");
     });
+
+    main.alertModal = document.getElementById("alertModal");
+    main.alertTitle = document.getElementById("alertTitle");
+    main.alertText = document.getElementById("alertText");
+    main.alertDeleteButton = document.getElementById("alertDeleteButton");
+    main.cancelDeleteButton = document.getElementById("cancelDeleteButton");
+
+    main.alertModal.addEventListener("close", function () {
+        document.body.classList.remove("blur");
+    });
+}
+
+function hideDeleteConfirmation() {
+    main.alertModal.close();
 }
 
 
 
-async function readClient(id){
+async function readClient(id) {
     let viewItem;
+    let responseMessage;
 
     await fetch(`${apiUrl}/api/client/${id}`, {
         headers: {
@@ -344,7 +369,13 @@ async function readClient(id){
         .then(response => { return response.json() })
         .then(data => {
             viewItem = data.client;
+            responseMessage = data.message;
         });
+
+    if (responseMessage == "client does not exist") {
+        clientNotFoundAlert();
+        return;
+    }
 
     main.clientViewModal.dataset.userId = id;
     showClientViewModal();
@@ -375,4 +406,14 @@ async function registerLog(userAction, id) {
         },
         body: JSON.stringify({ clientId: id, action: userAction })
     })
+}
+
+async function clientNotFoundAlert() {
+    main.alertTitle.innerText = `Cliente não encontrado`;
+    main.alertText.innerText = "Este cliente não existe ou foi deletado";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.cancelDeleteButton.innerText = "OK";
+    await updateTable();
 }

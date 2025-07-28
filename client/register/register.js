@@ -12,7 +12,6 @@ function getRegisterElements() {
     let tableHeader = document.getElementById("tableHeader");
 
     main.register.registerModal = document.getElementById("registerModal");
-    main.register.alertModal = document.getElementById("alertModal");
 
     main.register.statusCheck = document.getElementById("status");
     main.register.nameInput = document.getElementById("name");
@@ -23,14 +22,6 @@ function getRegisterElements() {
     main.register.interestsInput = document.getElementById("interests");
     main.register.feelingsInput = document.getElementById("feelings");
     main.register.valuesInput = document.getElementById("values");
-
-    main.register.alertTitle = document.getElementById("alertTitle");
-    main.register.alertDeleteButton = document.getElementById("alertDeleteButton");
-    main.register.cancelDeleteButton = document.getElementById("cancelDeleteButton");
-
-    main.register.alertModal.addEventListener("close", function () {
-        document.body.classList.remove("blur");
-    });
 
     main.register.registerModal.addEventListener("close", function () {
         document.body.classList.remove("blur");
@@ -123,6 +114,7 @@ async function deleteClient(id) {
 
 async function editClient(id) {
     let editItem;
+    let responseMessage;
 
     await fetch(`${apiUrl}/api/client/${id}`, {
         headers: {
@@ -132,7 +124,13 @@ async function editClient(id) {
         .then(response => { return response.json() })
         .then(data => {
             editItem = data.client;
+            responseMessage = data.message;
         });
+
+    if (responseMessage == "client does not exist") {
+        clientNotFoundAlert();
+        return;
+    }
 
     registerModal.dataset.userId = id;
     showRegisterModal();
@@ -160,14 +158,13 @@ function hideRegisterModal() {
 
 function showDeleteConfirmation(id) {
     let deletedUser = main.tablePage.filter((register) => register.id == id)[0].name
-    main.register.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    main.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    main.alertText.innerText = "Essa ação não pode ser desfeita";
+    main.alertDeleteButton.style.display = "block";
+    main.cancelDeleteButton.innerText = "CANCELAR";
     document.body.classList.add("blur");
-    main.register.alertModal.showModal();
-    main.register.alertDeleteButton.onclick = () => deleteClient(id);
-}
-
-function hideDeleteConfirmation() {
-    main.register.alertModal.close();
+    main.alertModal.showModal();
+    main.alertDeleteButton.onclick = () => deleteClient(id);
 }
 
 function clearFields() {

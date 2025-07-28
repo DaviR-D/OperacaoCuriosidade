@@ -9,8 +9,13 @@ namespace Api.Modules.Clients.Application.Queries.GetSingleClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var query = (GetSingleClientQuery)input;
-            var response = new GetSingleClientResponse(repository.GetOne(query.Id));
-            return response;
+            var client = repository.GetOne(query.Id);
+            if (client == null || client.Deleted == true)
+            {
+                return new GetSingleClientResponse(message: "client does not exist");
+            }
+            
+            return new GetSingleClientResponse(client: client); ;
         }
     }
 }
