@@ -82,8 +82,9 @@ async function saveClient(event, id = null) {
 
         if (await checkFieldsValidity(id, newRegister)) {
             httpMethod = id == null ? "POST" : "PUT";
+            let newClientId;
 
-            fetch(`${apiUrl}/api/client/`, {
+            await fetch(`${apiUrl}/api/client/`, {
                 method: httpMethod,
                 headers: {
                     "Authorization": `Bearer ${loggedUser.token}`,
@@ -91,9 +92,15 @@ async function saveClient(event, id = null) {
                 },
                 body: JSON.stringify(newRegister)
             })
+                .then(response => { return response.json() })
+                .then(data => {
+                    newClientId = data.id;
+                });
             registerForm.submit();
             if (httpMethod == "PUT")
                 registerLog("Edit", id);
+            else
+                registerLog("Create", newClientId);
         }
     }
     else {
@@ -286,6 +293,6 @@ function setTableSettings() {
     loadClientsTable();
 }
 
-function openClient(id){
+function openClient(id) {
     editClient(id);
 }

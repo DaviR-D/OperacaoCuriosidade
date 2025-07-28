@@ -11,14 +11,15 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (CreateClientCommand)input;
+            Guid? newId = new();
             lock (_lock)
             {
                 if (VerifyAvailableEmail(command.Client.Email))
-                    repository.Create(command.Client);
+                    newId = repository.Create(command.Client);
                 else
                     return new CreateClientResponse(message: "email already in use");
             }
-            return new CreateClientResponse();
+            return new CreateClientResponse(id: newId);
         }
         public bool VerifyAvailableEmail(string email)
         {

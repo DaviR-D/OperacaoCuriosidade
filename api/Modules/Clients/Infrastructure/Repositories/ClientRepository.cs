@@ -7,11 +7,12 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
     public class ClientRepository(List<Client> clients)
     {
         private readonly List<Client> _activeClients = [.. clients.Where(client => client.Deleted == false)];
-        public void Create(ClientDto client)
+        public Guid? Create(ClientDto client)
         {
             client.Id = Guid.NewGuid();
             client.Date = DateTime.Now;
             clients.Add(ClientDtoMapper.ToEntity(client));
+            return client.Id;
         }
         public void Update(ClientDto client)
         {

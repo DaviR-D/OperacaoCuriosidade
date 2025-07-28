@@ -601,9 +601,10 @@ db = [
   }
 ]
 
-function createDB(token) {
-  db.forEach(register => {
-    fetch(`http://localhost:5204/api/client/`, {
+async function createDB(token) {
+  db.forEach(async register => {
+    let id;
+    await fetch(`http://localhost:5204/api/client/`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -611,5 +612,10 @@ function createDB(token) {
       },
       body: JSON.stringify(register)
     })
+      .then(response => { return response.json() })
+      .then(data => {
+        id = data.id;
+      });
+      registerLog("Create", id);
   });
 }
