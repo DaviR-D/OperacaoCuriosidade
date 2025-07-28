@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     main.lastMonthClients = await getStats("lastMonth");
     main.pendingClients = await getStats("pending");
     await updateTable();
-    
+
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('afterbegin',
         `

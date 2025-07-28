@@ -14,14 +14,14 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
             ClientValidator validator = new(command.Client);
             if (!validator.ValidateClient()) return new CreateClientResponse(message: "invalid data");
             Guid? newId = new();
-                lock (_lock)
-                {
-                    if (VerifyAvailableEmail(command.Client.Email))
-                        newId = repository.Create(command.Client);
-                    else
-                        return new CreateClientResponse(message: "email already in use");
-                }
-                return new CreateClientResponse(id: newId);           
+            lock (_lock)
+            {
+                if (VerifyAvailableEmail(command.Client.Email))
+                    newId = repository.Create(command.Client);
+                else
+                    return new CreateClientResponse(message: "email already in use");
+            }
+            return new CreateClientResponse(id: newId);
         }
         public bool VerifyAvailableEmail(string email)
         {

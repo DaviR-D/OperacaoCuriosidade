@@ -33,11 +33,11 @@ async function trySignup() {
 }
 
 function checkValidName(name) {
-  regex = /^[^0-9!@#$%*+={}?<>()]*$/
+    regex = /^[^0-9!@#$%*+={}?<>()]*$/
 
-  let validName = regex.test(name)
+    let validName = regex.test(name)
 
-  if (!validName) main.errorMessage.innerText = "Insira um nome válido";
+    if (!validName) main.errorMessage.innerText = "Insira um nome válido";
 
-  return validName;
+    return validName;
 }

@@ -1,7 +1,7 @@
 let logs = []
 let logsCache = {};
 let dictionary = {
-    "Create" : "Criação",
+    "Create": "Criação",
     "Delete": "Deleção",
     "Edit": "Edição",
     "Read": "Leitura"

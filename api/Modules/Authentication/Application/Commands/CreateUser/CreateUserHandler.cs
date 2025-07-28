@@ -13,7 +13,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
         {
             var command = (CreateUserCommand)input;
             UserValidator validator = new(command.User);
-            if(!validator.ValidateUser()) return new CreateUserResponse("invalid data");
+            if (!validator.ValidateUser()) return new CreateUserResponse("invalid data");
             var user = command.User;
             if (!VerifyAvailableEmail(user.Email)) return new CreateUserResponse("email already in use");
 

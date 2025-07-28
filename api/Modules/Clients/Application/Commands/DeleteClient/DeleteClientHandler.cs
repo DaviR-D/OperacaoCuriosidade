@@ -10,8 +10,8 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
             var command = (DeleteClientCommand)input;
             var alreadyDeleted = repository.Delete(command.Id);
 
-            if(alreadyDeleted)
-                return new DeleteClientResponse(message:"client does not exist");
+            if (alreadyDeleted)
+                return new DeleteClientResponse(message: "client does not exist");
             else
                 return new DeleteClientResponse();
         }

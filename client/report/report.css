@@ -3,7 +3,7 @@ button {
 }
 
 @media print {
-    body.blur{
+    body.blur {
         filter: none;
     }
 
@@ -19,7 +19,7 @@ button {
         display: none;
     }
 
-    .tablePaging{
+    .tablePaging {
         display: none;
     }
 
@@ -33,7 +33,7 @@ button {
         box-shadow: none;
     }
 
-    #tableContainer > *{
+    #tableContainer>* {
         height: 100%;
         width: 100%;
         overflow-inline: visible;
