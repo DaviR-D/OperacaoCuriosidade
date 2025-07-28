@@ -14,7 +14,7 @@ function getSignupElements() {
 }
 
 async function trySignup() {
-    if (checkValidEmail(main.emailInput.value)) {
+    if (checkValidEmail(main.emailInput.value) && checkValidName(main.nameInput.value)) {
         let newUser = { name: encodeURIComponent(main.nameInput.value), email: main.emailInput.value, password: main.passwordInput.value }
         await fetch(`${apiUrl}/api/authentication/signup`, {
             method: "POST",
@@ -30,4 +30,14 @@ async function trySignup() {
         else
             window.location = "../login/login.html";
     }
+}
+
+function checkValidName(name) {
+  regex = /^[^0-9!@#$%*+={}?<>()]*$/
+
+  let validName = regex.test(name)
+
+  if (!validName) main.errorMessage.innerText = "Insira um nome válido";
+
+  return validName;
 }

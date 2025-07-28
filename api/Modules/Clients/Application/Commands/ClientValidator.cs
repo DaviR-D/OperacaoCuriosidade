@@ -1,30 +1,28 @@
 ﻿using Api.Modules.Clients.Presentation.ClientDTOs;
+using Api.Shared;
 
 namespace Api.Modules.Clients.Application.Commands
 {
-    public class ClientValidator(ClientDto client)
+    public class ClientValidator(ClientDto client) : ValidatorBase
     {
-        private readonly ClientDto Client = client;
-        public bool ValidateClient(ClientDto client)
+        private readonly ClientDto _client = client;
+        public bool ValidateClient()
         {
             var textFieldsValid =
-                ValidateFieldSize(client.Name) &&
-                ValidateFieldSize(client.Email) &&
-                ValidateFieldSize(client.Status) &&
-                ValidateFieldSize(client.Address) &&
-                ValidateFieldSize(client.Other) &&
-                ValidateFieldSize(client.Interests) &&
-                ValidateFieldSize(client.Feelings) &&
-                ValidateFieldSize(client.Values);
+                ValidateFieldSize(_client.Name) &&
+                ValidateFieldSize(_client.Email) &&
+                ValidateFieldSize(_client.Status) &&
+                ValidateFieldSize(_client.Address) &&
+                ValidateFieldSize(_client.Other) &&
+                ValidateFieldSize(_client.Interests) &&
+                ValidateFieldSize(_client.Feelings) &&
+                ValidateFieldSize(_client.Values);
 
-            var ageValid = client.Age > 18 && client.Age < 120;
+            var ageValid = _client.Age >= 18 && _client.Age <= 120;
 
-            return textFieldsValid && ageValid;
+            var regexMatch = ValidateEmail(_client.Email) && ValidateName(_client.Name);
+
+            return textFieldsValid && ageValid && regexMatch;
         }
-        public bool ValidateFieldSize(string field)
-        {
-            return (field.Length > 0 && field.Length < 300);
-        }
-
     }
 }

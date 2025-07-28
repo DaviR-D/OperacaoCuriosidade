@@ -12,6 +12,8 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (CreateUserCommand)input;
+            UserValidator validator = new(command.User);
+            if(!validator.ValidateUser()) return new CreateUserResponse("invalid data");
             var user = command.User;
             if (!VerifyAvailableEmail(user.Email)) return new CreateUserResponse("email already in use");
 

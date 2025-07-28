@@ -8,6 +8,8 @@ namespace Api.Modules.Clients.Application.Commands.UpdateClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (UpdateClientCommand)input;
+            ClientValidator validator = new(command.Client);
+            if (!validator.ValidateClient()) return new UpdateClientResponse(message: "invalid data");
             repository.Update(command.Client);
 
             return new UpdateClientResponse();
