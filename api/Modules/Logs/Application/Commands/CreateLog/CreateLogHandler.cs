@@ -10,6 +10,8 @@ namespace Api.Modules.Logs.Application.Commands.CreateLog
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (CreateLogCommand)input;
+            LogValidator validator = new(command.Log);
+            if (!validator.ValidateLog()) return new CreateLogResponse(message: "invalid data");
             command.Log.Id = Guid.NewGuid();
             command.Log.UserId = command.UserId;
             command.Log.TimeStamp = DateTime.Now;
