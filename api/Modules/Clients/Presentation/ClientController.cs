@@ -26,6 +26,11 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("Create");
             var response = handler.Handle(new CreateClientCommand(client));
+            if (response.Message == "email already in use")
+                return Conflict(response);
+            if (response.Message == "invalid data")
+                return UnprocessableEntity(response);
+
             return Ok(response);
         }
 
@@ -34,6 +39,9 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetSingle");
             var response = handler.Handle(new GetSingleClientQuery(id));
+            if (response.Message == "client does not exist")
+                return NotFound(response);
+
             return Ok(response);
         }
 
@@ -90,6 +98,9 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("Update");
             var response = handler.Handle(new UpdateClientCommand(client));
+            if (response.Message == "invalid data")
+                return UnprocessableEntity(response);
+
             return Ok(response);
         }
 
@@ -98,6 +109,9 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("Delete");
             var response = handler.Handle(new DeleteClientCommand(id));
+            if (response.Message == "client does not exist")
+                return NotFound(response);
+
             return Ok(response);
         }
 
