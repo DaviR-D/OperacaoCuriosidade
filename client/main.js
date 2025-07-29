@@ -251,7 +251,7 @@ async function loadClientsTable() {
                 <td onclick="openClient('${register.id}')"><span style="border-radius:5px; padding:5px;" class=${register.status == "Ativo" ? "active" : "inactive"}>${register.status}</span></td>
                 <td onclick="openClient('${register.id}')">${new Date(register.date).toLocaleDateString('pt-BR')}</td>
                 <td class="actions" style="display: none;">
-                    <button class="editButton material-symbols-outlined" onclick="editClient('${register.id}')">edit</button>
+                    <button class="editButton material-symbols-outlined" onclick="lockClient('${register.id}')">edit</button>
                     <button class="deleteButton material-symbols-outlined" onclick="showDeleteConfirmation('${register.id}')">delete</button>
                 </td>
             </tr>
@@ -406,6 +406,9 @@ async function clientNotFoundAlert() {
     main.alertModal.showModal();
     main.alertDeleteButton.style.display = "none";
     main.cancelDeleteButton.innerText = "OK";
+    main.cancelDeleteButton.onclick = () => {
+        hideDeleteConfirmation();
+    };
     await updateTable();
 }
 

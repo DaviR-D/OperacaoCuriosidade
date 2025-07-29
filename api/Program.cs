@@ -12,6 +12,7 @@ using Api.Modules.Clients.Application.Queries.SearchClients;
 using Api.Modules.Clients.Application.Commands.DeleteClient;
 using Api.Modules.Clients.Application.Commands.UpdateClient;
 using Api.Modules.Clients.Application.Commands.CreateClient;
+using Api.Modules.Clients.Application.Commands.LockClient;
 using Api.Modules.Authentication.Presentation.UserDTOs;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Application.Commands.CreateLog;
@@ -78,6 +79,7 @@ builder.Services.AddScoped<VerifyAvailableEmailHandler>();
 builder.Services.AddScoped<CreateClientHandler>();
 builder.Services.AddScoped<DeleteClientHandler>();
 builder.Services.AddScoped<UpdateClientHandler>();
+builder.Services.AddScoped<LockClientHandler>();
 builder.Services.AddScoped<CreateLogHandler>();
 builder.Services.AddScoped<GetLogsHandler>();
 

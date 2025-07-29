@@ -10,6 +10,7 @@ using Api.Modules.Clients.Application.Queries.GetClientsLength;
 using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
 using Api.Modules.Clients.Application.Queries.GetPendingClients;
 using Api.Shared.Interfaces;
+using Api.Modules.Clients.Application.Commands.LockClient;
 
 namespace Api.Modules.Clients.Application
 {
@@ -18,6 +19,7 @@ namespace Api.Modules.Clients.Application
         private static readonly Dictionary<string, Type> Handlers = new()
         {
             { "Create", typeof(CreateClientHandler) },
+            {"Lock", typeof(LockClientHandler)},
             { "GetSingle", typeof(GetSingleClientHandler) },
             { "GetLength", typeof(GetClientsLengthHandler) },
             { "GetLastMonth", typeof(GetLastMonthClientsHandler) },

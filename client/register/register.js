@@ -124,6 +124,28 @@ async function deleteClient(id) {
     registerLog("Delete", id);
 }
 
+async function lockClient(id) {
+    let responseMessage;
+
+    await fetch(`${apiUrl}/api/client/lock/${id}`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+        }
+    })
+        .then(response => { return response.json() })
+        .then(data => {
+            responseMessage = data.message;
+        });
+
+    if (responseMessage == "client already locked") {
+        clientLockedAlert(id);
+        return;
+    }
+
+    editClient(id);
+}
+
 async function editClient(id) {
     let editItem;
     let responseMessage;
@@ -159,6 +181,20 @@ async function editClient(id) {
     registerLog("Read", id)
 }
 
+async function clientLockedAlert(id) {
+    main.alertTitle.innerText = `Abrindo modo de somente leitura`;
+    main.alertText.innerText = "Este cliente já está sendo editado por outro usuário";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.cancelDeleteButton.innerText = "OK";
+    main.cancelDeleteButton.onclick = () => {
+        hideDeleteConfirmation();
+        readClient(id);
+    };
+    await updateTable();
+}
+
 function showRegisterModal() {
     document.body.classList.add("blur");
     registerModal.showModal();
@@ -177,6 +213,9 @@ function showDeleteConfirmation(id) {
     document.body.classList.add("blur");
     main.alertModal.showModal();
     main.alertDeleteButton.onclick = () => deleteClient(id);
+    main.cancelDeleteButton.onclick = () => {
+        hideDeleteConfirmation();
+    };
 }
 
 function clearFields() {
@@ -303,5 +342,5 @@ function setTableSettings() {
 }
 
 function openClient(id) {
-    editClient(id);
+    lockClient(id);
 }

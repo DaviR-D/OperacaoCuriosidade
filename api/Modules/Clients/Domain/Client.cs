@@ -12,7 +12,8 @@ namespace Api.Modules.Clients.Domain
     string other,
     string interests,
     string feelings,
-    string values
+    string values,
+    DateTime? editLock = null
         )
     {
         public Guid Id { get; set; } = id;
@@ -28,5 +29,6 @@ namespace Api.Modules.Clients.Domain
         public string Feelings { get; set; } = feelings;
         public string Values { get; set; } = values;
         public bool Deleted { get; set; }
+        public DateTime? Lock { get; set; } = editLock;
     }
 }

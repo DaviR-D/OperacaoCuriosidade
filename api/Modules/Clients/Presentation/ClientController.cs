@@ -1,6 +1,7 @@
 using Api.Modules.Clients.Application;
 using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Clients.Application.Commands.DeleteClient;
+using Api.Modules.Clients.Application.Commands.LockClient;
 using Api.Modules.Clients.Application.Commands.UpdateClient;
 using Api.Modules.Clients.Application.Queries.GetClientsLength;
 using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
@@ -13,6 +14,7 @@ using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api.Modules.Clients.Presentation
 {
@@ -30,6 +32,22 @@ namespace Api.Modules.Clients.Presentation
                 return Conflict(response);
             if (response.Message == "invalid data")
                 return UnprocessableEntity(response);
+
+            return Ok(response);
+        }
+
+        [HttpPost("lock/{clientId}")]
+        public IActionResult Lock([FromRoute] Guid clientId)
+        {
+            var handler = factory.GetHandler("Lock");
+            var response = handler.Handle(
+                new LockClientCommand(
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
+                clientId: clientId
+                )
+            );
+            if (response.Message == "client already locked")
+                return Conflict(response);
 
             return Ok(response);
         }
