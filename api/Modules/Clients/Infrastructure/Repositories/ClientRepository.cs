@@ -17,6 +17,7 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         public void Update(ClientDto client)
         {
             int clientIndex = clients.FindIndex(r => r.Id == client.Id);
+            client.Date = clients[clientIndex].Date;
             clients[clientIndex] = ClientDtoMapper.ToEntity(client);
         }
         public bool Delete(Guid id)
