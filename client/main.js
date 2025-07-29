@@ -47,12 +47,7 @@ function loadHeader() {
     main.userDisplay.innerText = loggedUser.name;
 
     main.search.addEventListener("input", function () {
-        tablePagesCache = {}
-        main.sortByColumnArrow = {};
-        main.currentSortKey = "default"
-        main.endpoint = main.search.value.length > 0 ? `page/search` : "page";
-        main.params = main.search.value.length > 0 ? `query=${main.search.value.toLowerCase()}` : "";
-        updateTable();
+        searchTable();
     });
 
     main.exit.addEventListener("click", function () {
@@ -228,6 +223,15 @@ function loadCachedPage(page, pageStart) {
     main.tablePage = tablePagesCache[page];
     loadTableContent();
     loadPaging(pageStart);
+}
+
+function searchTable() {
+    tablePagesCache = {}
+    main.sortByColumnArrow = {};
+    main.currentSortKey = "default"
+    main.endpoint = main.search.value.length > 0 ? `page/search` : "page";
+    main.params = main.search.value.length > 0 ? `query=${main.search.value.toLowerCase()}` : "";
+    updateTable();
 }
 
 async function loadClientsTable() {
