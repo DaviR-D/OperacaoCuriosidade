@@ -4,9 +4,9 @@ namespace Api.Shared
 {
     public abstract class ValidatorBase
     {
-        protected static bool ValidateFieldSize(string field)
+        protected static bool ValidateFieldSize(string field, int maxSize = 300)
         {
-            return (field.Length > 0 && field.Length <= 300);
+            return (field.Length > 0 && field.Length <= maxSize);
         }
         protected static bool ValidateEmail(string email)
         {
