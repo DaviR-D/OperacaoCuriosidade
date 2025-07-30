@@ -30,7 +30,7 @@ namespace Api.Modules.Clients.Presentation.ClientDTOs
                 email: client.Email,
                 status: client.Status,
                 pending: client.Pending,
-                date: client.Date,
+                date: (DateTime)client.Date,
                 age: client.Age,
                 address: client.Address,
                 other: client.Other,

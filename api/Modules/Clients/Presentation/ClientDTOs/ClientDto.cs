@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Presentation.ClientDTOs
     string email,
     string status,
     bool pending,
-    DateTime date,
+    DateTime? date,
     int age,
     string address,
     string other,
@@ -20,7 +20,7 @@ namespace Api.Modules.Clients.Presentation.ClientDTOs
         public string Email { get; set; } = email;
         public string Status { get; set; } = status;
         public bool Pending { get; set; } = pending;
-        public DateTime Date { get; set; } = date;
+        public DateTime? Date { get; set; } = date;
         public int Age { get; set; } = age;
         public string Address { get; set; } = address;
         public string Other { get; set; } = other;
