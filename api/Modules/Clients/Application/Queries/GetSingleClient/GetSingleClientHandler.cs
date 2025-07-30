@@ -15,7 +15,7 @@ namespace Api.Modules.Clients.Application.Queries.GetSingleClient
                 return new GetSingleClientResponse(message: "client does not exist");
             }
 
-            return new GetSingleClientResponse(client: client); ;
+            return new GetSingleClientResponse(client: ClientDtoMapper.ToDto(client)); ;
         }
     }
 }
