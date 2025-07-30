@@ -24,7 +24,7 @@ function getRegisterElements() {
     main.register.valuesInput = document.getElementById("values");
 
     main.register.registerModal.addEventListener("close", function () {
-        if(String(registerModal.dataset.userId) != "null"){
+        if(String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined"){
             unlockClient();
         }
         document.body.classList.remove("blur");
