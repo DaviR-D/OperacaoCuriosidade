@@ -65,7 +65,6 @@ async function saveClient(event, id = null) {
             email: main.register.emailInput.value,
             status: main.register.statusCheck.checked ? "Ativo" : "Inativo",
             pending: true,
-            date: id ? main.tablePage.filter((register) => register.id == id)[0].date : new Date(),
             age: main.register.ageInput.value,
             address: main.register.addressInput.value,
             other: main.register.otherInput.value,
