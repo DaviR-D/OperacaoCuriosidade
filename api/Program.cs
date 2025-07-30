@@ -49,7 +49,11 @@ builder.Services.AddAuthentication(options =>
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+            LifetimeValidator = (notBefore, expires, token, parameters) =>
+            {
+                return expires > DateTime.UtcNow;
+            }
         };
     });
 
