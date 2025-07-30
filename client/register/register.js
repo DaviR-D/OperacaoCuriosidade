@@ -121,7 +121,7 @@ async function deleteClient(id) {
 
     clientsCache = {};
     updateTable();
-    hideDeleteConfirmation();
+    hideAlertModal();
     registerLog("Delete", id);
 }
 
@@ -198,9 +198,9 @@ async function clientLockedAlert(id) {
     document.body.classList.add("blur");
     main.alertModal.showModal();
     main.alertDeleteButton.style.display = "none";
-    main.cancelDeleteButton.innerText = "OK";
-    main.cancelDeleteButton.onclick = () => {
-        hideDeleteConfirmation();
+    main.closeAlertButton.innerText = "OK";
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
         readClient(id);
     };
     await updateTable();
@@ -220,12 +220,12 @@ function showDeleteConfirmation(id) {
     main.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
     main.alertText.innerText = "Essa ação não pode ser desfeita";
     main.alertDeleteButton.style.display = "block";
-    main.cancelDeleteButton.innerText = "CANCELAR";
+    main.closeAlertButton.innerText = "CANCELAR";
     document.body.classList.add("blur");
     main.alertModal.showModal();
     main.alertDeleteButton.onclick = () => deleteClient(id);
-    main.cancelDeleteButton.onclick = () => {
-        hideDeleteConfirmation();
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
     };
 }
 

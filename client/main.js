@@ -316,7 +316,7 @@ function loadModals() {
         <p id="alertTitle"></p>
         <span id="alertText">Essa ação não pode ser desfeita</span>
         <div id="alertButtons">
-            <button id="cancelDeleteButton" onclick="hideDeleteConfirmation()">CANCELAR</button>
+            <button id="cancelDeleteButton" onclick="hideAlertModal()">CANCELAR</button>
             <button id="alertDeleteButton">DELETAR</button>
         </div>
     </div>
@@ -348,14 +348,14 @@ function loadModals() {
     main.alertTitle = document.getElementById("alertTitle");
     main.alertText = document.getElementById("alertText");
     main.alertDeleteButton = document.getElementById("alertDeleteButton");
-    main.cancelDeleteButton = document.getElementById("cancelDeleteButton");
+    main.closeAlertButton = document.getElementById("cancelDeleteButton");
 
     main.alertModal.addEventListener("close", function () {
         document.body.classList.remove("blur");
     });
 }
 
-function hideDeleteConfirmation() {
+function hideAlertModal() {
     main.alertModal.close();
 }
 
@@ -405,9 +405,9 @@ async function clientNotFoundAlert() {
     document.body.classList.add("blur");
     main.alertModal.showModal();
     main.alertDeleteButton.style.display = "none";
-    main.cancelDeleteButton.innerText = "OK";
-    main.cancelDeleteButton.onclick = () => {
-        hideDeleteConfirmation();
+    main.closeAlertButton.innerText = "OK";
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
     };
     await updateTable();
 }
