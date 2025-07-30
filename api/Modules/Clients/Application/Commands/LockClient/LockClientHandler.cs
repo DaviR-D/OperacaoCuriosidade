@@ -18,12 +18,14 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
             if (client.Lock != null && client.Lock > DateTime.UtcNow)
                 return new LockClientResponse(message:"client already locked");
 
-            client.Lock = DateTime.UtcNow.AddSeconds(15);
-            var token = GenerateToken(command.UserId, command.ClientId);
+            var expireTime = DateTime.UtcNow.AddSeconds(15);
+
+            client.Lock = expireTime;
+            var token = GenerateToken(command.UserId, command.ClientId, expireTime);
 
             return new LockClientResponse(token: token);
         }
-        private string GenerateToken(Guid userId, Guid clientId)
+        private string GenerateToken(Guid userId, Guid clientId, DateTime expireTime)
         {
             var handler = new JwtSecurityTokenHandler();
 
@@ -37,7 +39,7 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
             {
                 Subject = GenerateClaims(userId, clientId),
                 SigningCredentials = credentials,
-                Expires = DateTime.UtcNow.AddSeconds(15),
+                Expires = expireTime,
             };
 
             var token = handler.CreateToken(tokenDescriptor);
