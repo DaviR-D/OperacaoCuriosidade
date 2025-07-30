@@ -11,6 +11,7 @@ using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
 using Api.Modules.Clients.Application.Queries.GetPendingClients;
 using Api.Shared.Interfaces;
 using Api.Modules.Clients.Application.Commands.LockClient;
+using Api.Modules.Clients.Application.Commands.UnlockClient;
 
 namespace Api.Modules.Clients.Application
 {
@@ -20,6 +21,7 @@ namespace Api.Modules.Clients.Application
         {
             { "Create", typeof(CreateClientHandler) },
             {"Lock", typeof(LockClientHandler)},
+            {"Unlock", typeof(UnlockClientHandler)},
             { "GetSingle", typeof(GetSingleClientHandler) },
             { "GetLength", typeof(GetClientsLengthHandler) },
             { "GetLastMonth", typeof(GetLastMonthClientsHandler) },

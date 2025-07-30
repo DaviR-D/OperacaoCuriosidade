@@ -1,5 +1,4 @@
-﻿using Api.Modules.Authentication.Domain;
-using Api.Modules.Clients.Infrastructure.Repositories;
+﻿using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Shared.Configurations;
 using Api.Shared.Interfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -7,24 +6,19 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Api.Modules.Clients.Application.Commands.LockClient
+namespace Api.Modules.Clients.Application.Commands.UnlockClient
 {
-    public class LockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class UnlockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         public IRequestOutput Handle(IRequestInput input)
         {
-            var command = (LockClientCommand)input;
+            var command = (UnlockClientCommand)input;
             var client = repository.GetOne(command.ClientId);
+            client.Lock = null;
 
-            if (client.Lock != null && client.Lock > DateTime.UtcNow)
-                return new LockClientResponse(message:"client already locked");
-
-            client.Lock = DateTime.UtcNow.AddSeconds(15);
-            var token = GenerateToken(command.UserId, command.ClientId);
-
-            return new LockClientResponse(token: token);
+            return new UnlockClientResponse();
         }
-        private string GenerateToken(Guid userId, Guid clientId)
+        private string GenerateToken(Guid userId)
         {
             var handler = new JwtSecurityTokenHandler();
 
@@ -36,7 +30,7 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(userId, clientId),
+                Subject = GenerateClaims(userId),
                 SigningCredentials = credentials,
                 Expires = DateTime.UtcNow.AddSeconds(15),
             };
@@ -45,11 +39,10 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             return handler.WriteToken(token);
         }
-        private static ClaimsIdentity GenerateClaims(Guid userId, Guid clientId)
+        private static ClaimsIdentity GenerateClaims(Guid userId)
         {
             var claimsIdentity = new ClaimsIdentity();
             claimsIdentity.AddClaim(new Claim(type: ClaimTypes.NameIdentifier, value: userId.ToString()));
-            claimsIdentity.AddClaim(new Claim(type: "ClientId", value: clientId.ToString()));
 
             return claimsIdentity;
         }

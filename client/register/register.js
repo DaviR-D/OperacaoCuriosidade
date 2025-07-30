@@ -24,6 +24,9 @@ function getRegisterElements() {
     main.register.valuesInput = document.getElementById("values");
 
     main.register.registerModal.addEventListener("close", function () {
+        if(String(registerModal.dataset.userId) != "null"){
+            unlockClient();
+        }
         document.body.classList.remove("blur");
         clearFields();
         resetFieldsStyle();
@@ -136,6 +139,7 @@ async function lockClient(id) {
         .then(response => { return response.json() })
         .then(data => {
             responseMessage = data.message;
+            loggedUser.editToken = data.token;
         });
 
     if (responseMessage == "client already locked") {
@@ -144,6 +148,15 @@ async function lockClient(id) {
     }
 
     editClient(id);
+}
+
+async function unlockClient() {
+    await fetch(`${apiUrl}/api/client/unlock/`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.editToken}`,
+        }
+    })
 }
 
 async function editClient(id) {

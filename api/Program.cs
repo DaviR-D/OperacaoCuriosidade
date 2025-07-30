@@ -28,6 +28,7 @@ using Api.Modules.Clients.Domain;
 using Api.Shared.Configurations;
 using Api.Modules.Logs.Domain;
 using System.Text;
+using Api.Modules.Clients.Application.Commands.UnlockClient;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +81,7 @@ builder.Services.AddScoped<CreateClientHandler>();
 builder.Services.AddScoped<DeleteClientHandler>();
 builder.Services.AddScoped<UpdateClientHandler>();
 builder.Services.AddScoped<LockClientHandler>();
+builder.Services.AddScoped<UnlockClientHandler>();
 builder.Services.AddScoped<CreateLogHandler>();
 builder.Services.AddScoped<GetLogsHandler>();
 

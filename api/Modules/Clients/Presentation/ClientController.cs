@@ -2,6 +2,7 @@ using Api.Modules.Clients.Application;
 using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Clients.Application.Commands.DeleteClient;
 using Api.Modules.Clients.Application.Commands.LockClient;
+using Api.Modules.Clients.Application.Commands.UnlockClient;
 using Api.Modules.Clients.Application.Commands.UpdateClient;
 using Api.Modules.Clients.Application.Queries.GetClientsLength;
 using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
@@ -48,6 +49,20 @@ namespace Api.Modules.Clients.Presentation
             );
             if (response.Message == "client already locked")
                 return Conflict(response);
+
+            return Ok(response);
+        }
+
+        [HttpPost("unlock")]
+        public IActionResult Unlock()
+        {
+            var handler = factory.GetHandler("Unlock");
+            var response = handler.Handle(
+                new UnlockClientCommand(
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
+                clientId: Guid.Parse(User.FindFirst("ClientId")?.Value)
+                )
+            );
 
             return Ok(response);
         }
