@@ -37,7 +37,7 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(userId, clientId),
+                Subject = GenerateClaims(userId, clientId, expireTime),
                 SigningCredentials = credentials,
                 Expires = expireTime,
             };
@@ -46,10 +46,11 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             return handler.WriteToken(token);
         }
-        private static ClaimsIdentity GenerateClaims(Guid userId, Guid clientId)
+        private static ClaimsIdentity GenerateClaims(Guid userId, Guid clientId, DateTime expireTime)
         {
             var claimsIdentity = new ClaimsIdentity();
             claimsIdentity.AddClaim(new Claim(type: ClaimTypes.NameIdentifier, value: userId.ToString()));
+            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Expiration, value: expireTime.ToString()));
             claimsIdentity.AddClaim(new Claim(type: "ClientId", value: clientId.ToString()));
 
             return claimsIdentity;

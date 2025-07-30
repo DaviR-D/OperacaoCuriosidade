@@ -60,7 +60,6 @@ async function saveClient(event, id = null) {
 
     if (registerForm.checkValidity()) {
         let newRegister = {
-            id: id,
             name: main.register.nameInput.value,
             email: main.register.emailInput.value,
             status: main.register.statusCheck.checked ? "Ativo" : "Inativo",
@@ -80,7 +79,7 @@ async function saveClient(event, id = null) {
             await fetch(`${apiUrl}/api/client/`, {
                 method: httpMethod,
                 headers: {
-                    "Authorization": `Bearer ${loggedUser.token}`,
+                    "Authorization": `Bearer ${httpMethod == "POST" ? loggedUser.token : loggedUser.editToken}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(newRegister)

@@ -130,7 +130,12 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Update([FromBody] ClientDto client)
         {
             var handler = factory.GetHandler("Update");
-            var response = handler.Handle(new UpdateClientCommand(client));
+            var response = handler.Handle(new UpdateClientCommand(
+                client: client,
+                clientId: Guid.Parse(User.FindFirst("ClientId")?.Value),
+                tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value)
+                )
+             );
             if (response.Message == "invalid data")
                 return UnprocessableEntity(response);
 
