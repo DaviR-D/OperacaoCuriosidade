@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[9.0.6, )"
             },
+            "Microsoft.TestPlatform.TestHost": {
+              "target": "Package",
+              "version": "[17.14.1, )"
+            },
             "xunit": {
               "target": "Package",
               "version": "[2.9.3, )"
