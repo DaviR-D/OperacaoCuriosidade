@@ -12,7 +12,10 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
         {
             var command = (CreateClientCommand)input;
             ClientValidator validator = new(command.Client);
-            if (!validator.ValidateClient()) return new CreateClientResponse(message: "invalid data");
+
+            if (!validator.ValidateClient())
+                return new CreateClientResponse(message: "invalid data");
+
             Guid? newId = new();
             lock (_lock)
             {

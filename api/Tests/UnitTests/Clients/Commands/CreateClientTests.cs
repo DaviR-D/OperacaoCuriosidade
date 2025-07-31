@@ -3,9 +3,9 @@ using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
-namespace Api.Tests.UnitTests.Clients
+namespace Api.Tests.UnitTests.Clients.Commands
 {
-    public class ClientTests()
+    public class CreateClientTests()
     {
         [Fact]
         public void Create_Client_With_Valid_Data_Test()
