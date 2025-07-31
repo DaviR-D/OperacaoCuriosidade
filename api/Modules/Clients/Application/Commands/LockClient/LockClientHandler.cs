@@ -16,7 +16,7 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
             var client = repository.GetOne(command.ClientId);
 
             if (client.Lock != null && client.Lock > DateTime.UtcNow)
-                return new LockClientResponse(message:"client already locked");
+                return new LockClientResponse(message: "client already locked");
 
             var expireTime = DateTime.UtcNow.AddSeconds(15);
 

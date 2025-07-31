@@ -27,10 +27,10 @@ namespace Api.Tests.UnitTests.Clients.Commands
             );
 
             //Act
-            var result = controller.Create( clientMock );
+            var result = controller.Create(clientMock);
 
             //Assert
-            Assert.IsType<OkObjectResult>( result );
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]

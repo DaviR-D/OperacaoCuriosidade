@@ -20,7 +20,7 @@ namespace Api.Tests.UnitTests.Clients
 {
     public class ClientMockDependencies
     {
-        public IServiceProvider ServiceProvider {get;set;}
+        public IServiceProvider ServiceProvider { get; set; }
         public List<Client> ClientsMock { get; set; }
         public ClientMockDependencies()
         {
