@@ -18,6 +18,7 @@ namespace Api.Modules.Logs.Application.Queries.GetLogs
                 .Select(log => LogDtoMapper
                 .ToResponseDto(log, clients, users))
                 .ToList();
+
             return new GetLogsResponse(logs: logsPage, logsLength: logs.Count);
         }
     }

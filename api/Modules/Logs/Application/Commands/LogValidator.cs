@@ -1,5 +1,4 @@
-﻿using Api.Modules.Logs.Domain;
-using Api.Modules.Logs.Presentation.LogDTOs;
+﻿using Api.Modules.Logs.Presentation.LogDTOs;
 using Api.Shared;
 
 namespace Api.Modules.Logs.Application.Commands

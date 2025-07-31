@@ -17,10 +17,13 @@ namespace Api.Modules.Logs.Presentation
         public IActionResult Create([FromBody] CreateLogDto log)
         {
             var handler = factory.GetHandler("Create");
-            var response = handler.Handle(new CreateLogCommand(
+
+            var response = handler.Handle(
+                new CreateLogCommand(
                 log: log,
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value))
                 );
+
             return Ok(response);
         }
         [HttpGet]
@@ -28,6 +31,7 @@ namespace Api.Modules.Logs.Presentation
         {
             var handler = factory.GetHandler("GetAll");
             var response = handler.Handle(new GetLogsQuery(start: start, increment: increment));
+
             return Ok(response);
         }
     }
