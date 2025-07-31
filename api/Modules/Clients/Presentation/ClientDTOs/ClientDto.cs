@@ -1,18 +1,18 @@
 namespace Api.Modules.Clients.Presentation.ClientDTOs
 {
     public class ClientDto(
-    Guid? id,
     string name,
     string email,
     string status,
     bool pending,
-    DateTime? date,
     int age,
     string address,
     string other,
     string interests,
     string feelings,
-    string values
+    string values,
+    Guid? id = null,
+    DateTime? date = null
         )
     {
         public Guid? Id { get; set; } = id;
