@@ -10,20 +10,23 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 {
     public class LockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
     {
+        private static readonly Lock _lock = new();
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (LockClientCommand)input;
             var client = repository.GetOne(command.ClientId);
 
-            if (client.Lock != null && client.Lock > DateTime.UtcNow)
-                return new LockClientResponse(message: "client already locked");
+            lock (_lock)
+            {
+                if (client.Lock != null && client.Lock > DateTime.UtcNow)
+                    return new LockClientResponse(message: "client already locked");
 
-            var expireTime = DateTime.UtcNow.AddSeconds(15);
+                var expireTime = DateTime.UtcNow.AddSeconds(15);
 
-            client.Lock = expireTime;
-            var token = GenerateToken(command.UserId, command.ClientId, expireTime);
-
-            return new LockClientResponse(token: token);
+                client.Lock = expireTime;
+                var token = GenerateToken(command.UserId, command.ClientId, expireTime);
+                return new LockClientResponse(token: token);
+            }
         }
         private string GenerateToken(Guid userId, Guid clientId, DateTime expireTime)
         {
