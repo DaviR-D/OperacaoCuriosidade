@@ -44,8 +44,11 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         }
         public List<Client> Sort(string sortKey, bool descending)
         {
-            PropertyInfo? sortProperty = sortKey == "default" ? typeof(Client).GetProperty("Id") : typeof(Client).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-            IOrderedEnumerable<Client> sortedClients = descending ? _activeClients.OrderByDescending(sortProperty.GetValue) : _activeClients.OrderBy(sortProperty.GetValue);
+            PropertyInfo? sortProperty = typeof(Client).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            IOrderedEnumerable<Client> sortedClients = 
+                descending ?
+                _activeClients.OrderByDescending(sortProperty.GetValue) :
+                _activeClients.OrderBy(sortProperty.GetValue);
 
             return [.. sortedClients];
         }
