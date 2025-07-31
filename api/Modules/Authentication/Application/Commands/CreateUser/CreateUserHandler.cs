@@ -1,6 +1,5 @@
 ﻿using Api.Modules.Authentication.Domain;
 using Api.Modules.Authentication.Infrastructure.Repositories;
-using Api.Modules.Authentication.Presentation.UserDTOs;
 using Api.Shared.Interfaces;
 using System.Security.Cryptography;
 using System.Text;

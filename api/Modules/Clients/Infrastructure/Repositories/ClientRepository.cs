@@ -45,7 +45,7 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         public List<Client> Sort(string sortKey, bool descending)
         {
             PropertyInfo? sortProperty = typeof(Client).GetProperty(sortKey, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-            IOrderedEnumerable<Client> sortedClients = 
+            IOrderedEnumerable<Client> sortedClients =
                 descending ?
                 _activeClients.OrderByDescending(sortProperty.GetValue) :
                 _activeClients.OrderBy(sortProperty.GetValue);

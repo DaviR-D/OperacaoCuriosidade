@@ -1,6 +1,5 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Presentation;
-using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
