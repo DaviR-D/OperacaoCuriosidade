@@ -16,9 +16,6 @@ using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Clients.Presentation;
 using Api.Shared.Configurations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace Api.Tests.UnitTests.Clients
 {

@@ -17,7 +17,7 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
 
             if (alreadyDeleted)
                 return new DeleteClientResponse(message: "client does not exist");
-            
+
             return new DeleteClientResponse();
         }
     }
