@@ -28,7 +28,7 @@ function getRegisterElements() {
             unlockClient();
         }
     });
-    
+
     main.register.registerModal.addEventListener("close", function () {
         if (String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined") {
             unlockClient();
@@ -125,6 +125,11 @@ async function deleteClient(id) {
         return;
     }
 
+    if (responseMessage == "client is locked") {
+        clientLockedForDeletionAlert();
+        return;
+    }
+
     clientsCache = {};
     updateTable();
     hideAlertModal();
@@ -210,6 +215,18 @@ async function clientLockedAlert(id) {
         readClient(id);
     };
     await updateTable();
+}
+
+function clientLockedForDeletionAlert(){
+    main.alertTitle.innerText = `Não foi possível deletar`;
+    main.alertText.innerText = "Este cliente está sendo editado por outro usuário";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.closeAlertButton.innerText = "OK";
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
+    };
 }
 
 function showRegisterModal() {
