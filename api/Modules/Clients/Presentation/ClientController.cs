@@ -63,9 +63,13 @@ namespace Api.Modules.Clients.Presentation
             var response = handler.Handle(
                 new UnlockClientCommand(
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
-                clientId: Guid.Parse(User.FindFirst("ClientId")?.Value)
+                clientId: Guid.Parse(User.FindFirst("ClientId")?.Value),
+                tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value)
                 )
             );
+
+            if (response.Message == "invalid token")
+                return Unauthorized(response);
 
             return Ok(response);
         }
@@ -139,8 +143,11 @@ namespace Api.Modules.Clients.Presentation
                 tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value)
                 )
              );
+
             if (response.Message == "invalid data")
                 return UnprocessableEntity(response);
+            if (response.Message == "invalid token")
+                return Unauthorized(response);
 
             return Ok(response);
         }
