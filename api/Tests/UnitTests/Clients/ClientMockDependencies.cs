@@ -15,6 +15,10 @@ using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Clients.Presentation;
+using Api.Shared.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Api.Tests.UnitTests.Clients
 {
@@ -25,7 +29,11 @@ namespace Api.Tests.UnitTests.Clients
         public ClientMockDependencies()
         {
             var services = new ServiceCollection();
+            AuthenticationSettings? mockAuthSettings = new();
+            mockAuthSettings.PrivateKey = "mockprivatekeyforunittesting12345678910";
+            string key = mockAuthSettings.PrivateKey;
             services.AddSingleton(ClientsMock);
+            services.AddSingleton(mockAuthSettings);
             services.AddScoped<ClientsHandlerFactory>();
             services.AddScoped<ClientRepository>();
             services.AddScoped<GetPagedClientsHandler>();
