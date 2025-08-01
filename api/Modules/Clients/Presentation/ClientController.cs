@@ -159,6 +159,8 @@ namespace Api.Modules.Clients.Presentation
             var response = handler.Handle(new DeleteClientCommand(id));
             if (response.Message == "client does not exist")
                 return NotFound(response);
+            if (response.Message == "client is locked")
+                return Unauthorized(response);
 
             return Ok(response);
         }

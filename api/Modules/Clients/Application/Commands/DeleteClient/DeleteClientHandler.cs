@@ -8,6 +8,11 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var command = (DeleteClientCommand)input;
+            var client = repository.GetOne(command.Id);
+
+            if(client.Lock != null)
+                return new DeleteClientResponse(message: "client is locked");
+
             var alreadyDeleted = repository.Delete(command.Id);
 
             if (alreadyDeleted)
