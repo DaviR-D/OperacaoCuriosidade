@@ -10,15 +10,15 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
             var command = (DeleteClientCommand)input;
             var client = repository.GetOne(command.Id);
 
-            if(client.Lock != null)
+            if (client != null && client.Lock != null)
                 return new DeleteClientResponse(message: "client is locked");
 
             var alreadyDeleted = repository.Delete(command.Id);
 
             if (alreadyDeleted)
                 return new DeleteClientResponse(message: "client does not exist");
-            else
-                return new DeleteClientResponse();
+            
+            return new DeleteClientResponse();
         }
     }
 }
