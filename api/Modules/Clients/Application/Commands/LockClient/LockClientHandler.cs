@@ -16,6 +16,11 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
             var command = (LockClientCommand)input;
             var client = repository.GetOne(command.ClientId);
 
+            if (client == null || client.Deleted == true)
+            {
+                return new LockClientResponse(message: "client does not exist");
+            }
+
             lock (_lock)
             {
                 if (client.Lock != null && client.Lock > DateTime.UtcNow)

@@ -47,8 +47,11 @@ namespace Api.Modules.Clients.Presentation
                 clientId: clientId
                 )
             );
+
             if (response.Message == "client already locked")
                 return Conflict(response);
+            if (response.Message == "client does not exist")
+                return NotFound(response);
 
             return Ok(response);
         }
