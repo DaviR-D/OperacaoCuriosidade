@@ -38,7 +38,7 @@ namespace Api.Tests.UnitTests.Clients.Commands
             var mockClaims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, mockUserId.ToString()),
-                new(ClaimTypes.Expiration, expireTimeMock.ToString()),
+                new(ClaimTypes.Expiration, expireTimeMock.ToString("yyyy-MM-dd HH:mm:ss.fff")),
                 new("ClientId", clientMockId.ToString())
             };
             var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");

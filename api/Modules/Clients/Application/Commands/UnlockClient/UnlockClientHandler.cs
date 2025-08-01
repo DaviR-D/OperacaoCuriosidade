@@ -11,7 +11,10 @@ namespace Api.Modules.Clients.Application.Commands.UnlockClient
             var command = (UnlockClientCommand)input;
             var client = repository.GetOne(command.ClientId);
 
-            if (client.Lock?.ToString("yyyy-MM-dd HH:mm:ss.fff") != command.TokenExpireDate.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+            var clientLock = client.Lock?.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            var tokenLock = command.TokenExpireDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+            if (clientLock != tokenLock)
                 return new UnlockClientResponse(message: "invalid token");
 
             client.Lock = null;

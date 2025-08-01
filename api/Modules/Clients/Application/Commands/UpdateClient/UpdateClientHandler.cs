@@ -10,7 +10,10 @@ namespace Api.Modules.Clients.Application.Commands.UpdateClient
             var command = (UpdateClientCommand)input;
             var client = repository.GetOne(command.ClientId);
 
-            if (client.Lock?.ToString("yyyy-MM-dd HH:mm:ss.fff") != command.TokenExpireDate.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+            var clientLock = client.Lock?.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            var tokenLock = command.TokenExpireDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+            if (clientLock != tokenLock)
                 return new UpdateClientResponse(message: "invalid token");
 
             command.Client.Id = command.ClientId;
