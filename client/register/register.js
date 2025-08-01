@@ -23,8 +23,14 @@ function getRegisterElements() {
     main.register.feelingsInput = document.getElementById("feelings");
     main.register.valuesInput = document.getElementById("values");
 
+    window.addEventListener("beforeunload", function () {
+        if (String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined") {
+            unlockClient();
+        }
+    });
+    
     main.register.registerModal.addEventListener("close", function () {
-        if(String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined"){
+        if (String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined") {
             unlockClient();
         }
         document.body.classList.remove("blur");
