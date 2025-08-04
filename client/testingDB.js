@@ -616,6 +616,5 @@ async function createDB(token) {
       .then(data => {
         id = data.id;
       });
-    registerLog("Create", id);
   });
 }

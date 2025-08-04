@@ -3,9 +3,9 @@ using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Application;
-using Api.Modules.Logs.Application.Commands.CreateLog;
 using Api.Modules.Logs.Application.Queries.GetLogs;
 using Api.Modules.Logs.Domain;
+using Api.Modules.Logs.Infrastructure;
 using Api.Modules.Logs.Infrastructure.Repositories;
 using Api.Modules.Logs.Presentation;
 using Api.Shared.Configurations;
@@ -32,7 +32,7 @@ namespace Api.Tests.UnitTests.Logs
             services.AddScoped<LogRepository>();
             services.AddScoped<ClientRepository>();
             services.AddScoped<UserRepository>();
-            services.AddScoped<CreateLogHandler>();
+            services.AddScoped<CreateLogService>();
             services.AddScoped<GetLogsHandler>();
             services.AddScoped<LogController>();
 

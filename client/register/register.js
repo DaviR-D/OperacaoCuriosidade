@@ -95,10 +95,6 @@ async function saveClient(event, id = null) {
                     newClientId = data.id;
                 });
             registerForm.submit();
-            if (httpMethod == "PUT")
-                registerLog("Edit", id);
-            else
-                registerLog("Create", newClientId);
         }
     }
     else {
@@ -133,7 +129,6 @@ async function deleteClient(id) {
     clientsCache = {};
     updateTable();
     hideAlertModal();
-    registerLog("Delete", id);
 }
 
 async function lockClient(id) {
@@ -200,7 +195,6 @@ async function editClient(id) {
     main.register.feelingsInput.value = editItem.feelings;
     main.register.valuesInput.value = editItem.values;
     main.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
-    registerLog("Read", id)
 }
 
 async function clientLockedAlert(id) {

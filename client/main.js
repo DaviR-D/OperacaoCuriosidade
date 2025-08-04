@@ -391,7 +391,6 @@ async function readClient(id) {
     main.feelingsInput.value = viewItem.feelings;
     main.valuesInput.value = viewItem.values;
     main.statusCheck.checked = viewItem.status == "Ativo" ? true : false;
-    registerLog("Read", id)
 }
 
 function showClientViewModal() {
@@ -410,15 +409,4 @@ async function clientNotFoundAlert() {
         hideAlertModal();
     };
     await updateTable();
-}
-
-async function registerLog(userAction, id) {
-    fetch(`${apiUrl}/api/log/`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${loggedUser.token}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ clientId: id, action: userAction })
-    })
 }
