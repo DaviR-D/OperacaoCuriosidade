@@ -28,9 +28,12 @@ namespace Api.Modules.Logs.Presentation.LogDTOs
         }
         public static GetLogDto ToResponseDto(Log log, ClientRepository clients, UserRepository users)
         {
+            var user = users.GetOne(log.UserId);
+            var client = clients.GetOne(log.ClientId);
+
             return new GetLogDto(
-                userEmail: users.GetOne(log.UserId).Email,
-                clientEmail: clients.GetOne(log.ClientId).Email,
+                userEmail: user == null ? "unknown" : user.Email,
+                clientEmail: client == null ? "unknown" : client.Email,
                 timeStamp: log.TimeStamp,
                 action: log.Action
                 );
