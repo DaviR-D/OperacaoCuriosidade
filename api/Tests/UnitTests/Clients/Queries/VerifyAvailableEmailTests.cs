@@ -37,7 +37,7 @@ namespace Api.Tests.UnitTests.Clients.Queries
             var response = (VerifyAvailableEmailResponse)castResult.Value;
 
             //Assert
-            Assert.Equal(true, response.IsAvailable);
+            Assert.True(response.IsAvailable);
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Api.Tests.UnitTests.Clients.Queries
             var response = (VerifyAvailableEmailResponse)castResult.Value;
 
             //Assert
-            Assert.Equal(true, response.IsAvailable);
+            Assert.True(response.IsAvailable);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Api.Tests.UnitTests.Clients.Queries
             var response = (VerifyAvailableEmailResponse)castResult.Value;
 
             //Assert
-            Assert.Equal(true, response.IsAvailable);
+            Assert.True(response.IsAvailable);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Api.Tests.UnitTests.Clients.Queries
             var response = (VerifyAvailableEmailResponse)castResult.Value;
 
             //Assert
-            Assert.Equal(false, response.IsAvailable);
+            Assert.False(response.IsAvailable);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace Api.Tests.UnitTests.Clients.Queries
             var response = (VerifyAvailableEmailResponse)castResult.Value;
 
             //Assert
-            Assert.Equal(false, response.IsAvailable);
+            Assert.False(response.IsAvailable);
         }
     }
 }
