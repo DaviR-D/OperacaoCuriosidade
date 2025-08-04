@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     main.logs = {};
     getLogsElements();
     insertLogsData();
-    main.search.disabled = true;
+    main.search.style.display = "none";
 });
 
 function getLogsElements() {
