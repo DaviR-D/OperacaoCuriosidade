@@ -15,6 +15,9 @@ using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Clients.Presentation;
+using Api.Modules.Logs.Domain;
+using Api.Modules.Logs.Infrastructure;
+using Api.Modules.Logs.Infrastructure.Repositories;
 using Api.Shared.Configurations;
 
 namespace Api.Tests.UnitTests.Clients
@@ -23,6 +26,7 @@ namespace Api.Tests.UnitTests.Clients
     {
         public IServiceProvider ServiceProvider { get; set; }
         public List<Client> ClientsMock { get; set; } = [];
+        public List<Log> LogsMock { get; set; } = [];
         public ClientMockDependencies()
         {
             var services = new ServiceCollection();
@@ -30,6 +34,7 @@ namespace Api.Tests.UnitTests.Clients
             mockAuthSettings.PrivateKey = "mockprivatekeyforunittesting12345678910";
             string key = mockAuthSettings.PrivateKey;
             services.AddSingleton(ClientsMock);
+            services.AddSingleton(LogsMock);
             services.AddSingleton(mockAuthSettings);
             services.AddScoped<ClientsHandlerFactory>();
             services.AddScoped<ClientRepository>();
@@ -47,6 +52,8 @@ namespace Api.Tests.UnitTests.Clients
             services.AddScoped<LockClientHandler>();
             services.AddScoped<UnlockClientHandler>();
             services.AddScoped<ClientController>();
+            services.AddScoped<CreateLogService>();
+            services.AddScoped<LogRepository>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

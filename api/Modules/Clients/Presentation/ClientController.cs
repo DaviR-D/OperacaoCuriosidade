@@ -28,7 +28,11 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Create([FromBody] ClientDto client)
         {
             var handler = factory.GetHandler("Create");
-            var response = handler.Handle(new CreateClientCommand(client));
+            var response = handler.Handle(new CreateClientCommand(
+                client: client,
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                )
+             );
             if (response.Message == "email already in use")
                 return Conflict(response);
             if (response.Message == "invalid data")
@@ -78,7 +82,11 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetSingle([FromRoute] Guid id)
         {
             var handler = factory.GetHandler("GetSingle");
-            var response = handler.Handle(new GetSingleClientQuery(id));
+            var response = handler.Handle(new GetSingleClientQuery(
+                id: id,
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                )
+             );
             if (response.Message == "client does not exist")
                 return NotFound(response);
 
@@ -140,7 +148,8 @@ namespace Api.Modules.Clients.Presentation
             var response = handler.Handle(new UpdateClientCommand(
                 client: client,
                 clientId: Guid.Parse(User.FindFirst("ClientId")?.Value),
-                tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value)
+                tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value),
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
              );
 
@@ -156,7 +165,11 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Delete([FromRoute] Guid id)
         {
             var handler = factory.GetHandler("Delete");
-            var response = handler.Handle(new DeleteClientCommand(id));
+            var response = handler.Handle(new DeleteClientCommand(
+                id: id,
+                userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                )
+             );
             if (response.Message == "client does not exist")
                 return NotFound(response);
             if (response.Message == "client is locked")

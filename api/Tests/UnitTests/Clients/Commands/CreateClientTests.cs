@@ -1,6 +1,7 @@
 ﻿using Api.Modules.Clients.Presentation;
 using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Xunit;
 
 namespace Api.Tests.UnitTests.Clients.Commands
@@ -25,6 +26,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 feelings: "Reflexiva",
                 values: "Autenticidade, Beleza"
             );
+
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
 
             //Act
             var result = controller.Create(clientMock);
@@ -52,6 +69,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
 
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
+
             //Act
             var result = controller.Create(clientMock);
 
@@ -77,6 +110,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 feelings: "Reflexiva",
                 values: "Autenticidade, Beleza"
             );
+
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
 
             //Act
             var result = controller.Create(clientMock);
@@ -118,6 +167,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
 
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
+
             //Act
             var result = controller.Create(clientMock);
 
@@ -144,6 +209,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 feelings: "Reflexiva",
                 values: "Autenticidade, Beleza"
             );
+
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
 
             //Act
             var result = controller.Create(clientMock);

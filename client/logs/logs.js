@@ -3,7 +3,7 @@ let logsCache = {};
 let dictionary = {
     "Create": "Criação",
     "Delete": "Deleção",
-    "Edit": "Edição",
+    "Update": "Edição",
     "Read": "Leitura"
 }
 

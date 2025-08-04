@@ -1,6 +1,7 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Presentation;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Xunit;
 
 namespace Api.Tests.UnitTests.Clients.Commands
@@ -29,6 +30,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
             mockDependencies.ClientsMock.Add(clientMock);
+
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
 
             //Act
             var result = controller.Delete(clientMockId);
@@ -61,6 +78,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
             clientMock.Lock = DateTime.UtcNow.AddMinutes(10);
             mockDependencies.ClientsMock.Add(clientMock);
 
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
+
             //Act
             var result = controller.Delete(clientMockId);
 
@@ -92,6 +125,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
             clientMock.Deleted = true;
             mockDependencies.ClientsMock.Add(clientMock);
 
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
+
             //Act
             var result = controller.Delete(clientMockId);
 
@@ -106,6 +155,22 @@ namespace Api.Tests.UnitTests.Clients.Commands
             ClientMockDependencies mockDependencies = new ClientMockDependencies();
             ClientController controller = mockDependencies.ServiceProvider.GetService<ClientController>();
             Guid inexintentClientMockId = Guid.NewGuid();
+
+            var mockUserId = Guid.NewGuid();
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
 
             //Act
             var result = controller.Delete(inexintentClientMockId);

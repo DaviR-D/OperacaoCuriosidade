@@ -1,9 +1,10 @@
 ﻿using Api.Modules.Clients.Infrastructure.Repositories;
+using Api.Modules.Logs.Infrastructure;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.UpdateClient
 {
-    public class UpdateClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class UpdateClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         public IRequestOutput Handle(IRequestInput input)
         {
@@ -24,6 +25,7 @@ namespace Api.Modules.Clients.Application.Commands.UpdateClient
 
             repository.Update(command.Client);
 
+            logService.Create(userId: command.UserId, clientId: command.ClientId, action: "Update");
             return new UpdateClientResponse();
         }
     }

@@ -1,10 +1,11 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
+using Api.Modules.Logs.Infrastructure;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.CreateClient
 {
-    public class CreateClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class CreateClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         private static readonly Lock _lock = new();
 
@@ -24,6 +25,8 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
                 else
                     return new CreateClientResponse(message: "email already in use");
             }
+
+            logService.Create(userId: command.UserId, clientId: (Guid)newId, action: "Create");
             return new CreateClientResponse(id: newId);
         }
         public bool VerifyAvailableEmail(string email)
