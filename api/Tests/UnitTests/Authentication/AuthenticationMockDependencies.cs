@@ -3,6 +3,7 @@ using Api.Modules.Authentication.Application.Commands.Authenticate;
 using Api.Modules.Authentication.Application.Commands.CreateUser;
 using Api.Modules.Authentication.Domain;
 using Api.Modules.Authentication.Infrastructure.Repositories;
+using Api.Modules.Authentication.Presentation;
 using Api.Shared.Configurations;
 
 namespace Api.Tests.UnitTests.Authentication
@@ -23,6 +24,7 @@ namespace Api.Tests.UnitTests.Authentication
             services.AddScoped<UserRepository>();
             services.AddScoped<AuthenticateHandler>();
             services.AddScoped<CreateUserHandler>();
+            services.AddScoped<AuthenticationController>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
