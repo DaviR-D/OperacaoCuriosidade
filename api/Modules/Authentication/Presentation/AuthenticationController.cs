@@ -15,6 +15,13 @@ namespace Api.Modules.Authentication.Presentation
         {
             var handler = factory.GetHandler("Signup");
             var response = handler.Handle(new CreateUserCommand(user));
+
+            if (response.Message == "email already in use") 
+                return Conflict(response);
+
+            if (response.Message == "invalid data")
+                return UnprocessableEntity(response);
+
             return Ok(response);
         }
 
