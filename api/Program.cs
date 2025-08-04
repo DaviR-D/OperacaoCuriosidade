@@ -91,7 +91,7 @@ builder.Services.AddScoped<GetLogsHandler>();
 
 UserRepository repository = new(usersMock);
 var handler = new CreateUserHandler(repository);
-handler.Handle(new CreateUserCommand(new UserDto("Davi", "davi@gmail.com", "123")));
+handler.Handle(new CreateUserCommand(new UserDto(email:"davi@gmail.com", password:"123", name: "Davi")));
 
 builder.Services.AddCors(options =>
 {
