@@ -1,5 +1,7 @@
 ﻿using Api.Modules.Authentication.Domain;
+using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Clients.Domain;
+using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Application;
 using Api.Modules.Logs.Application.Commands.CreateLog;
 using Api.Modules.Logs.Application.Queries.GetLogs;
@@ -28,6 +30,8 @@ namespace Api.Tests.UnitTests.Logs
             services.AddSingleton(mockAuthSettings);
             services.AddScoped<LogHandlerFactory>();
             services.AddScoped<LogRepository>();
+            services.AddScoped<ClientRepository>();
+            services.AddScoped<UserRepository>();
             services.AddScoped<CreateLogHandler>();
             services.AddScoped<GetLogsHandler>();
             services.AddScoped<LogController>();

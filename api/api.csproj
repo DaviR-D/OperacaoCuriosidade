@@ -17,9 +17,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\UnitTests\Logs\Commands\" />
-    <Folder Include="Tests\UnitTests\Logs\Queries\" />
-  </ItemGroup>
-
 </Project>
