@@ -1,5 +1,4 @@
 ﻿using Api.Modules.Logs.Application.Queries.GetLogs;
-using Api.Modules.Logs.Infrastructure;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Logs.Application

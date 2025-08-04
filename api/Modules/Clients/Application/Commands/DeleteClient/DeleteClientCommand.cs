@@ -1,5 +1,4 @@
-﻿using Api.Modules.Authentication.Domain;
-using Api.Shared.Interfaces;
+﻿using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.DeleteClient
 {

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "37eQMarvufY=",
+  "dgSpecHash": "v6cfczCofmQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\DaviRodriguesDavanzo\\Projeto\\Davi_Rodrigues_Davanzo\\api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DaviRodriguesDavanzo\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.7\\microsoft.aspnetcore.authentication.jwtbearer.9.0.7.nupkg.sha512",
     "C:\\Users\\DaviRodriguesDavanzo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",

@@ -1,5 +1,4 @@
-﻿using Api.Modules.Authentication.Domain;
-using Api.Modules.Clients.Presentation.ClientDTOs;
+﻿using Api.Modules.Clients.Presentation.ClientDTOs;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.CreateClient
