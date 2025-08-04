@@ -67,5 +67,40 @@ namespace Api.Tests.UnitTests.Logs.Queries
             //Assert
             Assert.IsType<OkObjectResult>(result);
         }
+
+        [Fact]
+        public void Get_Logs_With_Inexistent_IDs_Test()
+        {
+            //Arrange
+            LogMockDependencies mockDependencies = new();
+            LogController controller = mockDependencies.ServiceProvider.GetService<LogController>();
+
+            Guid mockUserId = Guid.NewGuid();
+            Guid clientMockId = Guid.NewGuid();
+
+            var mockClaims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, mockUserId.ToString())
+            };
+            var mockIdentity = new ClaimsIdentity(mockClaims, "MockAuth");
+            var mockUser = new ClaimsPrincipal(mockIdentity);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = mockUser
+                }
+            };
+
+            Log newLog = new(id: Guid.NewGuid(), userId: mockUserId, clientId: clientMockId, action: "Create", timeStamp: DateTime.UtcNow);
+            mockDependencies.LogsMock.Add(newLog);
+
+            //Act
+            var result = controller.GetAll(start: 0, increment: 10);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }
