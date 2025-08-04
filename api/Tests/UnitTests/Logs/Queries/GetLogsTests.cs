@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Api.Tests.UnitTests.Logs.Queries
 {
-    public class GetLogs
+    public class GetLogsTests
     {
         [Fact]
         public void Get_Logs_With_Valid_Data_Test()
