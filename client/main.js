@@ -46,9 +46,7 @@ function loadHeader() {
     main.userDisplay = document.getElementById("userDisplay");
     main.userDisplay.innerText = loggedUser.name;
 
-    main.search.addEventListener("input", function () {
-        searchTable();
-    });
+    main.search.addEventListener("input", handleSearchInput);
 
     main.exit.addEventListener("click", function () {
         localStorage.removeItem("login");
@@ -223,6 +221,14 @@ function loadCachedPage(page, pageStart) {
     main.tablePage = tablePagesCache[page];
     loadTableContent();
     loadPaging(pageStart);
+}
+
+function handleSearchInput() {
+    main.search.removeEventListener("input", handleSearchInput);
+    setTimeout(() => {
+        main.search.addEventListener("input", handleSearchInput);
+        searchTable();
+    }, 1000);
 }
 
 function searchTable() {
