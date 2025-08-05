@@ -12,25 +12,43 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
         {
             var command = (CreateUserCommand)input;
             UserValidator validator = new(command.User);
-            if (!validator.ValidateUser()) return new CreateUserResponse("invalid data");
+
+            if (!validator.ValidateUser())
+                return new CreateUserResponse("invalid data");
+
             var user = command.User;
-            if (!VerifyAvailableEmail(user.Email)) return new CreateUserResponse("email already in use");
+
+            if (!VerifyAvailableEmail(user.Email))
+                return new CreateUserResponse("email already in use");
 
             string salt = Guid.NewGuid().ToString();
-            string password = user.Password + salt;
-            byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
-            byte[] passwordHash = SHA256.HashData(encodedPassword);
+            string passwordHash = HashPassword(user.Password, salt);
 
-            User newUser = new(Guid.NewGuid(), user.Name, user.Email, Convert.ToBase64String(passwordHash), salt);
+            User newUser = new(
+                id: Guid.NewGuid(),
+                name: user.Name,
+                email: user.Email,
+                password: passwordHash,
+                salt: salt
+                );
+            
             repository.Create(newUser);
 
             return new CreateUserResponse();
         }
+        public string HashPassword(string inputPassword, string salt)
+        {
+            string password = inputPassword + salt;
+            byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
+            byte[] passwordHash = SHA256.HashData(encodedPassword);
+
+            return Convert.ToBase64String(passwordHash);
+        }
         public bool VerifyAvailableEmail(string email)
         {
             User? existingEmail = repository.GetAll().FirstOrDefault(user => user.Email == email);
-            if (existingEmail != null) return false;
-            return true;
+            
+            return existingEmail == null;
         }
     }
 }
