@@ -8,6 +8,7 @@ using Api.Modules.Logs.Domain;
 using Api.Modules.Logs.Infrastructure;
 using Api.Modules.Logs.Infrastructure.Repositories;
 using Api.Modules.Logs.Presentation;
+using Api.Shared;
 using Api.Shared.Configurations;
 
 namespace Test.UnitTests.Logs
@@ -28,6 +29,7 @@ namespace Test.UnitTests.Logs
             services.AddSingleton(ClientsMock);
             services.AddSingleton(LogsMock);
             services.AddSingleton(mockAuthSettings);
+            services.AddScoped<RequestResponseFactory>();
             services.AddScoped<LogHandlerFactory>();
             services.AddScoped<LogRepository>();
             services.AddScoped<ClientRepository>();

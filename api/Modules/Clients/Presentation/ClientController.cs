@@ -13,6 +13,7 @@ using Api.Modules.Clients.Application.Queries.GetSortedClients;
 using Api.Modules.Clients.Application.Queries.SearchClients;
 using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Presentation.ClientDTOs;
+using Api.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -22,7 +23,7 @@ namespace Api.Modules.Clients.Presentation
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ClientController(ClientsHandlerFactory factory) : ControllerBase
+    public class ClientController(ClientsHandlerFactory factory, RequestResponseFactory responseFactory) : ControllerBase
     {
         [HttpPost]
         public IActionResult Create([FromBody] ClientDto client)
@@ -33,12 +34,8 @@ namespace Api.Modules.Clients.Presentation
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
              );
-            if (response.Message == "email already in use")
-                return Conflict(response);
-            if (response.Message == "invalid data")
-                return UnprocessableEntity(response);
 
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpPost("lock/{clientId}")]
@@ -52,12 +49,7 @@ namespace Api.Modules.Clients.Presentation
                 )
             );
 
-            if (response.Message == "client already locked")
-                return Conflict(response);
-            if (response.Message == "client does not exist")
-                return NotFound(response);
-
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpPost("unlock")]
@@ -72,10 +64,7 @@ namespace Api.Modules.Clients.Presentation
                 )
             );
 
-            if (response.Message == "invalid token")
-                return Unauthorized(response);
-
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("{id}")]
@@ -87,10 +76,8 @@ namespace Api.Modules.Clients.Presentation
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
              );
-            if (response.Message == "client does not exist")
-                return NotFound(response);
 
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("length")]
@@ -98,7 +85,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetLength");
             var response = handler.Handle(new GetClientsLengthQuery());
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("lastMonth")]
@@ -106,7 +94,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetLastMonth");
             var response = handler.Handle(new GetLastMonthClientsQuery());
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("pending")]
@@ -114,7 +103,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetPending");
             var response = handler.Handle(new GetPendingClientsQuery());
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("page")]
@@ -122,7 +112,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetPage");
             var response = handler.Handle(new GetPagedClientsQuery(start, increment));
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("page/sorted")]
@@ -130,7 +121,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("GetSortedPage");
             var response = handler.Handle(new GetSortedClientsQuery(sortKey, descending, start, increment));
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("page/search")]
@@ -138,7 +130,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("SearchClients");
             var response = handler.Handle(new SearchClientsQuery(start, increment, query));
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
 
         [HttpPut]
@@ -153,12 +146,7 @@ namespace Api.Modules.Clients.Presentation
                 )
              );
 
-            if (response.Message == "invalid data")
-                return UnprocessableEntity(response);
-            if (response.Message == "invalid token")
-                return Unauthorized(response);
-
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpDelete("{id}")]
@@ -170,12 +158,8 @@ namespace Api.Modules.Clients.Presentation
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
              );
-            if (response.Message == "client does not exist")
-                return NotFound(response);
-            if (response.Message == "client is locked")
-                return Unauthorized(response);
 
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpGet("checkEmail")]
@@ -183,7 +167,8 @@ namespace Api.Modules.Clients.Presentation
         {
             var handler = factory.GetHandler("CheckEmail");
             var response = handler.Handle(new VerifyAvailableEmailQuery(id, email));
-            return Ok(response);
+
+            return responseFactory.GetResponse(response);
         }
     }
 }

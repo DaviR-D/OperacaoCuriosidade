@@ -18,6 +18,7 @@ using Api.Modules.Clients.Presentation;
 using Api.Modules.Logs.Domain;
 using Api.Modules.Logs.Infrastructure;
 using Api.Modules.Logs.Infrastructure.Repositories;
+using Api.Shared;
 using Api.Shared.Configurations;
 
 namespace Test.UnitTests.Clients
@@ -36,6 +37,7 @@ namespace Test.UnitTests.Clients
             services.AddSingleton(ClientsMock);
             services.AddSingleton(LogsMock);
             services.AddSingleton(mockAuthSettings);
+            services.AddScoped<RequestResponseFactory>();
             services.AddScoped<ClientsHandlerFactory>();
             services.AddScoped<ClientRepository>();
             services.AddScoped<GetPagedClientsHandler>();

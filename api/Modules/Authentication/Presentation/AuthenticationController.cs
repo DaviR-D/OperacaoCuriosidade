@@ -2,13 +2,14 @@
 using Api.Modules.Authentication.Application.Commands.Authenticate;
 using Api.Modules.Authentication.Application.Commands.CreateUser;
 using Api.Modules.Authentication.Presentation.UserDTOs;
+using Api.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Modules.Authentication.Presentation
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthenticationController(AuthenticationHandlerFactory factory) : ControllerBase
+    public class AuthenticationController(AuthenticationHandlerFactory factory, RequestResponseFactory responseFactory) : ControllerBase
     {
         [HttpPost("signup")]
         public IActionResult Create([FromBody] UserDto user)
@@ -16,25 +17,16 @@ namespace Api.Modules.Authentication.Presentation
             var handler = factory.GetHandler("Signup");
             var response = handler.Handle(new CreateUserCommand(user));
 
-            if (response.Message == "email already in use")
-                return Conflict(response);
-
-            if (response.Message == "invalid data")
-                return UnprocessableEntity(response);
-
-            return Ok(response);
+            return responseFactory.GetResponse(response);
         }
 
         [HttpPost]
-        public ActionResult Authenticate([FromBody] UserDto user)
+        public IActionResult Authenticate([FromBody] UserDto user)
         {
             var handler = factory.GetHandler("Authenticate");
             var response = handler.Handle(new AuthenticateCommand(user));
 
-            if (response.Message == null)
-                return Ok(response);
-            
-            return Unauthorized(response);
+            return responseFactory.GetResponse(response);
         }
     }
 }
