@@ -20,8 +20,8 @@ namespace Api.Modules.Clients.Application
         private static readonly Dictionary<string, Type> Handlers = new()
         {
             { "Create", typeof(CreateClientHandler) },
-            {"Lock", typeof(LockClientHandler)},
-            {"Unlock", typeof(UnlockClientHandler)},
+            { "Lock", typeof(LockClientHandler) },
+            { "Unlock", typeof(UnlockClientHandler) },
             { "GetSingle", typeof(GetSingleClientHandler) },
             { "GetLength", typeof(GetClientsLengthHandler) },
             { "GetLastMonth", typeof(GetLastMonthClientsHandler) },
