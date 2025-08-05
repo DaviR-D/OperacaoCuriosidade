@@ -3,10 +3,10 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Logs.Application.Queries.GetLogs
 {
-    public class GetLogsResponse(List<GetLogDto> logs, int logsLength, string? message = null) : IRequestOutput
+    public class GetLogsResponse(List<LogDto> logs, int logsLength, string? message = null) : IRequestOutput
     {
         public string? Message { get; set; } = message;
-        public List<GetLogDto> Logs { get; set; } = logs;
+        public List<LogDto> Logs { get; set; } = logs;
         public int LogsLength { get; set; } = logsLength;
     }
 }

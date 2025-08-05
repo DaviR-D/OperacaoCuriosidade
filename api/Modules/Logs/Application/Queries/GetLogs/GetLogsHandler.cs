@@ -16,7 +16,7 @@ namespace Api.Modules.Logs.Application.Queries.GetLogs
                 .Skip(query.Start)
                 .Take(query.Increment)
                 .Select(log => LogDtoMapper
-                .ToResponseDto(log, clients, users))
+                .ToDto(log, clients, users))
                 .ToList();
 
             return new GetLogsResponse(logs: logsPage, logsLength: logs.Count);

@@ -11,7 +11,7 @@ namespace Api.Modules.Logs.Infrastructure.Repositories
         }
         public List<Log> GetAll()
         {
-            PropertyInfo? sortProperty = typeof(Log).GetProperty("TimeStamp");
+            PropertyInfo sortProperty = typeof(Log).GetProperty("TimeStamp")!;
             IOrderedEnumerable<Log> sortedLogs = logs.OrderByDescending(sortProperty.GetValue);
 
             return [.. sortedLogs];
