@@ -4,7 +4,7 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.UnlockClient
 {
-    public class UnlockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class UnlockClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         public IRequestOutput Handle(IRequestInput input)
         {
