@@ -17,20 +17,23 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
             var command = input as AuthenticateCommand;
             var user = repository.GetAll().FirstOrDefault(user => command.UserCredentials.Email == user.Email);
 
-            if (user != null)
-            {
-                string salt = user.Salt;
-                string password = command.UserCredentials.Password + salt;
-                byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
-                byte[] passwordHash = SHA256.HashData(encodedPassword);
+            if (user == null)
+                return new AuthenticateResponse(message: "incorrect email");
 
-                if (Convert.ToBase64String(passwordHash) == user.Password)
-                    return new AuthenticateResponse(token: GenerateToken(user));
+            string salt = user.Salt;
+            var credentialPassword = HashPassword(command.UserCredentials.Password, salt);
 
-                return new AuthenticateResponse(message: "incorrect password");
+            return credentialPassword == user.Password
+                ? new AuthenticateResponse(token: GenerateToken(user))
+                : new AuthenticateResponse(message: "incorrect password");
+        }
+        public string HashPassword(string originalPassword, string salt)
+        {
+            string password = originalPassword + salt;
+            byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
+            byte[] passwordHash = SHA256.HashData(encodedPassword);
 
-            }
-            return new AuthenticateResponse(message: "incorrect email");
+            return Convert.ToBase64String(passwordHash);
         }
         private string GenerateToken(User user)
         {
