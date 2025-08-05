@@ -1,7 +1,6 @@
 ﻿using Api.Modules.Authentication.Presentation;
 using Api.Modules.Authentication.Presentation.UserDTOs;
 using Microsoft.AspNetCore.Mvc;
-using Test.UnitTests.Authentication;
 using Xunit;
 
 namespace Test.UnitTests.Authentication.Commands

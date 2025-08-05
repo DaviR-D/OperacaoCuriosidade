@@ -1,5 +1,4 @@
 ﻿using Api.Modules.Clients.Infrastructure.Repositories;
-using Api.Shared.Configurations;
 using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.UnlockClient

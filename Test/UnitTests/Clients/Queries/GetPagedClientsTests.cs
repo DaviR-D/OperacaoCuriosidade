@@ -1,7 +1,6 @@
 ﻿using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Presentation;
 using Microsoft.AspNetCore.Mvc;
-using Test.UnitTests.Clients;
 using Xunit;
 
 namespace Test.UnitTests.Clients.Queries
@@ -32,7 +31,7 @@ namespace Test.UnitTests.Clients.Queries
             mockDependencies.ClientsMock.Add(clientMock);
 
             //Act
-            var result = controller.GetPage(start:0, increment:10);
+            var result = controller.GetPage(start: 0, increment: 10);
 
             //Assert
             Assert.IsType<OkObjectResult>(result);

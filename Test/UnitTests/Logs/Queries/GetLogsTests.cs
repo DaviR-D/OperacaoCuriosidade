@@ -4,7 +4,6 @@ using Api.Modules.Logs.Domain;
 using Api.Modules.Logs.Presentation;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Test.UnitTests.Logs;
 using Xunit;
 
 namespace Test.UnitTests.Logs.Queries

@@ -2,7 +2,6 @@
 using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Presentation;
 using Microsoft.AspNetCore.Mvc;
-using Test.UnitTests.Clients;
 using Xunit;
 
 namespace Test.UnitTests.Clients.Queries

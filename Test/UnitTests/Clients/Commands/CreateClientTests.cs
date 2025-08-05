@@ -2,7 +2,6 @@
 using Api.Modules.Clients.Presentation.ClientDTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Test.UnitTests.Clients;
 using Xunit;
 
 namespace Test.UnitTests.Clients.Commands
