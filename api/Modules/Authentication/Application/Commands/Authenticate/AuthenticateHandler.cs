@@ -26,8 +26,8 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
 
                 if (Convert.ToBase64String(passwordHash) == user.Password)
                     return new AuthenticateResponse(token: GenerateToken(user));
-                else
-                    return new AuthenticateResponse(message: "incorrect password");
+                
+                return new AuthenticateResponse(message: "incorrect password");
 
             }
             return new AuthenticateResponse(message: "incorrect email");

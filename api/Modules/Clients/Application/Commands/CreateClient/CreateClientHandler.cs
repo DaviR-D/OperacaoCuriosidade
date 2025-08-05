@@ -17,13 +17,13 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
             if (!validator.ValidateClient())
                 return new CreateClientResponse(message: "invalid data");
 
-            Guid? newId = new();
+            Guid? newId;
             lock (_lock)
             {
-                if (VerifyAvailableEmail(command.Client.Email))
-                    newId = repository.Create(command.Client);
-                else
+                if (!VerifyAvailableEmail(command.Client.Email))
                     return new CreateClientResponse(message: "email already in use");
+
+                newId = repository.Create(command.Client);
             }
 
             logService.Create(userId: command.UserId, clientId: (Guid)newId, action: "Create");
