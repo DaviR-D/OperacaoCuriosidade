@@ -16,17 +16,17 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         }
         public void Update(ClientDto client)
         {
-            int clientIndex = clients.FindIndex(r => r.Id == client.Id);
+            int clientIndex = clients.FindIndex(c => c.Id == client.Id);
             client.Date = clients[clientIndex].Date;
             clients[clientIndex] = ClientDtoMapper.ToEntity(client);
         }
         public bool Delete(Guid id)
         {
             Client? client = clients.FirstOrDefault(c => c.Id == id);
-            if (client == null || client.Deleted)
-                return true;
+            bool alreadyDeleted = client == null || client.Deleted;
             client.Deleted = true;
-            return false;
+
+            return alreadyDeleted;
         }
         public Client? GetOne(Guid id)
         {
