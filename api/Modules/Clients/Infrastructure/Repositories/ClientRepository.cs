@@ -23,10 +23,10 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         public bool Delete(Guid id)
         {
             Client? client = clients.FirstOrDefault(c => c.Id == id);
-            bool alreadyDeleted = client == null || client.Deleted;
+            if (client == null || client.Deleted)
+                return true;
             client.Deleted = true;
-
-            return alreadyDeleted;
+            return false;
         }
         public Client? GetOne(Guid id)
         {
