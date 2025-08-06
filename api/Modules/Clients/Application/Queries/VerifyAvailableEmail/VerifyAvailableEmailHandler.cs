@@ -12,7 +12,7 @@ namespace Api.Modules.Clients.Application.Queries.VerifyAvailableEmail
             Client? existingEmail = repository.GetAll().FirstOrDefault(client => client.Email == query.Email);
             if (existingEmail != null)
             {
-                return new VerifyAvailableEmailResponse(existingEmail.Id.Equals(query.Id));
+                return new VerifyAvailableEmailResponse(existingEmail.Id.Equals(query.ClientId));
             }
             return new VerifyAvailableEmailResponse(true);
         }

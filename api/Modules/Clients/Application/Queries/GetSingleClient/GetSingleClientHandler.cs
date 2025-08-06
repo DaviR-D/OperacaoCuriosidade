@@ -10,14 +10,14 @@ namespace Api.Modules.Clients.Application.Queries.GetSingleClient
         public IRequestOutput Handle(IRequestInput input)
         {
             var query = (GetSingleClientQuery)input;
-            var client = repository.GetOne(query.Id);
+            var client = repository.GetOne(query.ClientId);
             if (client == null || client.Deleted == true)
             {
                 return new GetSingleClientResponse(message: "client does not exist");
             }
 
-            logService.Create(userId: query.UserId, clientId: query.Id, action: "Read");
-            return new GetSingleClientResponse(client: ClientDtoMapper.ToDto(client)); ;
+            logService.Create(userId: query.UserId, clientId: query.ClientId, action: "Read");
+            return new GetSingleClientResponse(client: ClientDtoMapper.ToDto(client));
         }
     }
 }
