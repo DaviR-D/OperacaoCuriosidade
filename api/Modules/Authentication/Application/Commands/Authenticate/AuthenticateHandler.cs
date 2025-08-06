@@ -15,7 +15,9 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
         public IRequestOutput? Handle(IRequestInput input)
         {
             var command = input as AuthenticateCommand;
-            var user = repository.GetAll().FirstOrDefault(user => command.UserCredentials.Email == user.Email);
+            var user = repository
+                .GetAll()
+                .FirstOrDefault(user => command.UserCredentials.Email == user.Email);
 
             if (user == null)
                 return new AuthenticateResponse(message: "incorrect email");
@@ -59,8 +61,16 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
         private static ClaimsIdentity GenerateClaims(User user)
         {
             var claimsIdentity = new ClaimsIdentity();
-            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Name, value: user.Name));
-            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.NameIdentifier, value: user.Id.ToString()));
+
+            claimsIdentity.AddClaim(new Claim(
+                type: ClaimTypes.Name,
+                value: user.Name)
+                );
+
+            claimsIdentity.AddClaim(new Claim(
+                type: ClaimTypes.NameIdentifier,
+                value: user.Id.ToString())
+                );
 
             return claimsIdentity;
         }

@@ -9,11 +9,15 @@ namespace Api.Modules.Clients.Application.Queries.VerifyAvailableEmail
         public IRequestOutput Handle(IRequestInput input)
         {
             var query = (VerifyAvailableEmailQuery)input;
-            Client? existingEmail = repository.GetAll().FirstOrDefault(client => client.Email == query.Email);
+            Client? existingEmail = repository
+                .GetAll()
+                .FirstOrDefault(client => client.Email == query.Email);
+
             if (existingEmail != null)
             {
                 return new VerifyAvailableEmailResponse(existingEmail.Id.Equals(query.ClientId));
             }
+
             return new VerifyAvailableEmailResponse(true);
         }
     }

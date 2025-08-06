@@ -9,7 +9,11 @@ namespace Api.Modules.Clients.Application.Queries.GetLastMonthClients
         public IRequestOutput Handle(IRequestInput input)
         {
             List<Client> activeClients = repository.GetAll();
-            int lastMonth = activeClients.Where(client => client.Date >= DateTime.Now.AddMonths(-1)).Count();
+            int lastMonth = activeClients
+                .Where(client => client.Date >= DateTime.Now
+                .AddMonths(-1))
+                .Count();
+
             return new GetLastMonthClientsResponse(lastMonth);
         }
     }

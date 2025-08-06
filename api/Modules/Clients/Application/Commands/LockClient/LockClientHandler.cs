@@ -57,9 +57,21 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
         private static ClaimsIdentity GenerateClaims(Guid userId, Guid clientId, DateTime expireTime)
         {
             var claimsIdentity = new ClaimsIdentity();
-            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.NameIdentifier, value: userId.ToString()));
-            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Expiration, value: expireTime.ToString("yyyy-MM-dd HH:mm:ss.fff")));
-            claimsIdentity.AddClaim(new Claim(type: "ClientId", value: clientId.ToString()));
+
+            claimsIdentity.AddClaim(new Claim(
+                type: ClaimTypes.NameIdentifier,
+                value: userId.ToString())
+                );
+
+            claimsIdentity.AddClaim(new Claim(
+                type: ClaimTypes.Expiration,
+                value: expireTime.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+                );
+
+            claimsIdentity.AddClaim(new Claim(
+                type: "ClientId",
+                value: clientId.ToString())
+                );
 
             return claimsIdentity;
         }

@@ -31,7 +31,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
                 password: passwordHash,
                 salt: salt
                 );
-            
+
             repository.Create(newUser);
 
             return new CreateUserResponse();
@@ -47,7 +47,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
         public bool VerifyAvailableEmail(string email)
         {
             User? existingEmail = repository.GetAll().FirstOrDefault(user => user.Email == email);
-            
+
             return existingEmail == null;
         }
     }
