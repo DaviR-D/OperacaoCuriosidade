@@ -34,7 +34,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-AuthenticationSettings? authSettings = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
+AuthenticationSettings? authSettings = builder.Configuration
+    .GetSection("AuthenticationSettings")
+    .Get<AuthenticationSettings>();
 string key = authSettings.PrivateKey;
 
 builder.Services.AddAuthentication(options =>
