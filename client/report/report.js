@@ -1,15 +1,16 @@
-document.addEventListener("DOMContentLoaded", function () {
-    html.report = {};
+document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
+    main.report = {};
     getReportElements();
     insertReportData();
 });
 
 function getReportElements() {
-    html.report.tableTop = document.getElementById("tableTop");
+    main.report.tableTop = document.getElementById("tableTop");
 }
 
 function insertReportData() {
-    html.report.tableTop.insertAdjacentHTML('beforeend',
+    main.report.tableTop.insertAdjacentHTML('beforeend',
         `
         <h1><strong>Lista de usuários</strong></h1>
         <button onclick="printTable()">IMPRIMIR</button>
@@ -22,9 +23,17 @@ function insertReportData() {
 
 async function printTable() {
     document.body.classList.add("blur");
-    await updateTable(0, html.registrationsLength);
+    await updateTable(0, main.clientsLength);
     window.print();
-    registrationsCache = {};
+    clientsCache = {};
     updateTable();
     document.body.classList.remove("blur");
+}
+
+function setTableSettings() {
+    loadClientsTable();
+}
+
+async function openClient(id) {
+    readClient(id);
 }

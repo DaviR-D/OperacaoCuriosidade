@@ -1,36 +1,38 @@
-document.addEventListener("DOMContentLoaded", function () {
-    html.register = {};
+document.addEventListener("DOMContentLoaded", async function () {
+    await updateTable();
+    main.register = {};
     getRegisterElements();
     insertRegisterData();
-    try { html.addActions(); }
+    try { main.addActions(); }
     catch (error) { if (!(error instanceof ReferenceError)) throw error; }
 })
 
 function getRegisterElements() {
-    html.register.tableTop = document.getElementById("tableTop");
+    main.register.tableTop = document.getElementById("tableTop");
+    let tableHeader = document.getElementById("tableHeader");
 
-    html.register.registerModal = document.getElementById("registerModal");
-    html.register.alertModal = document.getElementById("alertModal");
+    main.register.registerModal = document.getElementById("registerModal");
 
-    html.register.statusCheck = document.getElementById("status");
-    html.register.nameInput = document.getElementById("name");
-    html.register.ageInput = document.getElementById("age");
-    html.register.emailInput = document.getElementById("email");
-    html.register.addressInput = document.getElementById("address");
-    html.register.otherInput = document.getElementById("other");
-    html.register.interestsInput = document.getElementById("interests");
-    html.register.feelingsInput = document.getElementById("feelings");
-    html.register.valuesInput = document.getElementById("values");
+    main.register.statusCheck = document.getElementById("status");
+    main.register.nameInput = document.getElementById("name");
+    main.register.ageInput = document.getElementById("age");
+    main.register.emailInput = document.getElementById("email");
+    main.register.addressInput = document.getElementById("address");
+    main.register.otherInput = document.getElementById("other");
+    main.register.interestsInput = document.getElementById("interests");
+    main.register.feelingsInput = document.getElementById("feelings");
+    main.register.valuesInput = document.getElementById("values");
 
-    html.register.alertTitle = document.getElementById("alertTitle");
-    html.register.alertDeleteButton = document.getElementById("alertDeleteButton");
-    html.register.cancelDeleteButton = document.getElementById("cancelDeleteButton");
-
-    html.register.alertModal.addEventListener("close", function () {
-        document.body.classList.remove("blur");
+    window.addEventListener("beforeunload", function () {
+        if (String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined") {
+            unlockClient();
+        }
     });
 
-    html.register.registerModal.addEventListener("close", function () {
+    main.register.registerModal.addEventListener("close", function () {
+        if (String(registerModal.dataset.userId) != "null" && String(registerModal.dataset.userId) != "undefined") {
+            unlockClient();
+        }
         document.body.classList.remove("blur");
         clearFields();
         resetFieldsStyle();
@@ -40,7 +42,7 @@ function getRegisterElements() {
 }
 
 function insertRegisterData() {
-    html.register.tableTop.insertAdjacentHTML('beforeend',
+    main.register.tableTop.insertAdjacentHTML('beforeend',
         `
             <h1><strong>Cadastros</strong></h1>
             <button onclick="showRegisterModal()"> + NOVO CADASTRO</button>
@@ -50,7 +52,7 @@ function insertRegisterData() {
     navLink = document.getElementById("registerNav")
     navLink.style.backgroundColor = "var(--highlight-color)";
 
-    html.addActions = () => {
+    main.addActions = () => {
         tableHeader.insertAdjacentHTML("beforeend", "<th style='cursor: default;'>Ações</th>");
         document.querySelectorAll(".actions").forEach(row => {
             row.style.display = "table-cell";
@@ -58,37 +60,40 @@ function insertRegisterData() {
     }
 }
 
-async function saveRegistration(event, id = undefined) {
+async function saveClient(event, id = null) {
     event.preventDefault();
     resetFieldsStyle();
 
     if (registerForm.checkValidity()) {
         let newRegister = {
-            id: id,
-            name: html.register.nameInput.value,
-            email: html.register.emailInput.value,
-            status: html.register.statusCheck.checked ? "Ativo" : "Inativo",
+            name: main.register.nameInput.value,
+            email: main.register.emailInput.value,
+            status: main.register.statusCheck.checked ? "Ativo" : "Inativo",
             pending: true,
-            date: id ? registrations.filter((register) => register.id == id)[0].date : new Date(),
-            age: html.register.ageInput.value,
-            address: html.register.addressInput.value,
-            other: html.register.otherInput.value,
-            interests: html.register.interestsInput.value,
-            feelings: html.register.feelingsInput.value,
-            values: html.register.valuesInput.value,
+            age: main.register.ageInput.value,
+            address: main.register.addressInput.value,
+            other: main.register.otherInput.value,
+            interests: main.register.interestsInput.value,
+            feelings: main.register.feelingsInput.value,
+            values: main.register.valuesInput.value,
         };
 
         if (await checkFieldsValidity(id, newRegister)) {
-            httpMethod = id == undefined ? "POST" : "PUT";
+            httpMethod = id == null ? "POST" : "PUT";
+            let newClientId;
 
-            fetch(`${apiUrl}/api/registration/`, {
+            await fetch(`${apiUrl}/api/client/`, {
                 method: httpMethod,
                 headers: {
-                    "Authorization": `Bearer ${loggedUser.token}`,
+                    "Authorization": `Bearer ${httpMethod == "POST" ? loggedUser.token : loggedUser.editToken}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(newRegister)
             })
+                .then(response => { return response.json() })
+                .then(data => {
+                    newClientId = data.id;
+                });
             registerForm.submit();
         }
     }
@@ -97,43 +102,125 @@ async function saveRegistration(event, id = undefined) {
     }
 }
 
-async function deleteRegistration(id) {
-    await fetch(`${apiUrl}/api/registration/${id}`, {
+async function deleteClient(id) {
+    let responseMessage;
+
+    await fetch(`${apiUrl}/api/client/${id}`, {
         method: 'DELETE',
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`
         }
     })
-    registrationsCache = {};
+        .then(response => { return response.json() })
+        .then(data => {
+            responseMessage = data.message;
+        });
+
+    if (responseMessage == "client does not exist") {
+        clientNotFoundAlert();
+        return;
+    }
+
+    if (responseMessage == "client is locked") {
+        clientLockedForDeletionAlert();
+        return;
+    }
+
+    clientsCache = {};
     updateTable();
-    hideDeleteConfirmation()
+    hideAlertModal();
 }
 
-async function editRegistration(id) {
-    let editItem;
+async function lockClient(id) {
+    let responseMessage;
 
-    await fetch(`${apiUrl}/api/registration/${id}`, {
+    await fetch(`${apiUrl}/api/client/lock/${id}`, {
+        method: "POST",
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`,
         }
     })
         .then(response => { return response.json() })
         .then(data => {
-            editItem = data;
+            responseMessage = data.message;
+            loggedUser.editToken = data.token;
         });
+
+    if (responseMessage == "client already locked") {
+        clientLockedAlert(id);
+        return;
+    }
+
+    editClient(id);
+}
+
+async function unlockClient() {
+    await fetch(`${apiUrl}/api/client/unlock/`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${loggedUser.editToken}`,
+        }
+    })
+}
+
+async function editClient(id) {
+    let editItem;
+    let responseMessage;
+
+    await fetch(`${apiUrl}/api/client/${id}`, {
+        headers: {
+            "Authorization": `Bearer ${loggedUser.token}`,
+        }
+    })
+        .then(response => { return response.json() })
+        .then(data => {
+            editItem = data.client;
+            responseMessage = data.message;
+        });
+
+    if (responseMessage == "client does not exist") {
+        clientNotFoundAlert();
+        return;
+    }
 
     registerModal.dataset.userId = id;
     showRegisterModal();
 
-    html.register.nameInput.value = editItem.name;
-    html.register.emailInput.value = editItem.email;
-    html.register.ageInput.value = editItem.age;
-    html.register.addressInput.value = editItem.address;
-    html.register.otherInput.value = editItem.other;
-    html.register.interestsInput.value = editItem.interests;
-    html.register.feelingsInput.value = editItem.feelings;
-    html.register.valuesInput.value = editItem.values;
-    html.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
+    main.register.nameInput.value = editItem.name;
+    main.register.emailInput.value = editItem.email;
+    main.register.ageInput.value = editItem.age;
+    main.register.addressInput.value = editItem.address;
+    main.register.otherInput.value = editItem.other;
+    main.register.interestsInput.value = editItem.interests;
+    main.register.feelingsInput.value = editItem.feelings;
+    main.register.valuesInput.value = editItem.values;
+    main.register.statusCheck.checked = editItem.status == "Ativo" ? true : false;
+}
+
+async function clientLockedAlert(id) {
+    main.alertTitle.innerText = `Abrindo modo de somente leitura`;
+    main.alertText.innerText = "Este cliente já está sendo editado por outro usuário";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.closeAlertButton.innerText = "OK";
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
+        readClient(id);
+    };
+    await updateTable();
+}
+
+function clientLockedForDeletionAlert(){
+    main.alertTitle.innerText = `Não foi possível deletar`;
+    main.alertText.innerText = "Este cliente está sendo editado por outro usuário";
+    document.body.classList.add("blur");
+    main.alertModal.showModal();
+    main.alertDeleteButton.style.display = "none";
+    main.closeAlertButton.innerText = "OK";
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
+    };
 }
 
 function showRegisterModal() {
@@ -146,28 +233,30 @@ function hideRegisterModal() {
 }
 
 function showDeleteConfirmation(id) {
-    let deletedUser = registrations.filter((register) => register.id == id)[0].name
-    html.register.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    let deletedUser = main.tablePage.filter((register) => register.id == id)[0].name
+    main.alertTitle.innerText = `Você tem certeza que deseja deletar ${deletedUser}?`;
+    main.alertText.innerText = "Essa ação não pode ser desfeita";
+    main.alertDeleteButton.style.display = "block";
+    main.closeAlertButton.innerText = "CANCELAR";
     document.body.classList.add("blur");
-    html.register.alertModal.showModal();
-    html.register.alertDeleteButton.onclick = () => deleteRegistration(id);
-}
-
-function hideDeleteConfirmation() {
-    html.register.alertModal.close();
+    main.alertModal.showModal();
+    main.alertDeleteButton.onclick = () => deleteClient(id);
+    main.closeAlertButton.onclick = () => {
+        hideAlertModal();
+    };
 }
 
 function clearFields() {
-    registerModal.dataset.userId = undefined;
-    html.register.nameInput.value = "";
-    html.register.emailInput.value = "";
-    html.register.ageInput.value = "";
-    html.register.addressInput.value = "";
-    html.register.otherInput.value = "";
-    html.register.interestsInput.value = "";
-    html.register.feelingsInput.value = "";
-    html.register.valuesInput.value = "";
-    html.register.statusCheck.checked = false;
+    registerModal.dataset.userId = null;
+    main.register.nameInput.value = "";
+    main.register.emailInput.value = "";
+    main.register.ageInput.value = "";
+    main.register.addressInput.value = "";
+    main.register.otherInput.value = "";
+    main.register.interestsInput.value = "";
+    main.register.feelingsInput.value = "";
+    main.register.valuesInput.value = "";
+    main.register.statusCheck.checked = false;
 }
 
 function resetFieldStyle(field) {
@@ -201,31 +290,33 @@ function highlightBlankFields() {
 }
 
 async function checkFieldsValidity(id, newRegister) {
-    html.invalidFields = [];
+    main.invalidFields = [];
     checkValidName(newRegister.name);
     checkValidEmail(newRegister.email);
     await checkExistingEmail(id, newRegister.email);
 
-    if (html.invalidFields.length) {
-        html.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
+    if (main.invalidFields.length) {
+        main.invalidFields[0].scrollIntoView({ behavior: "smooth", block: "center" });
         return false;
     }
     return true;
 }
 
-async function checkExistingEmail(id = crypto.randomUUID(), email) {
+async function checkExistingEmail(id = null, email) {
     let availableEmail;
-    await fetch(`${apiUrl}/api/registration/checkEmail?id=${id}&email=${email}`, {
+    let idParam = String(id) == "null" ? "" : `id=${id}&`;
+
+    await fetch(`${apiUrl}/api/client/checkEmail?${idParam}email=${email}`, {
         headers: {
             "Authorization": `Bearer ${loggedUser.token}`,
         }
     })
         .then(response => { return response.json() })
-        .then(data => { availableEmail = data; });
+        .then(data => { availableEmail = data.isAvailable; });
 
     if (!availableEmail) {
-        highlightInvalidField(html.register.emailInput, "Email já cadastrado");
-        html.invalidFields.push(html.register.emailInput);
+        highlightInvalidField(main.register.emailInput, "Email já cadastrado");
+        main.invalidFields.push(main.register.emailInput);
     };
     return availableEmail;
 }
@@ -234,8 +325,8 @@ function checkValidEmail(email) {
     regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let valid = regex.test(email)
     if (!valid) {
-        highlightInvalidField(html.register.emailInput, "Insira um email válido");
-        html.invalidFields.push(html.register.emailInput);
+        highlightInvalidField(main.register.emailInput, "Insira um email válido");
+        main.invalidFields.push(main.register.emailInput);
     };
     return valid;
 }
@@ -244,14 +335,14 @@ function checkValidName(name) {
     regex = /^[^0-9!@#$%*+={}?<>()]*$/
     let valid = regex.test(name)
     if (!valid) {
-        highlightInvalidField(html.register.nameInput, "Insira um nome válido")
-        html.invalidFields.push(html.register.nameInput);
+        highlightInvalidField(main.register.nameInput, "Insira um nome válido")
+        main.invalidFields.push(main.register.nameInput);
     };
     return valid;
 }
 
 function addInputEvents() {
-    html.invalidFields = [];
+    main.invalidFields = [];
     [...registerForm.elements].forEach(field => {
         let errorMessage;
         field.addEventListener("input", function () {
@@ -260,15 +351,24 @@ function addInputEvents() {
         })
     });
 
-    html.register.nameInput.addEventListener("input", function () {
-        resetFieldStyle(html.register.nameInput)
-        checkValidName(html.register.nameInput.value);
+    main.register.nameInput.addEventListener("input", function () {
+        resetFieldStyle(main.register.nameInput)
+        checkValidName(main.register.nameInput.value);
     })
-    html.register.emailInput.addEventListener("input", function () {
-        resetFieldStyle(html.register.emailInput);
-        checkValidEmail(html.register.emailInput.value);
+    main.register.emailInput.addEventListener("input", function () {
+        resetFieldStyle(main.register.emailInput);
+        checkValidEmail(main.register.emailInput.value);
     })
-    html.register.emailInput.addEventListener("blur", function () {
-        checkExistingEmail(registerModal.dataset.userId, html.register.emailInput.value);
+    main.register.emailInput.addEventListener("blur", function () {
+        if (main.register.emailInput.value.length > 0)
+            checkExistingEmail(registerModal.dataset.userId, main.register.emailInput.value);
     })
+}
+
+function setTableSettings() {
+    loadClientsTable();
+}
+
+function openClient(id) {
+    lockClient(id);
 }

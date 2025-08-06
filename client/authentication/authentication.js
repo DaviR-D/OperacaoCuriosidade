@@ -2,7 +2,7 @@ let apiUrl = "http://localhost:5204";
 
 let pageTheme = localStorage.getItem("theme");
 
-let html = {}
+let main = {}
 
 document.addEventListener("DOMContentLoaded", function () {
   getAuthElements();
@@ -10,22 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 function getAuthElements() {
-  html.loginButton = document.getElementById("login");
-  html.emailInput = document.getElementById("email");
-  html.passwordInput = document.getElementById("password");
-  html.errorMessage = document.getElementById("errorMessage");
+  main.loginButton = document.getElementById("login");
+  main.emailInput = document.getElementById("email");
+  main.passwordInput = document.getElementById("password");
+  main.errorMessage = document.getElementById("errorMessage");
 
-  html.emailInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") html.passwordInput.focus();
+  main.emailInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") main.passwordInput.focus();
   })
 }
 
 async function tryLogin() {
-  let login = { email: html.emailInput.value, password: html.passwordInput.value }
+  let login = { email: main.emailInput.value, password: main.passwordInput.value }
 
 
   if (checkValidEmail(login.email)) {
     let token;
+    let responseMessage;
     await fetch(`${apiUrl}/api/authentication/`, {
       method: "POST",
       headers: {
@@ -35,6 +36,7 @@ async function tryLogin() {
     }).then(response => { return response.json() })
       .then(data => {
         token = data.token;
+        responseMessage = data.message;
       });
 
     if (token) {
@@ -42,8 +44,11 @@ async function tryLogin() {
       localStorage.setItem("login", JSON.stringify({ "name": tokenData.unique_name, "token": token }))
       window.location = "../../dashboard/dashboard.html";
     }
-    else {
-      html.errorMessage.innerText = "Login incorreto!";
+    else if (responseMessage == "incorrect email") {
+      main.errorMessage.innerText = "Email incorreto";
+    }
+    else if (responseMessage == "incorrect password") {
+      main.errorMessage.innerText = "Senha incorreta";
     }
   }
 }
@@ -53,7 +58,7 @@ function checkValidEmail(email) {
 
   let validEmail = regex.test(email);
 
-  if (!validEmail) html.errorMessage.innerText = "Insira um email válido!";
+  if (!validEmail) main.errorMessage.innerText = "Insira um email válido";
 
   return validEmail;
 }

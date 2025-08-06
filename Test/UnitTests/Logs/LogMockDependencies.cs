@@ -1,0 +1,46 @@
+﻿using Api.Modules.Authentication.Domain;
+using Api.Modules.Authentication.Infrastructure.Repositories;
+using Api.Modules.Clients.Domain;
+using Api.Modules.Clients.Infrastructure.Repositories;
+using Api.Modules.Logs.Application;
+using Api.Modules.Logs.Application.Queries.GetLogs;
+using Api.Modules.Logs.Domain;
+using Api.Modules.Logs.Infrastructure;
+using Api.Modules.Logs.Infrastructure.Repositories;
+using Api.Modules.Logs.Presentation;
+using Api.Shared;
+using Api.Shared.Configurations;
+
+namespace Test.UnitTests.Logs
+{
+    public class LogMockDependencies
+    {
+        public IServiceProvider ServiceProvider { get; set; }
+        public List<User> UsersMock { get; set; } = [];
+        public List<Client> ClientsMock { get; set; } = [];
+        public List<Log> LogsMock { get; set; } = [];
+
+        public LogMockDependencies()
+        {
+            var services = new ServiceCollection();
+            AuthenticationSettings? mockAuthSettings = new()
+            {
+                PrivateKey = "mockprivatekeyforunittesting12345678910"
+            };
+            services.AddSingleton(UsersMock);
+            services.AddSingleton(ClientsMock);
+            services.AddSingleton(LogsMock);
+            services.AddSingleton(mockAuthSettings);
+            services.AddScoped<RequestResponseFactory>();
+            services.AddScoped<LogHandlerFactory>();
+            services.AddScoped<LogRepository>();
+            services.AddScoped<ClientRepository>();
+            services.AddScoped<UserRepository>();
+            services.AddScoped<CreateLogService>();
+            services.AddScoped<GetLogsHandler>();
+            services.AddScoped<LogController>();
+
+            ServiceProvider = services.BuildServiceProvider();
+        }
+    }
+}

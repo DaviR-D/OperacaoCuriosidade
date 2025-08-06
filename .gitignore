@@ -2,3 +2,7 @@ api/bin/
 api/obj/
 api/api.http
 /api/.vs
+
+Test/bin/
+Test/obj/
+/Test/.vs

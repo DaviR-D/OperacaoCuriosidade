@@ -1,4 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    if (await getStats("length") == 0) await createDB(loggedUser.token);
+    main.lastMonthClients = await getStats("lastMonth");
+    main.pendingClients = await getStats("pending");
+    await updateTable();
+
     let content = document.getElementById("mainContent")
     content.insertAdjacentHTML('afterbegin',
         `
@@ -18,35 +23,41 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         `
     )
-    html.dashboard = {};
+    main.dashboard = {};
     getDashboardElements();
     insertDashboardData();
 })
 
 function getDashboardElements() {
-    html.dashboard.tableTop = document.getElementById("tableTop");
-    html.dashboard.total = document.getElementById("total");
-    html.dashboard.pending = document.getElementById("pending");
-    html.dashboard.lastMonth = document.getElementById("lastMonth");
+    main.dashboard.tableTop = document.getElementById("tableTop");
+    main.dashboard.total = document.getElementById("total");
+    main.dashboard.pending = document.getElementById("pending");
+    main.dashboard.lastMonth = document.getElementById("lastMonth");
 }
 
 async function insertDashboardData() {
-    await updateTable();
-    if (html.registrationsLength == 0) createDB(loggedUser.token);
-    html.orderReverse = true;
+    main.sortDescending = true;
     await sortTable("date");
 
 
-    html.dashboard.tableTop.insertAdjacentHTML('beforeend',
+    main.dashboard.tableTop.insertAdjacentHTML('beforeend',
         `
         <h1><strong>Últimos cadastros</strong></h1>
         `
     )
 
-    html.dashboard.total.innerText = html.registrationsLength;
-    html.dashboard.pending.innerText = html.pendingRegistrations;
-    html.dashboard.lastMonth.innerText = html.lastMonthRegistrations;
+    main.dashboard.total.innerText = main.clientsLength;
+    main.dashboard.pending.innerText = main.pendingClients;
+    main.dashboard.lastMonth.innerText = main.lastMonthClients;
 
     navLink = document.getElementById("dashboardNav")
     navLink.style.backgroundColor = "var(--highlight-color)";
+}
+
+function setTableSettings() {
+    loadClientsTable();
+}
+
+async function openClient(id) {
+    readClient(id);
 }

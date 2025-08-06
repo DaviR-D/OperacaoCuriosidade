@@ -1,12 +1,7 @@
 @api_HostAddress = http://localhost:5204/api
 
-POST {{api_HostAddress}}/authentication
+GET {{api_HostAddress}}/client/page?start=0&increment=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkRhdmkiLCJuYmYiOjE3NTI4NjMwNjQsImV4cCI6MTc1Mjg2NjY2NCwiaWF0IjoxNzUyODYzMDY0fQ.OimbsTshWr_MOeLST4-c-9YroGro5RafBKZPgGoyml4
 Content-Type: application/json
 Accept: application/json
-
-{
-  "Name": "Davi",
-  "Email": "davi@gmail.com", 
-  "Password": "senha123"
-}
 ###

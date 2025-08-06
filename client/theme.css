@@ -20,7 +20,8 @@ nav,
 .statsContainer,
 .loginBox,
 #registerModal,
-#alertModal {
+#alertModal,
+#clientViewModal {
     background-color: var(--main-color);
     border: 1px solid rgba(0, 0, 0, 0.300);
     color: var(--font-color);
@@ -102,13 +103,15 @@ button {
 }
 
 #tableContainer>::-webkit-scrollbar,
-#registerModal>::-webkit-scrollbar {
+#registerModal>::-webkit-scrollbar,
+#clientViewModal>::-webkit-scrollbar {
     width: 4px;
     background-color: rgba(255, 255, 255, 0)
 }
 
 #tableContainer>::-webkit-scrollbar-thumb,
-#registerModal>::-webkit-scrollbar-thumb {
+#registerModal>::-webkit-scrollbar-thumb,
+#clientViewModal>::-webkit-scrollbar-thumb {
     background-color: gray;
     border-radius: 16px;
 }

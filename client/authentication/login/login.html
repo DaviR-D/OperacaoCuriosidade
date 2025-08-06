@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +10,16 @@
     <script src="../../token.js" defer></script>
     <script src="../../theme.js" defer></script>
 </head>
+
 <body>
     <main class="loginBox">
         <div id="navIconContainer">
             <p id="navIcon">OC</p>
             <p style="text-align: center;">Operação<br>Curiosidade</p>
-        </div>  
+        </div>
         <div id="loginInfo">
-            <input type="text" id="email" placeholder="Email"/>
-            <input type="password" id="password" placeholder="Senha"/>
+            <input type="text" id="email" maxlength="300" placeholder="Email" />
+            <input type="password" id="password" maxlength="300" placeholder="Senha" />
             <button id="login" onclick="tryLogin()">ENTRAR</button>
             <span id="errorMessage"></span>
         </div>
@@ -26,4 +28,5 @@
 </body>
 <script src="../authentication.js" defer></script>
 <script src="login.js" defer></script>
+
 </html>

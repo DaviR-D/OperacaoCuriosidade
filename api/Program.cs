@@ -1,13 +1,42 @@
+using Api.Modules.Authentication.Application;
+using Api.Modules.Authentication.Application.Commands.Authenticate;
+using Api.Modules.Authentication.Application.Commands.CreateUser;
+using Api.Modules.Authentication.Domain;
+using Api.Modules.Authentication.Infrastructure.Repositories;
+using Api.Modules.Authentication.Presentation.UserDTOs;
+using Api.Modules.Clients.Application;
+using Api.Modules.Clients.Application.Commands.CreateClient;
+using Api.Modules.Clients.Application.Commands.DeleteClient;
+using Api.Modules.Clients.Application.Commands.LockClient;
+using Api.Modules.Clients.Application.Commands.UnlockClient;
+using Api.Modules.Clients.Application.Commands.UpdateClient;
+using Api.Modules.Clients.Application.Queries.GetClientsLength;
+using Api.Modules.Clients.Application.Queries.GetLastMonthClients;
+using Api.Modules.Clients.Application.Queries.GetPagedClients;
+using Api.Modules.Clients.Application.Queries.GetPendingClients;
+using Api.Modules.Clients.Application.Queries.GetSingleClient;
+using Api.Modules.Clients.Application.Queries.GetSortedClients;
+using Api.Modules.Clients.Application.Queries.SearchClients;
+using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
+using Api.Modules.Clients.Domain;
+using Api.Modules.Clients.Infrastructure.Repositories;
+using Api.Modules.Logs.Application;
+using Api.Modules.Logs.Application.Queries.GetLogs;
+using Api.Modules.Logs.Domain;
+using Api.Modules.Logs.Infrastructure;
+using Api.Modules.Logs.Infrastructure.Repositories;
+using Api.Shared;
+using Api.Shared.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Api.Modules.Authentication;
-using Api.Modules.Registrations;
 using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-AuthenticationSettings? authSettings = builder.Configuration.GetSection("AuthenticationSettings").Get<AuthenticationSettings>();
+AuthenticationSettings? authSettings = builder.Configuration
+    .GetSection("AuthenticationSettings")
+    .Get<AuthenticationSettings>();
 string key = authSettings.PrivateKey;
 
 builder.Services.AddAuthentication(options =>
@@ -23,19 +52,50 @@ builder.Services.AddAuthentication(options =>
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+            LifetimeValidator = (notBefore, expires, token, parameters) =>
+            {
+                return expires > DateTime.UtcNow;
+            }
         };
     });
 
-List<Registration> registrationsMock = [];
+List<Client> registrationsMock = [];
 List<User> usersMock = [];
+List<Log> logsMock = [];
 
 builder.Services.AddSingleton(registrationsMock);
 builder.Services.AddSingleton(usersMock);
+builder.Services.AddSingleton(logsMock);
 builder.Services.AddSingleton(authSettings);
+builder.Services.AddScoped<RequestResponseFactory>();
+builder.Services.AddScoped<AuthenticationHandlerFactory>();
+builder.Services.AddScoped<ClientsHandlerFactory>();
+builder.Services.AddScoped<LogHandlerFactory>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ClientRepository>();
+builder.Services.AddScoped<LogRepository>();
+builder.Services.AddScoped<AuthenticateHandler>();
+builder.Services.AddScoped<CreateUserHandler>();
+builder.Services.AddScoped<GetPagedClientsHandler>();
+builder.Services.AddScoped<GetClientsLengthHandler>();
+builder.Services.AddScoped<GetLastMonthClientsHandler>();
+builder.Services.AddScoped<GetPendingClientsHandler>();
+builder.Services.AddScoped<GetSingleClientHandler>();
+builder.Services.AddScoped<GetSortedClientsHandler>();
+builder.Services.AddScoped<SearchClientsHandler>();
+builder.Services.AddScoped<VerifyAvailableEmailHandler>();
+builder.Services.AddScoped<CreateClientHandler>();
+builder.Services.AddScoped<DeleteClientHandler>();
+builder.Services.AddScoped<UpdateClientHandler>();
+builder.Services.AddScoped<LockClientHandler>();
+builder.Services.AddScoped<UnlockClientHandler>();
+builder.Services.AddScoped<CreateLogService>();
+builder.Services.AddScoped<GetLogsHandler>();
 
-AuthenticationService service = new(usersMock, authSettings);
-service.CreateUser(new UserDto("Davi", "davi@gmail.com", "senha123"));
+UserRepository repository = new(usersMock);
+var handler = new CreateUserHandler(repository);
+handler.Handle(new CreateUserCommand(new UserDto(email: "davi@gmail.com", password: "123", name: "Davi")));
 
 builder.Services.AddCors(options =>
 {
@@ -46,9 +106,6 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
-
-builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
 builder.Services.AddControllers();
 
