@@ -31,9 +31,10 @@ namespace Test.UnitTests.Clients
         public ClientMockDependencies()
         {
             var services = new ServiceCollection();
-            AuthenticationSettings? mockAuthSettings = new();
-            mockAuthSettings.PrivateKey = "mockprivatekeyforunittesting12345678910";
-            string key = mockAuthSettings.PrivateKey;
+            AuthenticationSettings? mockAuthSettings = new()
+            {
+                PrivateKey = "mockprivatekeyforunittesting12345678910"
+            };
             services.AddSingleton(ClientsMock);
             services.AddSingleton(LogsMock);
             services.AddSingleton(mockAuthSettings);

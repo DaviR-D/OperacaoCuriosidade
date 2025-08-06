@@ -17,8 +17,10 @@ namespace Test.UnitTests.Authentication
         public AuthenticationMockDependencies()
         {
             var services = new ServiceCollection();
-            AuthenticationSettings? mockAuthSettings = new();
-            mockAuthSettings.PrivateKey = "mockprivatekeyforunittesting12345678910";
+            AuthenticationSettings? mockAuthSettings = new()
+            {
+                PrivateKey = "mockprivatekeyforunittesting12345678910"
+            };
             services.AddSingleton(UsersMock);
             services.AddSingleton(mockAuthSettings);
             services.AddScoped<RequestResponseFactory>();

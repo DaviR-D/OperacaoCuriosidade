@@ -23,8 +23,10 @@ namespace Test.UnitTests.Logs
         public LogMockDependencies()
         {
             var services = new ServiceCollection();
-            AuthenticationSettings? mockAuthSettings = new();
-            mockAuthSettings.PrivateKey = "mockprivatekeyforunittesting12345678910";
+            AuthenticationSettings? mockAuthSettings = new()
+            {
+                PrivateKey = "mockprivatekeyforunittesting12345678910"
+            };
             services.AddSingleton(UsersMock);
             services.AddSingleton(ClientsMock);
             services.AddSingleton(LogsMock);
@@ -37,7 +39,6 @@ namespace Test.UnitTests.Logs
             services.AddScoped<CreateLogService>();
             services.AddScoped<GetLogsHandler>();
             services.AddScoped<LogController>();
-
 
             ServiceProvider = services.BuildServiceProvider();
         }
