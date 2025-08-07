@@ -14,6 +14,11 @@ function getSignupElements() {
 }
 
 async function trySignup() {
+    if (main.nameInput.value.length == 0 || main.emailInput.value.length == 0 || main.passwordInput.value.length == 0) {
+        main.errorMessage.innerText = "Preecha todos os campos";
+        return;
+    }
+
     if (checkValidEmail(main.emailInput.value) && checkValidName(main.nameInput.value)) {
         let newUser = { name: encodeURIComponent(main.nameInput.value), email: main.emailInput.value, password: main.passwordInput.value }
         await fetch(`${apiUrl}/api/authentication/signup`, {
