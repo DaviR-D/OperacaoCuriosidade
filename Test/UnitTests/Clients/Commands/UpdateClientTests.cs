@@ -253,7 +253,7 @@ namespace Test.UnitTests.Clients.Commands
 
             ClientDto updatedClient = new(
                 id: clientMockId,
-                name: "Maria Clara1",
+                name: "Maria Clara$@",
                 email: "mariaclara@example.com",
                 status: "Inactive",
                 pending: true,

@@ -99,7 +99,7 @@ namespace Test.UnitTests.Clients.Commands
             ClientMockDependencies mockDependencies = new ClientMockDependencies();
             ClientController controller = mockDependencies.ServiceProvider.GetService<ClientController>();
             ClientDto clientMock = new(
-                name: "Maria Clara1",
+                name: "Maria Clara$@",
                 email: "maria.clara@example.com",
                 status: "Inactive",
                 pending: true,

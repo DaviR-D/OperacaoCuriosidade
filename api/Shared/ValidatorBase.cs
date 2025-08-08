@@ -15,7 +15,7 @@ namespace Api.Shared
         }
         protected static bool ValidateName(string name)
         {
-            Regex regex = new(@"^[^0-9!@#$%*+={}?<>()]*$");
+            Regex regex = new(@"^[^!@#$*+={}?<>()]*$");
             return regex.IsMatch(name);
         }
     }
