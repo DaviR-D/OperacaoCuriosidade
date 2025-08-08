@@ -8,3 +8,5 @@ C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.
 C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\DaviRodriguesDavanzo\Projeto\Davi_Rodrigues_Davanzo\api\obj\Debug\net9.0\staticwebassets.build.json
