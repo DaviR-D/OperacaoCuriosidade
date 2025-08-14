@@ -13,7 +13,7 @@ namespace Api.Shared.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("server=FORLOGIC762;Database=ApiDb;Trusted_Connection=True");
+            options.UseSqlServer("server=FORLOGIC762\\SQLEXPRESS;Database=ApiDb;Trusted_Connection=True;TrustServerCertificate=True;");
         }
     }
 }
