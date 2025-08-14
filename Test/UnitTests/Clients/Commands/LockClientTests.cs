@@ -75,7 +75,7 @@ namespace Test.UnitTests.Clients.Commands
                 feelings: "Reflexiva",
                 values: "Autenticidade, Beleza"
             );
-            clientMock.Lock = DateTime.UtcNow.AddMinutes(10);
+            clientMock.EditLock = DateTime.UtcNow.AddMinutes(10);
             mockDependencies.ClientsMock.Add(clientMock);
 
 

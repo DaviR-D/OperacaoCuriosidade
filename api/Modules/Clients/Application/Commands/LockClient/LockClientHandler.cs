@@ -23,12 +23,12 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             lock (_lock)
             {
-                if (client.Lock != null && client.Lock > DateTime.UtcNow)
+                if (client.EditLock != null && client.EditLock > DateTime.UtcNow)
                     return new LockClientResponse(message: "client already locked");
 
                 var expireTime = DateTime.UtcNow.AddSeconds(60);
 
-                client.Lock = expireTime;
+                client.EditLock = expireTime;
                 var token = GenerateToken(command.UserId, command.ClientId, expireTime);
                 return new LockClientResponse(token: token);
             }

@@ -29,6 +29,6 @@ namespace Api.Modules.Clients.Domain
         public string Feelings { get; set; } = feelings;
         public string Values { get; set; } = values;
         public bool Deleted { get; set; }
-        public DateTime? Lock { get; set; } = editLock;
+        public DateTime? EditLock { get; set; } = editLock;
     }
 }

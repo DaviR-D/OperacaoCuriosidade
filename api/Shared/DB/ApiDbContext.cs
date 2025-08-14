@@ -8,7 +8,7 @@ namespace Api.Shared.DB
     public class ApiDbContext : DbContext
     { 
         public DbSet<User> Users {  get; set; }
-        //public DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Clients { get; set; }
         //public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

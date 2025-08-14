@@ -31,7 +31,7 @@ namespace Test.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
             var expireTimeMock = DateTime.UtcNow.AddMinutes(10);
-            clientMock.Lock = expireTimeMock;
+            clientMock.EditLock = expireTimeMock;
             mockDependencies.ClientsMock.Add(clientMock);
 
 
@@ -97,7 +97,7 @@ namespace Test.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
             var expireTimeMock = DateTime.UtcNow.AddMinutes(10);
-            clientMock.Lock = expireTimeMock;
+            clientMock.EditLock = expireTimeMock;
             mockDependencies.ClientsMock.Add(clientMock);
 
 
@@ -163,7 +163,7 @@ namespace Test.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
             var expireTimeMock = DateTime.UtcNow.AddMinutes(10);
-            clientMock.Lock = expireTimeMock;
+            clientMock.EditLock = expireTimeMock;
             mockDependencies.ClientsMock.Add(clientMock);
 
 
@@ -229,7 +229,7 @@ namespace Test.UnitTests.Clients.Commands
                 values: "Autenticidade, Beleza"
             );
             var expireTimeMock = DateTime.UtcNow.AddMinutes(10);
-            clientMock.Lock = expireTimeMock;
+            clientMock.EditLock = expireTimeMock;
             mockDependencies.ClientsMock.Add(clientMock);
 
 
