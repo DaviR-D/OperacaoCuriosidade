@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Application.Queries.VerifyAvailableEmail
 {
     public class VerifyAvailableEmailHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var query = (VerifyAvailableEmailQuery)input;
             Client? existingEmail = repository

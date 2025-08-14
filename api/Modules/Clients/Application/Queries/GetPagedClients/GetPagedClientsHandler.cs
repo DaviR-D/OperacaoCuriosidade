@@ -7,7 +7,7 @@ namespace Api.Modules.Clients.Application.Queries.GetPagedClients
 {
     public class GetPagedClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var query = (GetPagedClientsQuery)input;
             List<Client> activeClients = repository.GetAll();

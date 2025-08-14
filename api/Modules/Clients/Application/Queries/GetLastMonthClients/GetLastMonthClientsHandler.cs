@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Application.Queries.GetLastMonthClients
 {
     public class GetLastMonthClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             List<Client> activeClients = repository.GetAll();
             int lastMonth = activeClients

@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Application.Commands.DeleteClient
 {
     public class DeleteClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var command = (DeleteClientCommand)input;
             var client = repository.GetOne(command.Id);

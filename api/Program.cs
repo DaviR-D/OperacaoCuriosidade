@@ -27,7 +27,9 @@ using Api.Modules.Logs.Infrastructure;
 using Api.Modules.Logs.Infrastructure.Repositories;
 using Api.Shared;
 using Api.Shared.Configurations;
+using Api.Shared.DB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -92,10 +94,7 @@ builder.Services.AddScoped<LockClientHandler>();
 builder.Services.AddScoped<UnlockClientHandler>();
 builder.Services.AddScoped<CreateLogService>();
 builder.Services.AddScoped<GetLogsHandler>();
-
-UserRepository repository = new(usersMock);
-var handler = new CreateUserHandler(repository);
-handler.Handle(new CreateUserCommand(new UserDto(email: "davi@gmail.com", password: "123", name: "Davi")));
+builder.Services.AddDbContext<ApiDbContext>();
 
 builder.Services.AddCors(options =>
 {

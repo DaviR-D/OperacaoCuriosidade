@@ -11,7 +11,7 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
     public class LockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
     {
         private static readonly Lock _lock = new();
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var command = (LockClientCommand)input;
             var client = repository.GetOne(command.ClientId);

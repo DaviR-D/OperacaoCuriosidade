@@ -29,7 +29,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Create([FromBody] ClientDto client)
         {
             var handler = factory.GetHandler("Create");
-            var response = handler.Handle(new CreateClientCommand(
+            var response = handler.HandleAsync(new CreateClientCommand(
                 client: client,
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
@@ -42,7 +42,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Lock([FromRoute] Guid clientId)
         {
             var handler = factory.GetHandler("Lock");
-            var response = handler.Handle(
+            var response = handler.HandleAsync(
                 new LockClientCommand(
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
                 clientId: clientId
@@ -56,7 +56,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Unlock()
         {
             var handler = factory.GetHandler("Unlock");
-            var response = handler.Handle(
+            var response = handler.HandleAsync(
                 new UnlockClientCommand(
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
                 clientId: Guid.Parse(User.FindFirst("ClientId")?.Value),
@@ -71,7 +71,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetSingle([FromRoute] Guid id)
         {
             var handler = factory.GetHandler("GetSingle");
-            var response = handler.Handle(new GetSingleClientQuery(
+            var response = handler.HandleAsync(new GetSingleClientQuery(
                 id: id,
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
@@ -84,7 +84,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetLength()
         {
             var handler = factory.GetHandler("GetLength");
-            var response = handler.Handle(new GetClientsLengthQuery());
+            var response = handler.HandleAsync(new GetClientsLengthQuery());
 
             return responseFactory.GetResponse(response);
         }
@@ -93,7 +93,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetLastMonth()
         {
             var handler = factory.GetHandler("GetLastMonth");
-            var response = handler.Handle(new GetLastMonthClientsQuery());
+            var response = handler.HandleAsync(new GetLastMonthClientsQuery());
 
             return responseFactory.GetResponse(response);
         }
@@ -102,7 +102,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetPending()
         {
             var handler = factory.GetHandler("GetPending");
-            var response = handler.Handle(new GetPendingClientsQuery());
+            var response = handler.HandleAsync(new GetPendingClientsQuery());
 
             return responseFactory.GetResponse(response);
         }
@@ -111,7 +111,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetPage(int start, int increment)
         {
             var handler = factory.GetHandler("GetPage");
-            var response = handler.Handle(new GetPagedClientsQuery(start, increment));
+            var response = handler.HandleAsync(new GetPagedClientsQuery(start, increment));
 
             return responseFactory.GetResponse(response);
         }
@@ -120,7 +120,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult GetSortedPage(string sortKey, bool descending, int start, int increment)
         {
             var handler = factory.GetHandler("GetSortedPage");
-            var response = handler.Handle(new GetSortedClientsQuery(sortKey, descending, start, increment));
+            var response = handler.HandleAsync(new GetSortedClientsQuery(sortKey, descending, start, increment));
 
             return responseFactory.GetResponse(response);
         }
@@ -129,7 +129,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult SearchClients(int start, int increment, string query = "")
         {
             var handler = factory.GetHandler("SearchClients");
-            var response = handler.Handle(new SearchClientsQuery(start, increment, query));
+            var response = handler.HandleAsync(new SearchClientsQuery(start, increment, query));
 
             return responseFactory.GetResponse(response);
         }
@@ -138,7 +138,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Update([FromBody] ClientDto client)
         {
             var handler = factory.GetHandler("Update");
-            var response = handler.Handle(new UpdateClientCommand(
+            var response = handler.HandleAsync(new UpdateClientCommand(
                 client: client,
                 clientId: Guid.Parse(User.FindFirst("ClientId")?.Value),
                 tokenExpireDate: DateTime.Parse(User.FindFirst(ClaimTypes.Expiration)?.Value),
@@ -153,7 +153,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult Delete([FromRoute] Guid id)
         {
             var handler = factory.GetHandler("Delete");
-            var response = handler.Handle(new DeleteClientCommand(
+            var response = handler.HandleAsync(new DeleteClientCommand(
                 id: id,
                 userId: Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
                 )
@@ -166,7 +166,7 @@ namespace Api.Modules.Clients.Presentation
         public IActionResult CheckEmail(string email, Guid? id = null)
         {
             var handler = factory.GetHandler("CheckEmail");
-            var response = handler.Handle(new VerifyAvailableEmailQuery(id, email));
+            var response = handler.HandleAsync(new VerifyAvailableEmailQuery(id, email));
 
             return responseFactory.GetResponse(response);
         }

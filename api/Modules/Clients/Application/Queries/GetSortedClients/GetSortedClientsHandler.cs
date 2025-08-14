@@ -7,7 +7,7 @@ namespace Api.Modules.Clients.Application.Queries.GetSortedClients
 {
     public class GetSortedClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var query = (GetSortedClientsQuery)input;
             List<Client> sortedClients = repository.Sort(query.SortKey, query.Descending);

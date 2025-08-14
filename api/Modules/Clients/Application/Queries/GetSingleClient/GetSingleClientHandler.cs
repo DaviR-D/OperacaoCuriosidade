@@ -7,7 +7,7 @@ namespace Api.Modules.Clients.Application.Queries.GetSingleClient
 {
     public class GetSingleClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var query = (GetSingleClientQuery)input;
             var client = repository.GetOne(query.ClientId);

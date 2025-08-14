@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Application.Queries.GetClientsLength
 {
     public class GetClientsLengthHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             List<Client> activeClients = repository.GetAll();
             return new GetClientsLengthResponse(activeClients.Count);

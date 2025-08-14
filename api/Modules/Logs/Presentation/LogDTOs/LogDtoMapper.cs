@@ -1,14 +1,15 @@
 ﻿using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Domain;
+using System.Threading.Tasks;
 
 namespace Api.Modules.Logs.Presentation.LogDTOs
 {
     public class LogDtoMapper
     {
-        public static LogDto ToDto(Log log, ClientRepository clients, UserRepository users)
+        public static async Task<LogDto> ToDto(Log log, ClientRepository clients, UserRepository users)
         {
-            var user = users.GetOne(log.UserId);
+            var user = await users.GetOne(log.UserId);
             var client = clients.GetOne(log.ClientId);
 
             return new LogDto(

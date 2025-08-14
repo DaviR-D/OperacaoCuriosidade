@@ -6,7 +6,7 @@ namespace Api.Modules.Clients.Application.Commands.UpdateClient
 {
     public class UpdateClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var command = (UpdateClientCommand)input;
             var client = repository.GetOne(command.ClientId);

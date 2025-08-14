@@ -5,7 +5,7 @@ namespace Api.Modules.Clients.Application.Commands.UnlockClient
 {
     public class UnlockClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var command = (UnlockClientCommand)input;
             var client = repository.GetOne(command.ClientId);

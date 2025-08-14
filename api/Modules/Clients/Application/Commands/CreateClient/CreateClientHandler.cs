@@ -9,7 +9,7 @@ namespace Api.Modules.Clients.Application.Commands.CreateClient
     {
         private static readonly Lock _lock = new();
 
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var command = (CreateClientCommand)input;
             ClientValidator validator = new(command.Client);

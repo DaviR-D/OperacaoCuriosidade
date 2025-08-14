@@ -7,7 +7,7 @@ namespace Api.Modules.Clients.Application.Queries.SearchClients
 {
     public class SearchClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public IRequestOutput HandleAsync(IRequestInput input)
         {
             var query = (SearchClientsQuery)input;
             List<Client> filteredClients = repository.Search(query.Query);
