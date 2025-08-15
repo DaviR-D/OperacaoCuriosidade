@@ -19,7 +19,6 @@ using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Application;
 using Api.Modules.Logs.Application.Queries.GetLogs;
-using Api.Modules.Logs.Domain;
 using Api.Modules.Logs.Infrastructure;
 using Api.Modules.Logs.Infrastructure.Repositories;
 using Api.Shared;
@@ -58,9 +57,6 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-List<Log> logsMock = [];
-
-builder.Services.AddSingleton(logsMock);
 builder.Services.AddSingleton(authSettings);
 builder.Services.AddScoped<RequestResponseFactory>();
 builder.Services.AddScoped<AuthenticationHandlerFactory>();

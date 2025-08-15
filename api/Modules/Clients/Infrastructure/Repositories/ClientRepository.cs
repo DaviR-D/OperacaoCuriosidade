@@ -87,7 +87,7 @@ namespace Api.Modules.Clients.Infrastructure.Repositories
         }
         private async Task<List<Client>> GetActiveClients()
         {
-            return await context.Clients.Where(client => client.Deleted == false).ToListAsync(); ;
+            return await context.Clients.Where(client => client.Deleted == false).ToListAsync();
         }
     }
 }

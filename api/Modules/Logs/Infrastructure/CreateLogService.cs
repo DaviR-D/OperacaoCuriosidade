@@ -4,12 +4,12 @@ namespace Api.Modules.Logs.Infrastructure
 {
     public class CreateLogService(LogRepository repository)
     {
-        public void Create(Guid userId, Guid clientId, string action)
+        public async Task Create(Guid userId, Guid clientId, string action)
         {
             var id = Guid.NewGuid();
             var timeStamp = DateTime.Now;
 
-            repository.Create(new(
+            await repository.Create(new(
                 id: id,
                 userId: userId,
                 clientId: clientId,
