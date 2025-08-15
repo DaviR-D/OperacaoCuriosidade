@@ -32,7 +32,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
                 salt: salt
                 );
 
-            repository.Create(newUser);
+            await repository.Create(newUser);
 
             return new CreateUserResponse();
         }

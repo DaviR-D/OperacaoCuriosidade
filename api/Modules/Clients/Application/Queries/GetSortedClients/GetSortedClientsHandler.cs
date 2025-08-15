@@ -2,15 +2,16 @@
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Clients.Presentation.ClientDTOs;
 using Api.Shared.Interfaces;
+using System.Threading.Tasks;
 
 namespace Api.Modules.Clients.Application.Queries.GetSortedClients
 {
-    public class GetSortedClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class GetSortedClientsHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput HandleAsync(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var query = (GetSortedClientsQuery)input;
-            List<Client> sortedClients = repository.Sort(query.SortKey, query.Descending);
+            List<Client> sortedClients = await repository.Sort(query.SortKey, query.Descending);
             List<Client> slicedClients = [.. sortedClients.Skip(query.Start).Take(query.Increment)];
             var response = new GetSortedClientsResponse(ClientDtoMapper.ToPreviewDto(slicedClients));
 

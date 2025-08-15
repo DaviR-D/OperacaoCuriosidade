@@ -10,7 +10,7 @@ namespace Api.Modules.Logs.Presentation.LogDTOs
         public static async Task<LogDto> ToDto(Log log, ClientRepository clients, UserRepository users)
         {
             var user = await users.GetOne(log.UserId);
-            var client = clients.GetOne(log.ClientId);
+            var client = await clients.GetOneAsync(log.ClientId);
 
             return new LogDto(
                 userEmail: user == null ? "unknown" : user.Email,

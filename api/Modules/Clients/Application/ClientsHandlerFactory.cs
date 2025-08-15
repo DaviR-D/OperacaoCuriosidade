@@ -34,9 +34,9 @@ namespace Api.Modules.Clients.Application
             { "CheckEmail", typeof(VerifyAvailableEmailHandler) }
         };
 
-        public IRequestHandler<IRequestOutput, IRequestInput> GetHandler(string endpoint)
+        public IRequestHandler<Task<IRequestOutput>, IRequestInput> GetHandler(string endpoint)
         {
-            return (IRequestHandler<IRequestOutput, IRequestInput>)service.GetService(Handlers[endpoint]);
+            return (IRequestHandler<Task<IRequestOutput>, IRequestInput>)service.GetService(Handlers[endpoint]);
         }
     }
 }
