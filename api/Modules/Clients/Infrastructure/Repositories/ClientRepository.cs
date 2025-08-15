@@ -3,11 +3,10 @@ using Api.Modules.Clients.Presentation.ClientDTOs;
 using Api.Shared.DB;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Clients.Infrastructure.Repositories
 {
-    public class ClientRepository(List<Client> clients, ApiDbContext context)
+    public class ClientRepository(ApiDbContext context)
     {
         private readonly ApiDbContext _context = context;
         public async Task<Guid?> CreateAsync(ClientDto client)

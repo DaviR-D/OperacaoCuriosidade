@@ -17,7 +17,7 @@ namespace Api.Modules.Authentication.Application.Commands.Authenticate
             var command = input as AuthenticateCommand;
             var userTask = await repository.GetAll();
 
-             var user = userTask.FirstOrDefault(user => command.UserCredentials.Email == user.Email);
+            var user = userTask.FirstOrDefault(user => command.UserCredentials.Email == user.Email);
 
             if (user == null)
                 return new AuthenticateResponse(message: "incorrect email");

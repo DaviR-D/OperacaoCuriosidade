@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    if (await getStats("length") == 0) await createDB(loggedUser.token);
     main.lastMonthClients = await getStats("lastMonth");
     main.pendingClients = await getStats("pending");
     await updateTable();

@@ -1,7 +1,6 @@
 ﻿using Api.Modules.Authentication.Infrastructure.Repositories;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Domain;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Logs.Presentation.LogDTOs
 {

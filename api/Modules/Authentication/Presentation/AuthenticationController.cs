@@ -4,7 +4,6 @@ using Api.Modules.Authentication.Application.Commands.CreateUser;
 using Api.Modules.Authentication.Presentation.UserDTOs;
 using Api.Shared;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Authentication.Presentation
 {

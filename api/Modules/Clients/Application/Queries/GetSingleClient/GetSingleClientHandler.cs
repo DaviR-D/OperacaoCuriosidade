@@ -2,7 +2,6 @@
 using Api.Modules.Clients.Presentation.ClientDTOs;
 using Api.Modules.Logs.Infrastructure;
 using Api.Shared.Interfaces;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Clients.Application.Queries.GetSingleClient
 {

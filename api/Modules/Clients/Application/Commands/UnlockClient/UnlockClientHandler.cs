@@ -1,6 +1,5 @@
 ﻿using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Shared.Interfaces;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Clients.Application.Commands.UnlockClient
 {

@@ -1,9 +1,7 @@
 using Api.Modules.Authentication.Application;
 using Api.Modules.Authentication.Application.Commands.Authenticate;
 using Api.Modules.Authentication.Application.Commands.CreateUser;
-using Api.Modules.Authentication.Domain;
 using Api.Modules.Authentication.Infrastructure.Repositories;
-using Api.Modules.Authentication.Presentation.UserDTOs;
 using Api.Modules.Clients.Application;
 using Api.Modules.Clients.Application.Commands.CreateClient;
 using Api.Modules.Clients.Application.Commands.DeleteClient;
@@ -18,7 +16,6 @@ using Api.Modules.Clients.Application.Queries.GetSingleClient;
 using Api.Modules.Clients.Application.Queries.GetSortedClients;
 using Api.Modules.Clients.Application.Queries.SearchClients;
 using Api.Modules.Clients.Application.Queries.VerifyAvailableEmail;
-using Api.Modules.Clients.Domain;
 using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Application;
 using Api.Modules.Logs.Application.Queries.GetLogs;
@@ -29,7 +26,6 @@ using Api.Shared;
 using Api.Shared.Configurations;
 using Api.Shared.DB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -62,12 +58,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-List<Client> registrationsMock = [];
-List<User> usersMock = [];
 List<Log> logsMock = [];
 
-builder.Services.AddSingleton(registrationsMock);
-builder.Services.AddSingleton(usersMock);
 builder.Services.AddSingleton(logsMock);
 builder.Services.AddSingleton(authSettings);
 builder.Services.AddScoped<RequestResponseFactory>();

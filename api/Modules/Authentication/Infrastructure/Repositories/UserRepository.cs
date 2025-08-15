@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Modules.Authentication.Infrastructure.Repositories
 {
-    public class UserRepository(List<User> users, ApiDbContext context)
+    public class UserRepository(ApiDbContext context)
     {
         private readonly ApiDbContext _context = context;
         public async Task Create(User user)

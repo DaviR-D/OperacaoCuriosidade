@@ -1,8 +1,6 @@
-﻿using Api.Modules.Clients.Domain;
-using Api.Modules.Clients.Infrastructure.Repositories;
+﻿using Api.Modules.Clients.Infrastructure.Repositories;
 using Api.Modules.Logs.Infrastructure;
 using Api.Shared.Interfaces;
-using System.Threading.Tasks;
 
 namespace Api.Modules.Clients.Application.Commands.CreateClient
 {
