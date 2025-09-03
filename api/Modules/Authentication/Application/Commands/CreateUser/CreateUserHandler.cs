@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Api.Modules.Authentication.Application.Commands.CreateUser
 {
-    public class CreateUserHandler(UserRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class CreateUserHandler(UserRepository repository) : IRequestHandler<Task<IRequestOutput?>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput?> HandleAsync(IRequestInput input)
         {
             var command = (CreateUserCommand)input;
             UserValidator validator = new(command.User);
@@ -18,7 +18,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
 
             var user = command.User;
 
-            if (!VerifyAvailableEmail(user.Email))
+            if (!await VerifyAvailableEmail(user.Email))
                 return new CreateUserResponse("email already in use");
 
             string salt = Guid.NewGuid().ToString();
@@ -32,7 +32,7 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
                 salt: salt
                 );
 
-            repository.Create(newUser);
+            await repository.Create(newUser);
 
             return new CreateUserResponse();
         }
@@ -44,9 +44,10 @@ namespace Api.Modules.Authentication.Application.Commands.CreateUser
 
             return Convert.ToBase64String(passwordHash);
         }
-        public bool VerifyAvailableEmail(string email)
+        public async Task<bool> VerifyAvailableEmail(string email)
         {
-            User? existingEmail = repository.GetAll().FirstOrDefault(user => user.Email == email);
+            List<User?> existingEmailTask = await repository.GetAll();
+            var existingEmail = existingEmailTask.FirstOrDefault(user => user.Email == email);
 
             return existingEmail == null;
         }

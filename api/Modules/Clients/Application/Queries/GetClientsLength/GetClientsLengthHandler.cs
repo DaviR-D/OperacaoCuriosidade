@@ -4,11 +4,11 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.GetClientsLength
 {
-    public class GetClientsLengthHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class GetClientsLengthHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
-            List<Client> activeClients = repository.GetAll();
+            List<Client> activeClients = await repository.GetAllAsync();
             return new GetClientsLengthResponse(activeClients.Count);
         }
     }

@@ -10,14 +10,14 @@ using System.Text;
 
 namespace Api.Modules.Authentication.Application.Commands.Authenticate
 {
-    public class AuthenticateHandler(UserRepository repository, AuthenticationSettings auth) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class AuthenticateHandler(UserRepository repository, AuthenticationSettings auth) : IRequestHandler<Task<IRequestOutput?>, IRequestInput>
     {
-        public IRequestOutput? Handle(IRequestInput input)
+        public async Task<IRequestOutput?> HandleAsync(IRequestInput input)
         {
             var command = input as AuthenticateCommand;
-            var user = repository
-                .GetAll()
-                .FirstOrDefault(user => command.UserCredentials.Email == user.Email);
+            var userTask = await repository.GetAll();
+
+            var user = userTask.FirstOrDefault(user => command.UserCredentials.Email == user.Email);
 
             if (user == null)
                 return new AuthenticateResponse(message: "incorrect email");

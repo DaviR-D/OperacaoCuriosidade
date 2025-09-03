@@ -2,6 +2,6 @@
 {
     public interface IRequestHandler<Output, Input>
     {
-        Output Handle(Input input);
+        Output HandleAsync(Input input);
     }
 }

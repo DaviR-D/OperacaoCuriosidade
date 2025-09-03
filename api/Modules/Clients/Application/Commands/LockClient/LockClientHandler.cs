@@ -8,13 +8,13 @@ using System.Text;
 
 namespace Api.Modules.Clients.Application.Commands.LockClient
 {
-    public class LockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class LockClientHandler(ClientRepository repository, AuthenticationSettings authentication) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
         private static readonly Lock _lock = new();
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var command = (LockClientCommand)input;
-            var client = repository.GetOne(command.ClientId);
+            var client = await repository.GetOneAsync(command.ClientId);
 
             if (client == null || client.Deleted == true)
             {
@@ -23,12 +23,13 @@ namespace Api.Modules.Clients.Application.Commands.LockClient
 
             lock (_lock)
             {
-                if (client.Lock != null && client.Lock > DateTime.UtcNow)
+                if (client.EditLock != null && client.EditLock > DateTime.UtcNow)
                     return new LockClientResponse(message: "client already locked");
 
                 var expireTime = DateTime.UtcNow.AddSeconds(60);
 
-                client.Lock = expireTime;
+                repository.LockAsync(command.ClientId, expireTime);
+
                 var token = GenerateToken(command.UserId, command.ClientId, expireTime);
                 return new LockClientResponse(token: token);
             }

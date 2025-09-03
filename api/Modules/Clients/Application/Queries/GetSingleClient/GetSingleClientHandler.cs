@@ -5,12 +5,13 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.GetSingleClient
 {
-    public class GetSingleClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class GetSingleClientHandler(ClientRepository repository, CreateLogService logService) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var query = (GetSingleClientQuery)input;
-            var client = repository.GetOne(query.ClientId);
+            var client = await repository.GetOneAsync(query.ClientId);
+
             if (client == null || client.Deleted == true)
             {
                 return new GetSingleClientResponse(message: "client does not exist");

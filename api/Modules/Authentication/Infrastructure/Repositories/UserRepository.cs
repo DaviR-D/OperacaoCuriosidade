@@ -1,20 +1,24 @@
 ﻿using Api.Modules.Authentication.Domain;
+using Api.Shared.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Modules.Authentication.Infrastructure.Repositories
 {
-    public class UserRepository(List<User> users)
+    public class UserRepository(ApiDbContext context)
     {
-        public void Create(User user)
+        private readonly ApiDbContext _context = context;
+        public async Task Create(User user)
         {
-            users.Add(user);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return users;
+            return await _context.Users.ToListAsync();
         }
-        public User? GetOne(Guid id)
+        public async Task<User?> GetOne(Guid id)
         {
-            return users.FirstOrDefault(user => user.Id == id);
+            return await _context.Users.FindAsync(id);
         }
     }
 }

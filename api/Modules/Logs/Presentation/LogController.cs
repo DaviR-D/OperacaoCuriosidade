@@ -12,10 +12,10 @@ namespace Api.Modules.Logs.Presentation
     public class LogController(LogHandlerFactory factory, RequestResponseFactory responseFactory) : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetAll(int start, int increment)
+        public async Task<IActionResult> GetAll(int start, int increment)
         {
             var handler = factory.GetHandler("GetAll");
-            var response = handler.Handle(new GetLogsQuery(start: start, increment: increment));
+            var response = await handler.HandleAsync(new GetLogsQuery(start: start, increment: increment));
 
             return responseFactory.GetResponse(response);
         }

@@ -4,11 +4,11 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.GetPendingClients
 {
-    public class GetPendingClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class GetPendingClientsHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
-            List<Client> activeClients = repository.GetAll();
+            List<Client> activeClients = await repository.GetAllAsync();
             int pending = activeClients.Where(client => client.Pending == true).Count();
             return new GetPendingClientsResponse(pending);
         }

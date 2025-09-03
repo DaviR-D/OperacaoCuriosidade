@@ -3,20 +3,20 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Commands.UnlockClient
 {
-    public class UnlockClientHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class UnlockClientHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var command = (UnlockClientCommand)input;
-            var client = repository.GetOne(command.ClientId);
+            var client = await repository.GetOneAsync(command.ClientId);
 
-            var clientLock = client.Lock?.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            var clientLock = client.EditLock?.ToString("yyyy-MM-dd HH:mm:ss.fff");
             var tokenLock = command.TokenExpireDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
             if (clientLock != tokenLock)
                 return new UnlockClientResponse(message: "invalid token");
 
-            client.Lock = null;
+            await repository.UnlockAsync(command.ClientId);
 
             return new UnlockClientResponse();
         }

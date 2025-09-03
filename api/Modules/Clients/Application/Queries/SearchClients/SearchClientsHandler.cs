@@ -5,12 +5,12 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.SearchClients
 {
-    public class SearchClientsHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class SearchClientsHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var query = (SearchClientsQuery)input;
-            List<Client> filteredClients = repository.Search(query.Query);
+            List<Client> filteredClients = await repository.SearchAsync(query.Query);
             List<Client> slicedClients = [.. filteredClients.Skip(query.Start).Take(query.Increment)];
             var response = new SearchClientsResponse(
                 page: ClientDtoMapper.ToPreviewDto(slicedClients),

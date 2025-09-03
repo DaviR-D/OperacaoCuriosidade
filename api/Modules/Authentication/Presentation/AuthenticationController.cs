@@ -12,19 +12,19 @@ namespace Api.Modules.Authentication.Presentation
     public class AuthenticationController(AuthenticationHandlerFactory factory, RequestResponseFactory responseFactory) : ControllerBase
     {
         [HttpPost("signup")]
-        public IActionResult Create([FromBody] UserDto user)
+        public async Task<IActionResult> Create([FromBody] UserDto user)
         {
             var handler = factory.GetHandler("Signup");
-            var response = handler.Handle(new CreateUserCommand(user));
+            var response = await handler.HandleAsync(new CreateUserCommand(user));
 
             return responseFactory.GetResponse(response);
         }
 
         [HttpPost]
-        public IActionResult Authenticate([FromBody] UserDto user)
+        public async Task<IActionResult> Authenticate([FromBody] UserDto user)
         {
             var handler = factory.GetHandler("Authenticate");
-            var response = handler.Handle(new AuthenticateCommand(user));
+            var response = await handler.HandleAsync(new AuthenticateCommand(user));
 
             return responseFactory.GetResponse(response);
         }

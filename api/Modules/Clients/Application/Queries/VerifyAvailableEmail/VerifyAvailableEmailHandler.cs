@@ -4,14 +4,14 @@ using Api.Shared.Interfaces;
 
 namespace Api.Modules.Clients.Application.Queries.VerifyAvailableEmail
 {
-    public class VerifyAvailableEmailHandler(ClientRepository repository) : IRequestHandler<IRequestOutput, IRequestInput>
+    public class VerifyAvailableEmailHandler(ClientRepository repository) : IRequestHandler<Task<IRequestOutput>, IRequestInput>
     {
-        public IRequestOutput Handle(IRequestInput input)
+        public async Task<IRequestOutput> HandleAsync(IRequestInput input)
         {
             var query = (VerifyAvailableEmailQuery)input;
-            Client? existingEmail = repository
-                .GetAll()
-                .FirstOrDefault(client => client.Email == query.Email);
+            var existingEmailTask = await repository.GetAllAsync();
+
+            Client? existingEmail = existingEmailTask.FirstOrDefault(client => client.Email == query.Email);
 
             if (existingEmail != null)
             {
